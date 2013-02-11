@@ -108,17 +108,14 @@ filetype on
 filetype plugin on
 filetype indent on
 
-if has("gui")
-    "  set guifont=Andale\ Mono/12/-1/5/48/0/0/0/1/0
-    "  set guifont=-xos4-Terminus-Medium-R-Normal--14-140-72-72-C-80-ISO8859-1
-    set gfn=terminus\ 12
+if has("gui_running")
+  set guifont=terminus\ 12 linespace=0
+  set bg=dark
+  colorscheme molokai
+else
+  set bg=dark
+  colorscheme molokai
 endif
-if ! has("gui_running")
-    set t_Co=256
-endif
-" set background=light gives a different style, feel free to choose between them.
-set background=dark
-colors molokai
 
 set modeline modelines=3
 
@@ -146,32 +143,12 @@ set nocompatible
 " allows files to be open in invisible buffers
 set hidden
 
-" show trailing spaces in yellow (or red, for users with dark backgrounds).
-" "set nolist" to disable this.
-" this only works if syntax highlighting is enabled.
-set list
-set listchars=tab:\ \ ,trail:\ ,extends:?,precedes:?
-if &background == "dark"
-  highlight SpecialKey ctermbg=Red guibg=Red
-else
-  highlight SpecialKey ctermbg=Yellow guibg=Yellow
-end
-" if you would like to make tabs and trailing spaces visible without syntax
-" highlighting, use this:
-"   set listchars=tab:?\ ,trail:\?,extends:?,precedes:?
-
 " make backspace "more powerful"
 set backspace=indent,eol,start
 
 
 " don't outdent hashes
 inoremap # #
-
-
-
-
-
-
 
 
 " Wrapping and tabs.
@@ -193,3 +170,39 @@ set formatoptions=cq textwidth=72 foldignore= wildignore+=*.py[co]
 " Highlight end of line whitespace.
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
+
+" Enable spell checking, even in program source files. Hit <F4> to highlight
+" highlight spelling errors. Hit it again to turn highlighting off.
+"
+" And, if you cannot remember the keybindings, and/or too lazy to type
+"
+"     :help spell
+
+" and read the manual, here is a brief reminder:
+" ]s Next misspelled word
+" [s Previous misspelled word
+" z= Make suggestions for current word
+" zg Add to good words list
+"
+if has("spell")
+  setlocal spell spelllang=en_us  " American English spelling.
+
+  " Toggle spelling with F4 key.
+  map <F4> :set spell!<CR><Bar>:echo "Spell check: " . strpart("OffOn", 3 * &spell, 3)<CR>
+
+  " z= for suggestions
+
+  " Change the default highlighting colors and terminal attributes
+  highlight SpellBad cterm=underline ctermfg=yellow ctermbg=gray
+
+  " Limit list of suggestions to the top 10 items
+  set sps=best,10
+
+  "Turn spelling off by default for English UK.
+  "Center is correctly spelled. Centre is not, and
+  "shows with spell local colors. Misspelled words
+  "show like soo.
+  set nospell
+endif
+
+source ~/.vim/user.vim

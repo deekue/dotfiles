@@ -22,3 +22,6 @@
 [submodule "vim/bundle/vim-vividchalk.git"]
 	path = vim/bundle/vim-vividchalk.git
 	url = git://github.com/tpope/vim-vividchalk.git
+[submodule "vim/bundle/peaksea.git"]
+	path = vim/bundle/peaksea.git
+	url = git://github.com/vim-scripts/peaksea.git
