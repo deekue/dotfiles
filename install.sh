@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/sh -ex
 
-INSTALL_TO=~/src/
+INSTALL_TO=~/
 
 warn() {
     echo "$1" >&2
@@ -15,6 +15,7 @@ die() {
 [ -e "~/.vim" ] && die "~/.vim already exists."
 [ -e "~/.vimrc" ] && die "~/.vimrc already exists."
 
+mkdir -p "$INSTALL_TO"
 cd "$INSTALL_TO"
 git clone git://github.com/hobeone/vimrc.git
 cd vimrc
@@ -24,9 +25,8 @@ git submodule init
 git submodule update
 
 # Symlink ~/.vim and ~/.vimrc
-cd ~
-ln -s "$INSTALL_TO/vimrc/vimrc" .vimrc
-ln -s "$INSTALL_TO/vimrc/vim" .vim
+ln -s "$INSTALL_TO/vimrc/vimrc" ~/.vimrc
+ln -s "$INSTALL_TO/vimrc/vim" ~/.vim
 touch ~/.vim/user.vim
 
 echo "Installed and configured .vim, have fun."
