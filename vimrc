@@ -113,6 +113,7 @@ if has("gui_running")
   set bg=dark
   colorscheme molokai
 else
+  set t_Co=256
   set bg=dark
   colorscheme molokai
 endif
