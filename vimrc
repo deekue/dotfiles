@@ -110,6 +110,8 @@ filetype indent on
 
 if has("gui_running")
   set guifont=terminus\ 12 linespace=0
+  " no toolbar
+  set guioptions-=T
   set bg=dark
   colorscheme molokai
 else
