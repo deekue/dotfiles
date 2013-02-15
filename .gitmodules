@@ -28,3 +28,15 @@
 [submodule "vim/bundle/vim-surround.git"]
 	path = vim/bundle/vim-surround.git
 	url = git://github.com/tpope/vim-surround.git
+[submodule "vim/bundle/nerdtree.git"]
+	path = vim/bundle/nerdtree.git
+	url = git://github.com/scrooloose/nerdtree.git
+[submodule "vim/bundle/vim-endwise.git"]
+	path = vim/bundle/vim-endwise.git
+	url = git://github.com/tpope/vim-endwise.git
+[submodule "vim/bundle/vim-sensible.git"]
+	path = vim/bundle/vim-sensible.git
+	url = git://github.com/tpope/vim-sensible.git
+[submodule "vim/bundle/vim-bundler.git"]
+	path = vim/bundle/vim-bundler.git
+	url = git://github.com/tpope/vim-bundler.git
