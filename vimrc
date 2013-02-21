@@ -1,8 +1,11 @@
-
 set   all&
-set   autoindent
-set   smartindent
-highlight SpecialKey ctermfg=DarkGray
+" reasonable defaults for indentation
+set autoindent nocindent nosmartindent
+
+set textwidth=79
+set tabstop=2
+set softtabstop=2
+
 
 "ignore case in searches
 set ignorecase
@@ -19,9 +22,6 @@ set nowb
 " keep a backup after overwriting a file
 set nobk
 "
-"       background:  Are we using a "light" or "dark" background?
-set   background=dark
-"
 "       compatible:  Let Vim behave like Vi?  Hell, no!
 set   nocompatible
 "
@@ -32,12 +32,7 @@ set   comments=b:#,:%,fb:-,n:>,n:)
 "       errorbells: damn this beep!  ;-)
 set   noerrorbells
 
-set   expandtab
-"
-"       formatoptions:  Options for the "text format" command ("gq")
-"                       I need all those options (but 'o')!
-"set   formatoptions=cqrt
-"
+
 "       helpheight: zero disables this.
 set   helpheight=0
 "
@@ -45,6 +40,7 @@ set   helpheight=0
 "       This is a nice feature sometimes - but it sure can get in the
 "       way sometimes when you edit.
 set   hlsearch
+
 "       laststatus:  show status line?  Yes, always!
 "       laststatus:  Even for only one buffer.
 set   laststatus=2
@@ -62,8 +58,7 @@ set   report=0
 "
 "       ruler:       show cursor position?  Yep!
 set   ruler
-"
-"
+
 "       shiftwidth:  Number of spaces to use for each
 "                    insertion of (auto)indent.
 set   shiftwidth=2
@@ -87,13 +82,22 @@ set nostartofline
 "
 set   splitbelow
 "
-set   tabstop=2
 "       title:
 set title
+
 "       visualbell:
 set   visualbell
 
+
 set   highlight=8r,db,es,hs,mb,Mr,nu,rs,sr,tb,vr,ws
+
+
+" allows files to be open in invisible buffers
+set hidden
+
+" make backspace "more powerful"
+set backspace=indent,eol,start
+
 
 
 "
@@ -134,43 +138,60 @@ augroup mkd
 augroup END
 
 syntax match Tabs "\t" containedin=ALL
-syntax match LineEndWS "\s\+$" containedin=ALL
 highlight Tabs term=standout cterm=standout gui=standout
-highlight link LineEndWS Error
 
+" Reopen files at the last seen line
 :au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
-" enables extra vim features (which break strict compatibility with vi)
-set nocompatible
-
-" allows files to be open in invisible buffers
-set hidden
-
-" make backspace "more powerful"
-set backspace=indent,eol,start
-
-
-" don't outdent hashes
-inoremap # #
-
-
 " Wrapping and tabs.
-autocmd BufRead *.py set tw=78 ts=4 sw=4 sta et sts=4 ai
+autocmd BufRead *.py set tw=78 ts=2 sw=2 sta et sts=2 ai
 
 " More syntax highlighting.
 let python_highlight_all = 1
 
 " Smart indenting
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd BufRead *.py set indentexpr=GetGooglePythonIndent(v:lnum)
 
 " Auto completion via ctrl-space (instead of the nasty ctrl-x ctrl-o)
 set omnifunc=pythoncomplete#Complete
 inoremap <Nul> <C-x><C-o>
 
-" Wrap at 72 chars for comments.
-set formatoptions=cq textwidth=72 foldignore= wildignore+=*.py[co]
+" http://code.google.com/p/google-styleguide/source/browse/trunk/google_python_style.vim
 
-" Highlight end of line whitespace.
+let s:maxoff = 50 " maximum number of lines to look backwards.
+
+function GetGooglePythonIndent(lnum)
+
+  " Indent inside parens.
+  " Align with the open paren unless it is at the end of the line.
+  " E.g.
+  "   open_paren_not_at_EOL(100,
+  "                         (200,
+  "                          300),
+  "                         400)
+  "   open_paren_at_EOL(
+  "       100, 200, 300, 400)
+  call cursor(a:lnum, 1)
+  let [par_line, par_col] = searchpairpos('(\|{\|\[', '', ')\|}\|\]', 'bW',
+        \ "line('.') < " . (a:lnum - s:maxoff) . " ? dummy :"
+        \ . " synIDattr(synID(line('.'), col('.'), 1), 'name')"
+        \ . " =~ '\\(Comment\\|String\\)$'")
+  if par_line > 0
+    call cursor(par_line, 1)
+    if par_col != col("$") - 1
+      return par_col
+    endif
+  endif
+
+  " Delegate the rest to the original function.
+  return GetPythonIndent(a:lnum)
+
+endfunction
+
+let pyindent_nested_paren="&sw*2"
+let pyindent_open_paren="&sw*2"
+
+" More coding sytle colors
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 
