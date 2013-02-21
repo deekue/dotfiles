@@ -117,8 +117,11 @@ if has("gui_running")
 else
   set t_Co=256
   set bg=dark
-  colorscheme molokai
+  colorscheme vividchalk
 endif
+
+" Bright red background for text matches
+hi Search          guifg=#FFFFFF guibg=#FF0000
 
 set modeline modelines=3
 
