@@ -105,6 +105,15 @@ set backspace=indent,eol,start
 " AutoCommands
 " ===================================================================
 "
+" More coding sytle colors
+
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd Syntax * syn match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+
+
+" Bright red background for text matches
+autocmd ColorScheme * highlight Search guifg=#FFFFFF guibg=#FF0000
 
 call pathogen#infect()
 syntax on
@@ -112,20 +121,23 @@ filetype on
 filetype plugin on
 filetype indent on
 
+"syntax match Tabs "\t" containedin=ALL
+"highlight Tabs term=standout cterm=standout gui=standout
+
 if has("gui_running")
   set guifont=terminus\ 12 linespace=0
   " no toolbar
   set guioptions-=T
   set bg=dark
-  colorscheme molokai
+  set antialias
+  colorscheme vividchalk
 else
   set t_Co=256
   set bg=dark
   colorscheme vividchalk
 endif
 
-" Bright red background for text matches
-hi Search          guifg=#FFFFFF guibg=#FF0000
+
 
 set modeline modelines=3
 
@@ -140,8 +152,7 @@ augroup mkd
   autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:>
 augroup END
 
-syntax match Tabs "\t" containedin=ALL
-highlight Tabs term=standout cterm=standout gui=standout
+
 
 " Reopen files at the last seen line
 :au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
@@ -194,9 +205,6 @@ endfunction
 let pyindent_nested_paren="&sw*2"
 let pyindent_open_paren="&sw*2"
 
-" More coding sytle colors
-highlight WhitespaceEOL ctermbg=red guibg=red
-match WhitespaceEOL /\s\+$/
 
 " Enable spell checking, even in program source files. Hit <F4> to highlight
 " highlight spelling errors. Hit it again to turn highlighting off.
