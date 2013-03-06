@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu xmlns="http://openbox.org/"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://openbox.org/
+                file:///usr/share/openbox/menu.xsd">
+
+<menu id="root-menu" label="Openbox 3">
+  <item label="Terminal emulator">
+    <action name="Execute"><execute>x-terminal-emulator</execute></action>
+  </item>
+  <item label="Firefox">
+    <action name="Execute"><execute>firefox</execute></action>
+  </item>
+  <item label="Google Chrome">
+    <action name="Execute"><execute>google-chrome</execute></action>
+  </item>
+  <item label="Pan">
+    <action name="Execute"><execute>pan</execute></action>
+  </item>
+  <item label="rhythmbox">
+    <action name="Execute"><execute>rhythmbox</execute></action>
+  </item>
+  <item label="Pidgin">
+    <action name="Execute"><execute>pidgin</execute></action>
+  </item>
+  <item label="Picasa">
+    <action name="Execute"><execute>/opt/google/picasa/3.0/bin/picasa</execute></action>
+  </item>
+  <item label="NoiseNinja">
+    <action name="Execute"><execute>./downloads/software/NoiseNinja_Linux_2_1_1/NoiseNinja</execute></action>
+  </item>
+  <item label="gnome-system-monitor">
+    <action name="Execute">
+      <execute>
+        gnome-system-monitor
+      </execute>
+    </action>
+  </item>
+
+
+  <item label="Run Command...">
+    <action name="Execute"><execute>gmrun</execute></action>
+  </item>
+  <separator />
+  
+  <item label="Home">
+    <action name="Execute"><execute>thunar ~/</execute></action>
+  </item>
+    <item label="Photos">
+    <action name="Execute"><execute>thunar ~/Pictures</execute></action>
+  </item>
+    <item label="Usenet">
+      <action name="Execute"><execute>thunar ~/downloads/usenet</execute></action>
+  </item>
+    <item label="mp3">
+    <action name="Execute"><execute>thunar ~/mp3</execute></action>
+  </item>
+  <separator />
+  <!-- This requires the presence of the 'menu' package to work -->
+  <menu id="Debian" />
+  <separator />
+  <menu id="client-list-menu" />
+  <separator />
+  <item label="ObConf">
+    <action name="Execute"><execute>obconf</execute></action>
+  </item>
+  <item label="Reconfigure">
+    <action name="Reconfigure" />
+  </item>
+  <item label="Restart">
+    <action name="Restart" />
+  </item>
+  <separator />
+  <item label="Exit">
+    <action name="Exit" />
+  </item>
+  <item label="Log out">
+    <action name="Execute"><execute>gnome-session-save --kill --gui</execute></action>
+  </item>
+
+</menu>
+
+</openbox_menu>

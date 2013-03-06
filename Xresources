@@ -1,0 +1,46 @@
+rxvt*background:       black
+rxvt*foreground:       white
+rxvt*font: -*-terminus-medium-*-normal-*-14-140-*-*-*-*-iso8859-1
+rxvt*scrollBar_right:  true
+rxvt*saveLines:        5000
+rxvt*visualBell:       true
+
+xterm*background:       black
+xterm*foreground:       white
+xterm*font: -*-terminus-medium-*-normal-*-14-140-*-*-*-*-iso8859-1
+xterm*scrollBar_right:  true
+xterm*saveLines:        5000
+xterm*visualBell:       true
+xterm*eightBitInput: false
+
+aterm*background:       black
+aterm*foreground:       white
+aterm*font: -*-terminus-medium-*-normal-*-14-140-*-*-*-*-iso8859-1
+aterm*scrollBar_right:  true
+aterm*saveLines:        1000
+aterm*visualBell:       true
+
+!! blacks: Black / Dark grey
+*color0:                #000000
+*color8:                #3D3D3D
+!! reds: Strong red / Light brilliant red
+*color1:                #B80000
+*color9:                #FF3333
+!! greens: Light brilliant green / Light brilliant chartreuse green
+*color2:                #33FF33
+*color10:               #99FF33
+!! yellows: Light brilliant orange / Light brilliant yellow
+*color3:                #FF9933
+*color11:               #FFFF33
+!! blues: Light brilliant blue / Light brilliant azure
+*color4:                #3333FF
+*color12:               #3399FF
+!! magentas: Light brilliant magenta / Light brilliant violet
+*color5:                #FF33FF
+*color13:               #9933FF
+!! cyans: Light brilliant cyan / Very light cyan
+*color6:                #33FFFF
+*color14:               #99FFFF
+!! whites: Cosmic latte / White
+*color7:                #FFF8E7
+*color15:               #FFFFFF
