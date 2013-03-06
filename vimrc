@@ -125,7 +125,8 @@ filetype indent on
 "highlight Tabs term=standout cterm=standout gui=standout
 
 if has("gui_running")
-  set guifont=terminus\ 12 linespace=0
+  "set guifont=terminus\ 12 linespace=0
+  set guifont=Source\ Code\ Pro\ 11 linespace=-2
   " no toolbar
   set guioptions-=T
   set bg=dark

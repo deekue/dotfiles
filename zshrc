@@ -32,7 +32,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby rails rsync rvm bundler cp history-substring-search)
+plugins=(git ruby rails rsync rvm bundler cp history-substring-search themes)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -87,11 +87,11 @@ export MAILDIR="~/Maildir/"
 export PAGER=less
 export EDITOR="vim"
 
-#if [[ $USER == 'root' ]] then
-#  PS1="%{${fg[red]}%}%n@%m:%{${fg[cyan]}%}%~%{${fg[default]}%}#"
-#else
-#  PS1="%{${fg[green]}%}%n@%m:%{${fg[cyan]}%}%~%{${fg[default]}%}>"
-#fi
+if [[ $USER == 'root' ]] then
+  PS1="%{${fg[red]}%}%n@%m:%{${fg[cyan]}%}%~%{${fg[default]}%}#"
+else
+  PS1="%{${fg[green]}%}%n@%m:%{${fg[cyan]}%}%~%{${fg[default]}%}>"
+fi
 
 case $TERM in
   xterm*|rxvt|Eterm)
@@ -173,3 +173,7 @@ pskill()
 compdef _files -g "*" scp
 
 export GOPATH=$HOME/go
+
+if [[ -e ~/.zshrc.local ]]; then
+	source .zshrc.local
+fi
