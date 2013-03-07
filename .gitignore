@@ -1,3 +1,6 @@
 *.swp
 *.un~
 vim/.netrwhist
+vim/user.vim
+vim/undodir/*
+!vim/undodir/.gitkeep

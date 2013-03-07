@@ -59,3 +59,10 @@ $ECHO mkdir -p ~/.config/Terminal
 link_file_or_dir "$INSTALL_TO"/config/Terminal/terminalrc ~/.config/Terminal/terminalrc
 link_file_or_dir "$INSTALL_TO"/config/openbox ~/.config/openbox
 
+
+if [ ! -e ~/bin/keyserver ]; then
+  $ECHO mkdir -p ~/bin
+  $ECHO wget -O ~/bin/keyserver.bz2 https://keysocket-server.googlecode.com/files/keyserver.bz2
+  $ECHO bunzip2 ~/bin/keyserver.bz2
+fi
+
