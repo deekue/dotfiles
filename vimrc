@@ -98,7 +98,8 @@ set hidden
 " make backspace "more powerful"
 set backspace=indent,eol,start
 
-
+" keep undo files in one place
+set undodir=~/.vim/undodir
 
 "
 " ===================================================================
@@ -120,9 +121,16 @@ syntax on
 filetype on
 filetype plugin on
 filetype indent on
+let g:solarized_termtrans=1
+call togglebg#map("<F5>")
+
+let g:solarized_termcolors = 256
+"let g:solarized_visibility = "high"
+"let g:solarized_contrast = "high"
 
 "syntax match Tabs "\t" containedin=ALL
 "highlight Tabs term=standout cterm=standout gui=standout
+"autocmd ColorScheme * highlight Normal guibg=black
 
 if has("gui_running")
   "set guifont=terminus\ 12 linespace=0
@@ -137,7 +145,6 @@ else
   set bg=dark
   colorscheme vividchalk
 endif
-
 
 
 set modeline modelines=3
