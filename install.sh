@@ -24,7 +24,7 @@ link_file_or_dir() {
   dest="$2"
   if [ ! -e $dest ]; then
     echo "$dest doesn't exist, linking."
-    $ECHO ln -s "$src" "$dest";
+    $ECHO ln -sfT "$src" "$dest";
   elif [ -h $dest ]; then
     echo "$dest is a symlink, relinking."
     $ECHO ln -sfT "$src" "$dest";
@@ -44,7 +44,7 @@ fi
 $ECHO git submodule init
 $ECHO git submodule update
 
-LINKS="vimrc vim oh-my-zsh fonts Xmodmap Xresources zshrc"
+LINKS="vimrc vim oh-my-zsh fonts Xmodmap Xresources zshrc tmux.conf"
 for f in $LINKS; do
   link_file_or_dir "$INSTALL_TO"/"$f" ~/."$f"
 done
