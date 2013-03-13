@@ -213,6 +213,7 @@ endfunction
 let pyindent_nested_paren="&sw*2"
 let pyindent_open_paren="&sw*2"
 
+autocmd BufRead *.py  set formatoptions=ctrq
 
 " Enable spell checking, even in program source files. Hit <F4> to highlight
 " highlight spelling errors. Hit it again to turn highlighting off.

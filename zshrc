@@ -53,7 +53,8 @@ setopt listtypes               # show types in completion
 #setopt extendedglob            # weird & wacky pattern matching - yay zsh!
 #setopt completeinword          # not just at the end
 setopt alwaystoend             # when complete from middle, move cursor
-#setopt correct                 # spelling correction
+unsetopt correct                 # spelling correction
+unsetopt correct_all                 # spelling correction
 #setopt nopromptcr              # don't add \n which overwrites cmds with no \n
 #setopt histverify              # when using ! cmds, confirm first
 setopt interactivecomments     # escape commands so i can use them later
@@ -175,5 +176,5 @@ compdef _files -g "*" scp
 export GOPATH=$HOME/go
 
 if [[ -e ~/.zshrc.local ]]; then
-	source .zshrc.local
+	source ~/.zshrc.local
 fi
