@@ -49,7 +49,7 @@ set   laststatus=2
 "       in search patterns?  Certainly!  (I just *love* "\s\+"!)
 "set   magic
 "
-"set nonumber
+set number
 "
 "
 "       report: show a report when N lines were changed.
@@ -89,7 +89,7 @@ set title
 set   visualbell
 
 
-set   highlight=8r,db,es,hs,mb,Mr,nu,rs,sr,tb,vr,ws
+"set   highlight=8r,db,es,hs,mb,Mr,nu,rs,sr,tb,vr,ws
 
 
 " allows files to be open in invisible buffers
@@ -111,10 +111,17 @@ set undodir=~/.vim/undodir
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd Syntax * syn match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-
+autocmd Syntax * syn match Tabs "\t" containedin=ALL
+autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
 
 " Bright red background for text matches
 autocmd ColorScheme * highlight Search guifg=#FFFFFF guibg=#FF0000
+
+" Override italics in gui colorschemes
+autocmd ColorScheme * highlight Comment gui=NONE
+
+" Force a black background in the colorschme
+autocmd ColorScheme * highlight Normal guibg=black
 
 call pathogen#infect()
 syntax on
@@ -128,13 +135,10 @@ let g:solarized_termcolors = 256
 "let g:solarized_visibility = "high"
 "let g:solarized_contrast = "high"
 
-"syntax match Tabs "\t" containedin=ALL
-"highlight Tabs term=standout cterm=standout gui=standout
-"autocmd ColorScheme * highlight Normal guibg=black
 
 if has("gui_running")
-  "set guifont=terminus\ 12 linespace=0
-  set guifont=Source\ Code\ Pro\ 11 linespace=-2
+  set guifont=terminus\ 12 linespace=0
+  "set guifont=Source\ Code\ Pro\ 11 linespace=-2
   " no toolbar
   set guioptions-=T
   set bg=dark
