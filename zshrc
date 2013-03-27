@@ -45,7 +45,7 @@ path=( $path /usr/local/go/bin )
 
 setopt AUTO_PUSHD
 setopt nobeep                  # i hate beeps
-setopt noautomenu              # don't cycle completions
+#setopt noautomenu              # don't cycle completions
 setopt nocheckjobs             # don't warn me about bg processes when exiting
 setopt nohup                   # and don't kill them, either
 setopt listpacked              # compact completion lists
@@ -64,6 +64,10 @@ setopt interactivecomments     # escape commands so i can use them later
 setopt chaselinks
 
 setopt shwordsplit
+
+# Don't complete any usernames except root and me
+complete_users=(root $USERNAME)
+zstyle ':completion:*' users $complete_users
 
 ##############################################################################
 # history
@@ -120,6 +124,8 @@ alias vim='vim -X -o -u $HOME/.vimrc "$@"'
 alias gvim='gvim --disable-sound --sm-disable --oaf-private -o -u $HOME/.vimrc -geom 80x24 "$@"'
 
 alias e=gvim
+
+alias tmux='tmux -2'
 
 ##############################################################################
 # command configuration
