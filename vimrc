@@ -49,7 +49,7 @@ set   laststatus=2
 "       in search patterns?  Certainly!  (I just *love* "\s\+"!)
 "set   magic
 "
-set number
+"set number
 "
 "
 "       report: show a report when N lines were changed.
