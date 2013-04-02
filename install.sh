@@ -44,7 +44,7 @@ fi
 $ECHO git submodule init
 $ECHO git submodule update
 
-LINKS="vimrc vim oh-my-zsh fonts Xmodmap Xresources zshrc tmux.conf"
+LINKS="vimrc vim oh-my-zsh fonts Xmodmap Xresources zshrc tmux.conf xscreensaver"
 for f in $LINKS; do
   link_file_or_dir "$INSTALL_TO"/"$f" ~/."$f"
 done
@@ -64,5 +64,6 @@ if [ ! -e ~/bin/keyserver ]; then
   $ECHO mkdir -p ~/bin
   $ECHO wget -O ~/bin/keyserver.bz2 https://keysocket-server.googlecode.com/files/keyserver.bz2
   $ECHO bunzip2 ~/bin/keyserver.bz2
+	chmod 755 ~/bin/keyserver
 fi
 
