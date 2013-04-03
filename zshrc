@@ -45,14 +45,14 @@ path=( $path /usr/local/go/bin )
 
 setopt AUTO_PUSHD
 setopt nobeep                  # i hate beeps
-setopt noautomenu              # don't cycle completions
+unsetopt auto_menu              # don't cycle completions
 setopt nocheckjobs             # don't warn me about bg processes when exiting
 setopt nohup                   # and don't kill them, either
 setopt listpacked              # compact completion lists
 setopt listtypes               # show types in completion
 #setopt extendedglob            # weird & wacky pattern matching - yay zsh!
-#setopt completeinword          # not just at the end
-setopt alwaystoend             # when complete from middle, move cursor
+unsetopt complete_in_word          # not just at the end
+setopt always_to_end             # when complete from middle, move cursor
 unsetopt correct                 # spelling correction
 unsetopt correct_all                 # spelling correction
 #setopt nopromptcr              # don't add \n which overwrites cmds with no \n
@@ -64,6 +64,13 @@ setopt interactivecomments     # escape commands so i can use them later
 setopt chaselinks
 
 setopt shwordsplit
+
+# Don't complete any usernames except root and me
+complete_users=(root $USERNAME)
+zstyle ':completion:*' users $complete_users
+
+# Only complete what I've typed, no substring matches.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 ##############################################################################
 # history
@@ -120,6 +127,8 @@ alias vim='vim -X -o -u $HOME/.vimrc "$@"'
 alias gvim='gvim --disable-sound --sm-disable --oaf-private -o -u $HOME/.vimrc -geom 80x24 "$@"'
 
 alias e=gvim
+
+alias tmux='tmux -2'
 
 ##############################################################################
 # command configuration

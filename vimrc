@@ -5,7 +5,7 @@ set autoindent nocindent nosmartindent
 set textwidth=79
 set tabstop=2
 set softtabstop=2
-
+set expandtab
 
 "ignore case in searches
 set ignorecase
@@ -49,7 +49,7 @@ set   laststatus=2
 "       in search patterns?  Certainly!  (I just *love* "\s\+"!)
 "set   magic
 "
-set number
+"set number
 "
 "
 "       report: show a report when N lines were changed.
@@ -111,8 +111,10 @@ set undodir=~/.vim/undodir
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd Syntax * syn match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd Syntax * syn match Tabs "\t" containedin=ALL
+
 autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
+autocmd Syntax * syn match Tabs "\t"
+autocmd BufWinEnter * match Tabs "\t"
 
 " Bright red background for text matches
 autocmd ColorScheme * highlight Search ctermfg=black ctermbg=red guifg=#FFFFFF guibg=#FF0000
