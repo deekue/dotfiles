@@ -61,3 +61,6 @@
 [submodule "vim/bundle/vim-railscasts-theme"]
 	path = vim/bundle/vim-railscasts-theme
 	url = https://github.com/jpo/vim-railscasts-theme.git
+[submodule "vim/bundle/vim-golang"]
+	path = vim/bundle/vim-golang
+	url = https://github.com/jnwhiteh/vim-golang.git
