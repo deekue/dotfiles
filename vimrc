@@ -26,7 +26,7 @@ set nobk
 set   nocompatible
 "
 "       comments default: sr:/*,mb:*,el:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-set   comments=b:#,:%,fb:-,n:>,n:)
+"set   comments=b:#,:%,fb:-,n:>,n:)
 
 "
 "       errorbells: damn this beep!  ;-)
@@ -115,13 +115,15 @@ autocmd Syntax * syn match Tabs "\t" containedin=ALL
 autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
 
 " Bright red background for text matches
-autocmd ColorScheme * highlight Search guifg=#FFFFFF guibg=#FF0000
+autocmd ColorScheme * highlight Search ctermfg=black ctermbg=red guifg=#FFFFFF guibg=#FF0000
 
 " Override italics in gui colorschemes
 autocmd ColorScheme * highlight Comment gui=NONE
 
 " Force a black background in the colorschme
 autocmd ColorScheme * highlight Normal guibg=black
+
+" autocmd ColorScheme * highlight Cursor ctermfg=white ctermbg=black guifg=black guibg=white
 
 call pathogen#infect()
 syntax on
@@ -137,8 +139,8 @@ let g:solarized_termcolors = 256
 
 
 if has("gui_running")
-  set guifont=terminus\ 12 linespace=0
-  "set guifont=Source\ Code\ Pro\ 11 linespace=-2
+  "set guifont=terminus\ 12 linespace=0
+  set guifont=Source\ Code\ Pro\ 11 linespace=-2
   " no toolbar
   set guioptions-=T
   set bg=dark
@@ -150,7 +152,6 @@ else
   colorscheme vividchalk
 endif
 
-
 set modeline modelines=3
 
 " don't show help when F1 is pressed -- I press it too much by accident
@@ -158,7 +159,6 @@ map <F1> <ESC>
 "map! <F1> <ESC>
 inoremap <F1> <ESC>
 
-highlight Cursor ctermfg=white  ctermbg=black
 
 augroup mkd
   autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:>
@@ -217,7 +217,7 @@ endfunction
 let pyindent_nested_paren="&sw*2"
 let pyindent_open_paren="&sw*2"
 
-autocmd BufRead *.py  set formatoptions=ctrq
+set formatoptions+=ctrqj
 
 " Enable spell checking, even in program source files. Hit <F4> to highlight
 " highlight spelling errors. Hit it again to turn highlighting off.
