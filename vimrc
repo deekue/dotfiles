@@ -117,7 +117,7 @@ autocmd Syntax * syn match Tabs "\t"
 autocmd BufWinEnter * match Tabs "\t"
 
 " Bright red background for text matches
-autocmd ColorScheme * highlight Search ctermfg=black ctermbg=red guifg=#FFFFFF guibg=#FF0000
+autocmd ColorScheme * highlight Search ctermbg=red ctermfg=white guifg=#FFFFFF guibg=#FF0000
 
 " Override italics in gui colorschemes
 autocmd ColorScheme * highlight Comment gui=NONE
@@ -223,7 +223,7 @@ endfunction
 let pyindent_nested_paren="&sw*2"
 let pyindent_open_paren="&sw*2"
 
-set formatoptions+=ctrqj
+set formatoptions+=ctrq
 
 " Enable spell checking, even in program source files. Hit <F4> to highlight
 " highlight spelling errors. Hit it again to turn highlighting off.
