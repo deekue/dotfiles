@@ -117,7 +117,7 @@ autocmd Syntax * syn match Tabs "\t"
 autocmd BufWinEnter * match Tabs "\t"
 
 " Bright red background for text matches
-autocmd ColorScheme * highlight Search guifg=#FFFFFF guibg=#FF0000
+autocmd ColorScheme * highlight Search ctermbg=red ctermfg=white guifg=#FFFFFF guibg=#FF0000
 
 " Override italics in gui colorschemes
 autocmd ColorScheme * highlight Comment gui=NONE
