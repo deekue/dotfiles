@@ -141,8 +141,8 @@ let g:solarized_termcolors = 256
 
 
 if has("gui_running")
-  "set guifont=terminus\ 12 linespace=0
-  set guifont=Source\ Code\ Pro\ 11 linespace=-2
+  set guifont=terminus\ 12 linespace=0
+  "set guifont=Source\ Code\ Pro\ 11 linespace=-2
   " no toolbar
   set guioptions-=T
   set bg=dark
