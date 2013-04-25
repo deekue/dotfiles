@@ -127,6 +127,10 @@ autocmd ColorScheme * highlight Normal guibg=black
 
 " autocmd ColorScheme * highlight Cursor ctermfg=white ctermbg=black guifg=black guibg=white
 
+" Go wants tabs so don't highlight or expand them,
+autocmd BufWinEnter *.go match Tabs "\t\+$"
+autocmd BufWinEnter *.go set noexpandtab
+
 call pathogen#infect()
 syntax on
 filetype on
@@ -143,7 +147,7 @@ let g:solarized_termcolors = 256
 if has("gui_running")
   set guifont=terminus\ 12 linespace=0
   "set guifont=Source\ Code\ Pro\ 11 linespace=-2
-  " no toolbar
+  "no toolbar
   set guioptions-=T
   set bg=dark
   set antialias
