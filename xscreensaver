@@ -2,10 +2,10 @@
 # Written by xscreensaver-demo 5.15 for hobe on Thu Mar 28 11:15:30 2013.
 # http://www.jwz.org/xscreensaver/
 
-timeout:	0:10:00
+timeout:	0:02:00
 cycle:		0:10:00
-lock:		True
-lockTimeout:	0:00:10
+lock:           True
+lockTimeout:    0:00:05
 passwdTimeout:	0:00:30
 visualID:	default
 installColormap:    True
@@ -24,7 +24,7 @@ fadeTicks:	20
 captureStderr:	True
 ignoreUninstalledPrograms:False
 font:		*-medium-r-*-140-*-m-*
-dpmsEnabled:	True
+dpmsEnabled:    True
 dpmsQuickOff:	False
 dpmsStandby:	0:30:00
 dpmsSuspend:	0:30:00
@@ -51,4 +51,3 @@ GetViewPortIsFullOfLies:False
 procInterrupts:	True
 xinputExtensionDev: False
 overlayStderr:	True
-
