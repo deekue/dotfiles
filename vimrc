@@ -5,7 +5,7 @@ set autoindent nocindent nosmartindent
 set textwidth=79
 set tabstop=2
 set softtabstop=2
-
+set expandtab
 
 "ignore case in searches
 set ignorecase
@@ -26,7 +26,7 @@ set nobk
 set   nocompatible
 "
 "       comments default: sr:/*,mb:*,el:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-set   comments=b:#,:%,fb:-,n:>,n:)
+"set   comments=b:#,:%,fb:-,n:>,n:)
 
 "
 "       errorbells: damn this beep!  ;-)
@@ -111,17 +111,25 @@ set undodir=~/.vim/undodir
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd Syntax * syn match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd Syntax * syn match Tabs "\t" containedin=ALL
+
 autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
+autocmd Syntax * syn match Tabs "\t"
+autocmd BufWinEnter * match Tabs "\t"
 
 " Bright red background for text matches
-autocmd ColorScheme * highlight Search guifg=#FFFFFF guibg=#FF0000
+autocmd ColorScheme * highlight Search ctermbg=red ctermfg=white guifg=#FFFFFF guibg=#FF0000
 
 " Override italics in gui colorschemes
 autocmd ColorScheme * highlight Comment gui=NONE
 
 " Force a black background in the colorschme
 autocmd ColorScheme * highlight Normal guibg=black
+
+" autocmd ColorScheme * highlight Cursor ctermfg=white ctermbg=black guifg=black guibg=white
+
+" Go wants tabs so don't highlight or expand them,
+autocmd BufWinEnter *.go match Tabs "\t\+$"
+autocmd BufWinEnter *.go set noexpandtab
 
 call pathogen#infect()
 syntax on
@@ -139,7 +147,7 @@ let g:solarized_termcolors = 256
 if has("gui_running")
   set guifont=terminus\ 12 linespace=0
   "set guifont=Source\ Code\ Pro\ 11 linespace=-2
-  " no toolbar
+  "no toolbar
   set guioptions-=T
   set bg=dark
   set antialias
@@ -150,7 +158,6 @@ else
   colorscheme vividchalk
 endif
 
-
 set modeline modelines=3
 
 " don't show help when F1 is pressed -- I press it too much by accident
@@ -158,7 +165,6 @@ map <F1> <ESC>
 "map! <F1> <ESC>
 inoremap <F1> <ESC>
 
-highlight Cursor ctermfg=white  ctermbg=black
 
 augroup mkd
   autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:>
@@ -217,7 +223,7 @@ endfunction
 let pyindent_nested_paren="&sw*2"
 let pyindent_open_paren="&sw*2"
 
-autocmd BufRead *.py  set formatoptions=ctrq
+set formatoptions+=ctrq
 
 " Enable spell checking, even in program source files. Hit <F4> to highlight
 " highlight spelling errors. Hit it again to turn highlighting off.
