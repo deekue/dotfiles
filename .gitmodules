@@ -1,9 +1,6 @@
 [submodule "vim/bundle/molokai"]
 	path = vim/bundle/molokai
 	url = git://github.com/tomasr/molokai.git
-[submodule "vim/bundle/snipmate.vim"]
-	path = vim/bundle/snipmate.vim
-	url = git://github.com/msanders/snipmate.vim.git
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
 	url = git://github.com/pangloss/vim-javascript.git
@@ -64,3 +61,9 @@
 [submodule "vim/bundle/vim-golang"]
 	path = vim/bundle/vim-golang
 	url = https://github.com/jnwhiteh/vim-golang.git
+[submodule "vim/bundle/ultisnips.git"]
+	path = vim/bundle/ultisnips.git
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "vim/vim-snippets"]
+	path = vim/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
