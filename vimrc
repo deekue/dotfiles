@@ -259,4 +259,6 @@ if has("spell")
   set nospell
 endif
 
+let g:UltiSnipsSnippetDirectories=["UltiSnips","vim-snippets/UltiSnips"]
+
 source ~/.vim/user.vim
