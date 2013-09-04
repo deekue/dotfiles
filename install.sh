@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh -ex
 
 INSTALL_TO=~/dotfiles
 ECHO=""
