@@ -15,7 +15,7 @@ ZSH_THEME="afowler"
 # CASE_SENSITIVE="true"
 
 # Comment this out to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
 # export UPDATE_ZSH_DAYS=13
@@ -32,7 +32,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby rails rsync rvm bundler cp history-substring-search themes)
+plugins=(git ruby rails rsync rvm bundler cp history-substring-search themes npm bower golang)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -41,7 +41,7 @@ path=(~/bin /bin /sbin /usr/local/bin /usr/sbin /usr/local/sbin /usr/bin)
 # Extend PATH
 path=( $path /usr/local/scripts )
 path=( $path /usr/X11R6/bin )
-path=( $path /usr/local/go/bin )
+path=( $path $HOME/npm $HOME/npm/bin $HOME/npm/lib )
 
 setopt AUTO_PUSHD
 setopt nobeep                  # i hate beeps

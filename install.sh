@@ -45,7 +45,7 @@ $ECHO git submodule init
 $ECHO git submodule update
 $ECHO git submodule foreach git pull origin master
 
-LINKS="vimrc vim oh-my-zsh fonts Xmodmap Xresources zshrc tmux.conf xscreensaver"
+LINKS="vimrc vim oh-my-zsh fonts Xmodmap Xresources zshrc tmux.conf xscreensaver npmrc"
 for f in $LINKS; do
   link_file_or_dir "$INSTALL_TO"/"$f" ~/."$f"
 done
