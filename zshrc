@@ -40,6 +40,7 @@ typeset -U path
 path=(~/bin /bin /sbin /usr/local/bin /usr/sbin /usr/local/sbin /usr/bin)
 # Extend PATH
 path=( $path /usr/local/scripts )
+path=( $path /usr/local/go/bin )
 path=( $path /usr/X11R6/bin )
 path=( $path $HOME/npm $HOME/npm/bin $HOME/npm/lib )
 
