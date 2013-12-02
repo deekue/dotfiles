@@ -134,10 +134,9 @@ autocmd BufWinEnter *.go set noexpandtab
 call pathogen#infect()
 syntax on
 filetype on
+filetype plugin indent on
 filetype plugin on
 filetype indent on
-let g:solarized_termtrans=1
-call togglebg#map("<F5>")
 
 let g:solarized_termcolors = 256
 "let g:solarized_visibility = "high"
@@ -185,8 +184,8 @@ let python_highlight_all = 1
 autocmd BufRead *.py set indentexpr=GetGooglePythonIndent(v:lnum)
 
 " Auto completion via ctrl-space (instead of the nasty ctrl-x ctrl-o)
-set omnifunc=pythoncomplete#Complete
-inoremap <Nul> <C-x><C-o>
+"set omnifunc=pythoncomplete#Complete
+"inoremap <Nul> <C-x><C-o>
 
 " http://code.google.com/p/google-styleguide/source/browse/trunk/google_python_style.vim
 
@@ -259,6 +258,8 @@ if has("spell")
   set nospell
 endif
 
+set omnifunc=syntaxcomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
 let g:UltiSnipsSnippetDirectories=["UltiSnips","vim-snippets/UltiSnips"]
 
 source ~/.vim/user.vim
