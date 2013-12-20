@@ -76,3 +76,6 @@
 [submodule "vim/bundle/vim-gocode"]
 	path = vim/bundle/vim-gocode
 	url = https://github.com/Blackrush/vim-gocode
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
