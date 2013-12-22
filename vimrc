@@ -259,7 +259,14 @@ if has("spell")
 endif
 
 set omnifunc=syntaxcomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabCrMapping = 0
+let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabContextDefaultCompletionType = '<c-x><c-u>'
+autocmd FileType *
+      \ if &omnifunc != '' |
+      \     call SuperTabChain(&omnifunc, '<c-p>') |
+      \ endif
+
 let g:UltiSnipsSnippetDirectories=["UltiSnips","vim-snippets/UltiSnips"]
 
 source ~/.vim/user.vim
