@@ -131,12 +131,14 @@ autocmd ColorScheme * highlight Normal guibg=black
 autocmd BufWinEnter *.go match Tabs "\t\+$"
 autocmd BufWinEnter *.go set noexpandtab
 
+filetype off
+filetype plugin indent off
+set runtimepath+=$GOROOT/misc/vim
+
 call pathogen#infect()
 syntax on
 filetype on
 filetype plugin indent on
-filetype plugin on
-filetype indent on
 
 let g:solarized_termcolors = 256
 "let g:solarized_visibility = "high"

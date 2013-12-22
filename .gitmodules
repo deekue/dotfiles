@@ -22,9 +22,6 @@
 [submodule "vim/bundle/peaksea.git"]
 	path = vim/bundle/peaksea.git
 	url = git://github.com/vim-scripts/peaksea.git
-[submodule "vim/bundle/vim-surround.git"]
-	path = vim/bundle/vim-surround.git
-	url = git://github.com/tpope/vim-surround.git
 [submodule "vim/bundle/nerdtree.git"]
 	path = vim/bundle/nerdtree.git
 	url = git://github.com/scrooloose/nerdtree.git
@@ -58,12 +55,6 @@
 [submodule "vim/bundle/vim-railscasts-theme"]
 	path = vim/bundle/vim-railscasts-theme
 	url = https://github.com/jpo/vim-railscasts-theme.git
-[submodule "vim/bundle/vim-autoclose.git"]
-	path = vim/bundle/vim-autoclose.git
-	url = https://github.com/Townk/vim-autoclose.git
-[submodule "vim/bundle/vim-golang"]
-	path = vim/bundle/vim-golang
-	url = https://github.com/jnwhiteh/vim-golang.git
 [submodule "vim/bundle/mustache"]
 	path = vim/bundle/mustache
 	url = git://github.com/juvenn/mustache.vim.git
@@ -73,9 +64,6 @@
 [submodule "vim/vim-snippets"]
 	path = vim/vim-snippets
 	url = https://github.com/honza/vim-snippets.git
-[submodule "vim/bundle/vim-gocode"]
-	path = vim/bundle/vim-gocode
-	url = https://github.com/Blackrush/vim-gocode
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git

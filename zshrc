@@ -36,12 +36,15 @@ plugins=(git ruby rails rsync rvm bundler cp history-substring-search themes npm
 
 source $ZSH/oh-my-zsh.sh
 
+export GOPATH=$HOME/go
+export GOROOT=/usr/local/go
+
 typeset -U path
 path=(~/bin /bin /sbin /usr/local/bin /usr/sbin /usr/local/sbin /usr/bin)
 # Extend PATH
 path=( $path /usr/local/scripts )
-path=( $path /usr/local/go/bin )
-path=( $path $HOME/go/bin )
+path=( $path $GOROOT/bin )
+path=( $path $GOPATH/bin )
 path=( $path /usr/X11R6/bin )
 path=( $path $HOME/npm $HOME/npm/bin $HOME/npm/lib )
 
@@ -126,7 +129,7 @@ alias irb='irb -r irb/completion'
 alias ri='ri --format ansi'
 
 alias vim='vim -X -o -u $HOME/.vimrc "$@"'
-alias gvim='gvim --disable-sound --sm-disable --oaf-private -o -u $HOME/.vimrc -geom 80x24 "$@"'
+alias gvim='gvim -o -u $HOME/.vimrc -geom 80x24 "$@"'
 
 alias e=gvim
 
@@ -184,7 +187,6 @@ pskill()
 
 compdef _files -g "*" scp
 
-export GOPATH=$HOME/go
 
 if [[ -e ~/.zshrc.local ]]; then
 	source ~/.zshrc.local
