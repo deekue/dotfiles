@@ -130,6 +130,8 @@ autocmd ColorScheme * highlight Normal guibg=black
 " Go wants tabs so don't highlight or expand them,
 autocmd BufWinEnter *.go match Tabs "\t\+$"
 autocmd BufWinEnter *.go set noexpandtab
+autocmd BufWinEnter *.go set textwidth=0
+autocmd BufWinEnter *.go set wrapmargin=0
 
 call pathogen#infect()
 syntax on
