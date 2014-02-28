@@ -266,6 +266,7 @@ let g:ycm_semantic_triggers = {
 \  'go'  : [' '],
 \ }
 
+let g:gofmt_command="goimports "
 let g:gocode_gofmt_tabs=" -tabs=true "
 let g:gocode_gofmt_tabwidth=" -tabwidth=8 "
 source ~/.vim/user.vim
