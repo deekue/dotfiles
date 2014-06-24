@@ -1,2 +1,2 @@
 #!/bin/sh
-go get github.com/nsf/gocode
+go get -v -u github.com/nsf/gocode

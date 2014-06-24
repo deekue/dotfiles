@@ -260,6 +260,10 @@ endif
 
 set omnifunc=syntaxcomplete#Complete
 let g:UltiSnipsSnippetDirectories=["UltiSnips","vim-snippets/UltiSnips"]
+" Needed for YCM compat
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " Force YCM to call out to the gocode omnifunc for everything.
 let g:ycm_semantic_triggers = {
@@ -269,4 +273,6 @@ let g:ycm_semantic_triggers = {
 let g:gofmt_command="goimports "
 let g:gocode_gofmt_tabs=" -tabs=true "
 let g:gocode_gofmt_tabwidth=" -tabwidth=8 "
+
+
 source ~/.vim/user.vim
