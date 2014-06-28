@@ -274,5 +274,7 @@ let g:gofmt_command="goimports "
 let g:gocode_gofmt_tabs=" -tabs=true "
 let g:gocode_gofmt_tabwidth=" -tabwidth=8 "
 
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_go_checkers = ['go', 'gotype', 'golint', 'govet']
 
 source ~/.vim/user.vim
