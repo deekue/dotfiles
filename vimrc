@@ -277,4 +277,35 @@ let g:gocode_gofmt_tabwidth=" -tabwidth=8 "
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_go_checkers = ['go', 'gotype', 'golint', 'govet']
 
+au Filetype go nnoremap <leader>v :sp <CR>:exe "GoDef" <CR>
+
+nmap <F6> :TagbarToggle<CR>
+let g:tagbar_type_go = {  
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
 source ~/.vim/user.vim
