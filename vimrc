@@ -133,6 +133,8 @@ autocmd BufWinEnter *.go set noexpandtab
 autocmd BufWinEnter *.go set textwidth=0
 autocmd BufWinEnter *.go set wrapmargin=0
 
+
+
 call pathogen#infect()
 syntax on
 filetype on
@@ -270,7 +272,7 @@ let g:ycm_semantic_triggers = {
 \  'go'  : [' '],
 \ }
 
-let g:gofmt_command="goimports "
+let g:go_fmt_command="goimports "
 let g:gocode_gofmt_tabs=" -tabs=true "
 let g:gocode_gofmt_tabwidth=" -tabwidth=8 "
 
@@ -307,5 +309,9 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" Don't wrap html
+autocmd BufWinEnter *.html set textwidth=0
+autocmd BufWinEnter *.html set wrapmargin=0
 
 source ~/.vim/user.vim
