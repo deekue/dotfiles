@@ -1,3 +1,9 @@
 keycode 66 = Control_L
 clear Lock
 add Control = Control_L
+keycode  75 = XF86AudioPrev
+keycode  76 = XF86AudioPlay
+keycode  95 = XF86AudioNext
+keycode 73 = XF86AudioLowerVolume
+keycode 74 = XF86AudioRaiseVolume
+

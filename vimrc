@@ -272,9 +272,7 @@ let g:ycm_semantic_triggers = {
 \  'go'  : [' '],
 \ }
 
-let g:go_fmt_command="goimports "
-let g:gocode_gofmt_tabs=" -tabs=true "
-let g:gocode_gofmt_tabwidth=" -tabwidth=8 "
+let g:go_fmt_command = "goimports"
 
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_go_checkers = ['go', 'gotype', 'golint', 'govet']
