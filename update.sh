@@ -1,6 +1,4 @@
 #!/bin/sh -ex
-git submodule init
-git submodule update --recursive
-#git submodule foreach git pull origin master
-#git submodule update
+git submodule update --init --remote
+git status
 ./install_go_tools.sh

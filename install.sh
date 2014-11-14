@@ -41,9 +41,8 @@ else
   $ECHO cd $INSTALL_TO
 fi
 # Initialize submodules
-$ECHO git submodule init
-$ECHO git submodule update
-$ECHO git submodule foreach git pull origin master
+git submodule update --init --recursive
+
 
 LINKS="vimrc vim oh-my-zsh fonts Xmodmap Xresources zshrc tmux.conf xscreensaver npmrc"
 for f in $LINKS; do
