@@ -1,57 +1,18 @@
-[submodule "vim/bundle/molokai"]
-	path = vim/bundle/molokai
-	url = git://github.com/tomasr/molokai.git
-[submodule "vim/bundle/vim-javascript"]
-	path = vim/bundle/vim-javascript
-	url = git://github.com/pangloss/vim-javascript.git
-[submodule "vim/bundle/vim-rails"]
-	path = vim/bundle/vim-rails
-	url = git://github.com/tpope/vim-rails.git
-[submodule "vim/bundle/vim-rdoc"]
-	path = vim/bundle/vim-rdoc
-	url = git://github.com/depuracao/vim-rdoc.git
-[submodule "vim/bundle/vim-ruby.git"]
-	path = vim/bundle/vim-ruby.git
-	url = git://github.com/vim-ruby/vim-ruby.git
-[submodule "vim/bundle/vim-vividchalk.git"]
-	path = vim/bundle/vim-vividchalk.git
-	url = git://github.com/tpope/vim-vividchalk.git
-[submodule "vim/bundle/peaksea.git"]
-	path = vim/bundle/peaksea.git
-	url = git://github.com/vim-scripts/peaksea.git
 [submodule "vim/bundle/nerdtree.git"]
 	path = vim/bundle/nerdtree.git
 	url = git://github.com/scrooloose/nerdtree.git
-[submodule "vim/bundle/vim-endwise.git"]
-	path = vim/bundle/vim-endwise.git
-	url = git://github.com/tpope/vim-endwise.git
 [submodule "vim/bundle/vim-sensible.git"]
 	path = vim/bundle/vim-sensible.git
 	url = git://github.com/tpope/vim-sensible.git
-[submodule "vim/bundle/vim-bundler.git"]
-	path = vim/bundle/vim-bundler.git
-	url = git://github.com/tpope/vim-bundler.git
 [submodule "vim/bundle/vim-colors-solarized"]
 	path = vim/bundle/vim-colors-solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
-[submodule "oh-my-zsh"]
-	path = oh-my-zsh
-	url = git://github.com/robbyrussell/oh-my-zsh.git
 [submodule "vim-colors-solarized"]
 	path = vim-colors-solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
 [submodule "vim/bundle/tabular"]
 	path = vim/bundle/tabular
 	url = git://github.com/godlygeek/tabular.git
-[submodule "vim/bundle/jellybeans.vim"]
-	path = vim/bundle/jellybeans.vim
-	url = https://github.com/nanotech/jellybeans.vim.git
-[submodule "vim/bundle/vim-railscasts-theme"]
-	path = vim/bundle/vim-railscasts-theme
-	url = https://github.com/jpo/vim-railscasts-theme.git
-[submodule "vim/bundle/mustache"]
-	path = vim/bundle/mustache
-	url = git://github.com/juvenn/mustache.vim.git
 [submodule "vim/bundle/ultisnips.git"]
 	path = vim/bundle/ultisnips.git
 	url = https://github.com/SirVer/ultisnips.git
