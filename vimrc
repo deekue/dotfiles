@@ -35,6 +35,9 @@ let g:syntastic_go_checkers = ['go', 'gotype', 'golint', 'govet']
 
 au Filetype go nnoremap <leader>v :sp <CR>:exe "GoDef" <CR>
 
+" NERDTree key map
+nmap <F7> :NERDTreeToggle<CR>
+
 " Tagbar/Go integration
 nmap <F6> :TagbarToggle<CR>
 let g:tagbar_type_go = {  
