@@ -7,11 +7,12 @@ Requirements:
 - Go installed and $GOPATH set
 - Vim >7.1 installed
 
-Installion:
+Installation:
+
 1. clone this repo
-2. run ./install.sh -n (dry run)
-2. check output, make sure it looks sensible
-2. run ./install.sh
+1. run ./install.sh -n (dry run)
+  - check output, make sure it looks sensible
+1. run ./install.sh
 
 Notes:
 * local untracked overrides for Vim go in ~/.vim/user.vim  (think work specific stuff on your work machine)
