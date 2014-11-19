@@ -1,0 +1,3 @@
+OPTIONS=showexp,showscore,time,color
+OPTIONS=autodig,fruit:kumquat,boulder:0
+

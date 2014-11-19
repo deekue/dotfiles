@@ -2,7 +2,7 @@
 
 GIT_REPO=https://github.com/deekue/vim-go-ide
 INSTALL_TO=~/src/vim-go-ide
-LINKS="vimrc vim fonts"
+LINKS="vimrc vim fonts bashrc bash_aliases bash_logout gitconfig profile screenrc lynxrc nethackrc tmux.conf"
 ECHO=""
 
 while getopts "n" VALUE "$@"; do

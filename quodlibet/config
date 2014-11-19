@@ -1,0 +1,65 @@
+[header_maps]
+
+[rename]
+windows = true
+spaces = false
+ascii = false
+
+[settings]
+ratings = 4
+pipeline = 
+repeat = false
+scan = 
+jump = true
+headers = ~#track ~title~version ~album~part artist ~#length
+disable_hints = false
+default_rating = 0.5
+eager_search = true
+
+[plugins]
+
+[library]
+exclude = 
+
+[player]
+time_remaining = false
+replaygain = on
+backend = gstbe
+gst_pipeline = 
+
+[tagsfrompath]
+add = True
+underscores = true
+split = false
+titlecase = true
+
+[browsers]
+panes = ~people album
+color = true
+pane_selection = 
+album_covers = 1
+background = 
+albums = 
+query_text = 
+album_sort = 0
+
+[memory]
+shufflequeue = false
+queue = false
+exfalso_size = 1280 725
+browser = SearchBar
+song = 
+volume = 1.0
+sortby = 0album
+browser_size = 500 300
+size = 400 350
+order = inorder
+songlist = true
+
+[editing]
+split_on = & , /
+id3encoding = 
+save_to_songs = true
+save_email = quodlibet@lists.sacredchao.net
+alltags = true
+
