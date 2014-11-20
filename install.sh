@@ -1,7 +1,7 @@
-#!/bin/sh -e
+#!/bin/sh -ex
 
-GIT_REPO=https://github.com/deekue/vim-go-ide
-INSTALL_TO=~/src/vim-go-ide
+GIT_REPO=https://github.com/deekue/dotfiles
+INSTALL_TO=~/src/dotfiles
 LINKS="vimrc vim fonts bashrc bash_aliases bash_logout gitconfig profile screenrc lynxrc nethackrc tmux.conf"
 ECHO=""
 
