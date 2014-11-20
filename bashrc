@@ -76,9 +76,6 @@ fi
 if [ -d $HOME/bin ]; then
   export PATH=$HOME/bin:$PATH:/usr/games
 fi
-if [ -d /usr/local/go/bin ]; then
-  export PATH=$PATH:/usr/local/go/bin
-fi
 
 # git
 export GIT_AUTHOR_NAME="Daniel Quinlan"
@@ -93,7 +90,8 @@ export EDITOR=vim
 
 # go-lang
 export GOPATH=$HOME/src/go
-[ -d /usr/local/go/bin ] && export PATH=$PATH:/usr/local/go/bin
+[ -d $HOME/src/go/bin ] && export PATH=$HOME/src/go/bin:$PATH
+[ -d /usr/local/go/bin ] && export PATH=/usr/local/go/bin:$PATH
 
 # The next line updates PATH for the Google Cloud SDK.
 export PATH=/home/danielq/tmp/google-cloud-sdk/bin:$PATH
