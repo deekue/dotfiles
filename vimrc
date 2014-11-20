@@ -20,6 +20,9 @@ set expandtab
 set textwidth=79
 
 "==== Color schemes ===
+colorscheme solarized
+let g:solarized_termcolors = 256
+"let g:solarized_termcolors="16"
 if has('gui_running')
   set guifont=terminus\ 12 linespace=0
   set guioptions-=T
@@ -27,11 +30,8 @@ if has('gui_running')
   set antialias
 else
   set t_Co=256
-  "let g:solarized_termcolors="16"
   set bg=dark
 endif
-colorscheme solarized
-let g:solarized_termcolors = 256
 
 " More coding sytle colors
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
