@@ -89,9 +89,9 @@ export EDITOR=vim
 . ~/.aws/bashrc
 
 # go-lang
-export GOPATH=$HOME/src/go
-[ -d $HOME/src/go/bin ] && export PATH=$HOME/src/go/bin:$PATH
+[ -d $HOME/src/go ] && export GOPATH=$HOME/src/go
 [ -d /usr/local/go/bin ] && export PATH=/usr/local/go/bin:$PATH
+[ -d $HOME/src/go/bin ] && export PATH=$HOME/src/go/bin:$PATH
 
 # The next line updates PATH for the Google Cloud SDK.
 export PATH=/home/danielq/tmp/google-cloud-sdk/bin:$PATH
