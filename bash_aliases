@@ -8,7 +8,7 @@ function kumo() {
 }
 
 function chiron() {
-  gcutil --service_version="v1" --project="perfect-trilogy-461" ssh --zone="us-central1-a" "chiron"
+  gcloud compute --project "perfect-trilogy-461" ssh --zone "us-central1-a" "chiron"
 }
 
 function mosh() {
