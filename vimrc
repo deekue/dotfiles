@@ -55,6 +55,10 @@ autocmd ColorScheme * highlight Normal guibg=black
 set pastetoggle=<F2>
 map <F3> mzgg=G'z<CR>
 
+" spaces to tabs from:
+" https://stackoverflow.com/questions/9104706/how-can-i-convert-spaces-to-tabs-in-vim-or-linux
+nnoremap    <F4> :<C-U>setlocal lcs=tab:>-,trail:-,eol:$ list! list? <CR>
+
 " don't show help when F1 is pressed -- I press it too much by accident
 map <F1> <ESC>
 "map! <F1> <ESC>
