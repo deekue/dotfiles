@@ -98,3 +98,7 @@ export PATH=/home/danielq/tmp/google-cloud-sdk/bin:$PATH
 
 # The next line enables bash completion for gcloud.
 #source /home/danielq/tmp/google-cloud-sdk/arg_rc
+
+# python virtualenv
+export WORKON=~/.virtualenvs
+
