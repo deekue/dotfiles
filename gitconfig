@@ -4,3 +4,12 @@
     diff =
 [push]
 	default = simple
+
+# per https://groups.google.com/forum/m/#!topic/binary-transparency/f-BI4o8HZW0
+# for $deity's sake, check that anything we're getting is complete and sane on a regular basis 
+[transfer] 
+	fsckobjects = true 
+[fetch] 
+	fsckobjects = true 
+[receive] 
+	fsckObjects = true 
