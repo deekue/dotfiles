@@ -4,6 +4,9 @@
     diff =
 [push]
 	default = simple
+[merge]
+	conflictStyle = diff3
+	tool = vimdiff
 
 # per https://groups.google.com/forum/m/#!topic/binary-transparency/f-BI4o8HZW0
 # for $deity's sake, check that anything we're getting is complete and sane on a regular basis 
@@ -13,3 +16,18 @@
 	fsckobjects = true 
 [receive] 
 	fsckObjects = true 
+
+# go/gob/users/user-repository
+[url "sso://user/danielq/"]
+	insteadof = gob:
+
+# https://paste.googleplex.com/5892655485550592?raw
+[color]
+	ui = auto
+[alias]
+	st = status
+	br = branch
+	co = checkout
+	df = diff
+	gr = log --graph --full-history --color --pretty=format:'%C(red)%h%x09%x1b%x1b %Creset%x20%<(80,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%C(black)%d%Creset' --date=relative -n 10
+	ll = log --color --pretty=oneline -n 10
