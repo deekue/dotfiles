@@ -33,14 +33,13 @@ else
   set bg=dark
 endif
 
-" More coding sytle colors
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd Syntax * syn match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-
-autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
-autocmd Syntax * syn match Tabs "\t"
-autocmd BufWinEnter * match Tabs "\t"
+" More coding sytle colors - where was ExtraWhitespace defined?
+"autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+"autocmd Syntax * syn match ExtraWhitespace /\s\+$/
+"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
+"autocmd Syntax * syn match Tabs "\t"
+"autocmd BufWinEnter * match Tabs "\t"
 
 " Bright red background for text matches
 autocmd ColorScheme * highlight Search ctermbg=red ctermfg=white guifg=#FFFFFF guibg=#FF0000
