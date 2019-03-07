@@ -23,14 +23,11 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color)
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    ;;
-*)
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-    ;;
-esac
+if echo $TERM | grep -qf <(dircolors -p | sed -ne '/^TERM/ s/^TERM //p') ; then
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1)\$ '
+else
+  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
 
 # Comment in the above and uncomment this below for a color prompt
 #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -86,7 +83,7 @@ export GIT_AUTHOR_EMAIL=daniel@chaosengine.net
 export EDITOR=vim
 
 # setup AWS
-. ~/.aws/bashrc
+#. ~/.aws/bashrc
 
 # go-lang
 [ -d $HOME/src/go ] && export GOPATH=$HOME/src/go
@@ -94,7 +91,9 @@ export EDITOR=vim
 [ -d $HOME/src/go/bin ] && export PATH=$HOME/src/go/bin:$PATH
 
 # The next line updates PATH for the Google Cloud SDK.
-export PATH=/home/danielq/tmp/google-cloud-sdk/bin:$PATH
+if [ -d /home/danielq/tmp/google-cloud-sdk/bin ] ; then
+  export PATH=/home/danielq/tmp/google-cloud-sdk/bin:$PATH
+fi
 
 # The next line enables bash completion for gcloud.
 #source /home/danielq/tmp/google-cloud-sdk/arg_rc
