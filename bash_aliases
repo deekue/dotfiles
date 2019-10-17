@@ -1,6 +1,4 @@
 
-alias zt=/usr/sbin/zerotier-cli
-
 function check_auth() {
   local AUTH=false
   local LOG=/tmp/check_auth.log
