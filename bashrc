@@ -70,9 +70,28 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-if [ -d $HOME/bin ]; then
-  export PATH=$HOME/bin:$PATH:/usr/games
-fi
+function add_bin_path {
+  local where="$1"
+  local new_bin_path="$2"
+
+  [ -d "$new_bin_path" ] || return 1
+  if [ -n "${PATH##*${new_bin_path}}" -a -n "${PATH##*${new_bin_path}:*}" ]; then
+    case "$where" in
+      pre)
+        export PATH=${new_bin_path}:$PATH
+        ;;
+      post)
+        export PATH=$PATH:${new_bin_path}
+        ;;
+      *)
+        echo "Usage: add_bin_path <pre|post> <path>" >&2
+        return 1
+        ;;
+    esac
+  fi
+}
+
+add_bin_path pre "$HOME/bin"
 
 # git
 export GIT_AUTHOR_NAME="Daniel Quinlan"
@@ -87,13 +106,11 @@ export EDITOR=vim
 
 # go-lang
 [ -d $HOME/src/go ] && export GOPATH=$HOME/src/go
-[ -d /usr/local/go/bin ] && export PATH=/usr/local/go/bin:$PATH
-[ -d $HOME/src/go/bin ] && export PATH=$HOME/src/go/bin:$PATH
+add_bin_path pre /usr/local/go/bin
+add_bin_path pre $HOME/src/go/bin
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -d /home/danielq/tmp/google-cloud-sdk/bin ] ; then
-  export PATH=/home/danielq/tmp/google-cloud-sdk/bin:$PATH
-fi
+add_bin_path pre /home/danielq/tmp/google-cloud-sdk/bin
 
 # The next line enables bash completion for gcloud.
 #source /home/danielq/tmp/google-cloud-sdk/arg_rc
