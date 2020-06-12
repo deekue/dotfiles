@@ -1,0 +1,3 @@
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^Mail$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
