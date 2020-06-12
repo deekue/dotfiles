@@ -4,3 +4,14 @@
     diff =
 [push]
 	default = simple
+[core]
+	autocrlf = input
+[branch]
+	autosetupmerge = always
+[credential]
+	helper = store
+[github]
+	user = deekue
+[user]
+	email = daniel@chaosengine.net
+	name = DQ
