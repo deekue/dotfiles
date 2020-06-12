@@ -12,6 +12,7 @@
 # @see: http://secrets.blacktree.com/?showapp=com.apple.finder
 #
 # @author Jeff Geerling, 2014
+# @author Daniel Quinlan, 2020
 
 # Warn that some commands will not be run if the script is not run as root.
 if [[ $EUID -ne 0 ]]; then
@@ -76,7 +77,7 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 # Set background to dark-grey color
-sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '/Library/Desktop Pictures/Solid Colors/Solid Gray Dark.png'"
+#sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '/Library/Desktop Pictures/Solid Colors/Solid Gray Dark.png'"
 
 ###############################################################################
 # SSD-specific tweaks                                                         #
@@ -133,6 +134,9 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
+# Use F1, F2, etc. keys as standard function keys
+defaults write NSGlobalDomain com.apple.keyboard.fnState 1
+
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
@@ -183,7 +187,7 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 defaults write com.apple.finder ShowStatusBar -bool true
 
 # Finder: show path bar
-# defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder ShowPathbar -bool true
 
 # Finder: allow text selection in Quick Look
 defaults write com.apple.finder QLEnableTextSelection -bool true
@@ -245,6 +249,13 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
   OpenWith -bool true \
   Preview -bool false \
   Privileges -bool true
+ 
+## Fix folder opened from desktop not tiling in yabai
+#defaults write com.apple.finder DisableAllAnimations -bool true
+#killall Finder # or logout and login
+#
+# to reset system defaults, delete the key instead
+# defaults delete com.apple.finder DisableAllAnimations
 
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
