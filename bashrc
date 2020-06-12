@@ -48,13 +48,12 @@ esac
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
 # enable color support of ls and also add handy aliases
-if [ "$TERM" != "dumb" ]; then
+if type dircolors > /dev/null 2>&1 && [ "$TERM" != "dumb" ]; then
     eval "`dircolors -b`"
     alias ls='ls --color=auto'
     #alias dir='ls --color=auto --format=vertical'
@@ -74,7 +73,7 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 if [ -d $HOME/bin ]; then
-  export PATH=$HOME/bin:$PATH:/usr/games
+  export PATH=$HOME/bin:$PATH
 fi
 
 # git
@@ -86,7 +85,7 @@ export GIT_AUTHOR_EMAIL=daniel@chaosengine.net
 export EDITOR=vim
 
 # setup AWS
-. ~/.aws/bashrc
+[ -r ~/.aws/bashrc ] && . ~/.aws/bashrc
 
 # go-lang
 [ -d $HOME/src/go ] && export GOPATH=$HOME/src/go
@@ -94,7 +93,10 @@ export EDITOR=vim
 [ -d $HOME/src/go/bin ] && export PATH=$HOME/src/go/bin:$PATH
 
 # The next line updates PATH for the Google Cloud SDK.
-export PATH=/home/danielq/tmp/google-cloud-sdk/bin:$PATH
-
+[ -d $HOME/tmp/google-cloud-sdk/bin ] && export PATH=$HOME/tmp/google-cloud-sdk/bin:$PATH
 # The next line enables bash completion for gcloud.
 #source /home/danielq/tmp/google-cloud-sdk/arg_rc
+
+# strap:straprc:begin
+[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
+# strap:straprc:end
