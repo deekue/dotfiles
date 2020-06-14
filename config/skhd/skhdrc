@@ -7,9 +7,9 @@
 
 # prevents skhd from monitoring events for listed processes.
 .blacklist [
-    "terminal"
-    "alacritty"
+#    "terminal"
+#    "alacritty"
     "kitty"
     "qutebrowser"
-    "google chrome"
+#    "google chrome"
 ]

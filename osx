@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# TODO crib from https://github.com/lony/dotFiles/blob/master/ansible/roles/osx/vars/main.yml
+#                https://github.com/lony/lony.github.io/blob/data/content/post/2016/mac-setup.md
+# https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+#   aka https://mths.be/macos
+
 # Mac OS X configuration
 #
 # This configuration applies to the latest version of Mac OS X (currently
@@ -137,6 +142,27 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 # Use F1, F2, etc. keys as standard function keys
 defaults write NSGlobalDomain com.apple.keyboard.fnState 1
 
+# Shortcuts
+#
+# see: https://support.apple.com/en-us/HT201236
+#
+# The meta-keys are set as 
+#   @ for Command
+#   $ for Shift
+#   ~ for Alt 
+#   ^ for Ctrl.
+# 'k' in this example is the non-meta-key that you want to use.
+# '\\U2026' is the code for an elipsis, useful in menu items
+#
+# For Application-specific commands, use the following:
+#  defaults write com.developer.app NSUserKeyEquivalents -dict-add "Menu Item" -string "@$~^k"
+# For system-wide shortcuts, you can use -g instead of the app identifier, e.g.
+#  defaults write -g NSUserKeyEquivalents -dict-add "Menu Item" -string "@$~^k" 
+#
+# Note that you'll need to relaunch the app before these will take effect. Also
+# you can see if they've been successful in System Preferences -- which will also
+# need a relaunch to show the changes.
+
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
@@ -250,10 +276,8 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
   Preview -bool false \
   Privileges -bool true
  
-## Fix folder opened from desktop not tiling in yabai
-#defaults write com.apple.finder DisableAllAnimations -bool true
-#killall Finder # or logout and login
-#
+## Fix folder opened from desktop not tiling in #yabai
+defaults write com.apple.finder DisableAllAnimations -bool true
 # to reset system defaults, delete the key instead
 # defaults delete com.apple.finder DisableAllAnimations
 
@@ -290,6 +314,9 @@ defaults write com.apple.dock showhidden -bool true
 
 # Enable the 'reduce transparency' option on Yosemite. Save GPU cycles.
 defaults write com.apple.universalaccess reduceTransparency -bool true
+
+# Enable the 'reduce motion' option. Faster Space switching #yabai
+defaults write com.apple.universalaccess reduceMotion -bool true
 
 # Add iOS Simulator to Applications folder.
 #if [[ "$RUN_AS_ROOT" = true ]]; then
