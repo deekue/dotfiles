@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-
-# find all executable files in ~/.config/yabai and execute them
-find -s "${HOME}/.config/yabai" -type f -perm +111 -exec {} \;
-
-echo "yabai configuration loaded.."
