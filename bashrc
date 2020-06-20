@@ -24,7 +24,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-xterm-color)
+xterm-color*|alacritty)
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     ;;
 *)
@@ -37,7 +37,7 @@ esac
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
+xterm*|rxvt*|alacritty)
     PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
     ;;
 *)
@@ -69,7 +69,10 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+  . /etc/bash_completion
+elif [ -f /usr/local/etc/bash_completion ] ; then
+  # MacOS HomeBrew
+  . /usr/local/etc/bash_completion
 fi
 
 if [ -d $HOME/bin ]; then
@@ -96,6 +99,7 @@ export EDITOR=vim
 [ -d $HOME/tmp/google-cloud-sdk/bin ] && export PATH=$HOME/tmp/google-cloud-sdk/bin:$PATH
 # The next line enables bash completion for gcloud.
 #source /home/danielq/tmp/google-cloud-sdk/arg_rc
+
 
 # strap:straprc:begin
 [ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
