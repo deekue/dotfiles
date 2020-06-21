@@ -354,9 +354,14 @@ shell: # {{{
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-  program: /usr/local/bin/bash
-  args:
-    - --login
+#  TODO work out how to use $USER instead of hard-coded username
+# on MacOS Catalina, use login or else stuff gets b0rked
+   program: /usr/bin/login
+   args:
+     - -pf
+     - danielquinlan
+     - /usr/local/bin/bash
+     - --login
 # }}}
 
 # Startup directory {{{
@@ -611,3 +616,5 @@ key_bindings: # {{{
   # Print all received window events.
   #print_events: false
 # }}}
+
+# vim:set foldmethod=marker

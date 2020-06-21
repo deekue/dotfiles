@@ -257,8 +257,8 @@ fn + shift - n : open -R ~
 
 ## Launch // Terminal // <fn> Enter ##
 # 'fn - return' is kVK_ANSI_KeypadEnter = 0x4C
-# TODO launch default terminal?
-fn - 0x4C : login -f -pq $USER /usr/local/bin/alacritty
+# TODO set alacritty to handle term:,ssh: URL schemes then use open -na term://
+fn - 0x4C : /usr/local/bin/alacritty
 
 ## Modify // Window Floating Toggle // <fn><Shift> f ##
 fn + shift - space : yabai -m window --toggle float
