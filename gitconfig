@@ -1,11 +1,12 @@
-[diff]
-    external = git_diff_wrapper
+#[diff]
+#    external = git_diff_wrapper
 [pager]
     diff =
 [push]
 	default = simple
 [core]
 	autocrlf = input
+	excludesfile = /Users/danielquinlan/.gitignore_global
 [branch]
 	autosetupmerge = always
 [credential]
