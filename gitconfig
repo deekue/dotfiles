@@ -1,15 +1,3 @@
-[core]
-	autocrlf = input
-[branch]
-	autosetupmerge = always
-[credential]
-	helper = store
-[github]
-	user = deekue
-[user]
-	email = daniel@chaosengine.net
-	name = DQ
-
 [diff]
 	tool = vimdiff
 [difftool]
@@ -40,3 +28,14 @@
 	df = diff
 	gr = log --graph --full-history --color --pretty=format:'%C(red)%h%x09%x1b%x1b %Creset%x20%<(80,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%C(black)%d%Creset' --date=relative -n 10
 	ll = log --color --pretty=oneline -n 10
+[core]
+	autocrlf = input
+[branch]
+	autosetupmerge = always
+[credential]
+	helper = store
+[github]
+	user = deekue
+[user]
+	email = daniel@chaosengine.net
+	name = DQ
