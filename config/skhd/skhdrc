@@ -1,0 +1,15 @@
+# specify a file that should be included as an additional config-file.
+# treated as an absolutepath if the filename begins with '/' otherwise
+# the file is relative to the path of the config-file it was loaded from.
+
+#.load "/Users/danielquinlan/.config/skhd/yabai_skhdrc"
+.load "yabai_skhdrc"
+
+# prevents skhd from monitoring events for listed processes.
+.blacklist [
+#    "terminal"
+#    "alacritty"
+    "kitty"
+    "qutebrowser"
+#    "google chrome"
+]

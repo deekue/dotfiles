@@ -5,6 +5,11 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Alias definitions.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
 # don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
 # ... and ignore same sucessive entries.
@@ -23,40 +28,28 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-if echo $TERM | grep -qf <(dircolors -p | sed -ne '/^TERM/ s/^TERM //p') ; then
+if type dircolors > /dev/null 2>&1 \
+  && echo $TERM | grep -qf <(dircolors -p | sed -ne '/^TERM / s///p') ; then
   PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1)\$ '
+
+  # enable color support of ls and also add handy aliases
+  eval "`dircolors -b`"
+  alias ls='ls --color=auto'
+  #alias dir='ls --color=auto --format=vertical'
+  #alias vdir='ls --color=auto --format=long'
 else
   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 
-# Comment in the above and uncomment this below for a color prompt
-#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+xterm*|rxvt*|alacritty)
+    PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND};}"'echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
     ;;
 *)
     ;;
 esac
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# enable color support of ls and also add handy aliases
-if [ "$TERM" != "dumb" ]; then
-    eval "`dircolors -b`"
-    alias ls='ls --color=auto'
-    #alias dir='ls --color=auto --format=vertical'
-    #alias vdir='ls --color=auto --format=long'
-fi
 
 # some more ls aliases
 #alias ll='ls -l'
@@ -106,12 +99,12 @@ export GIT_AUTHOR_EMAIL=daniel@chaosengine.net
 export EDITOR=vim
 
 # setup AWS
-#. ~/.aws/bashrc
+[ -r ~/.aws/bashrc ] && . ~/.aws/bashrc
 
 # go-lang
-[ -d $HOME/src/go ] && export GOPATH=$HOME/src/go
+[ -d $HOME/src/go ] && export GOPATH="$HOME/src/go"
 add_bin_path pre /usr/local/go/bin
-add_bin_path pre $HOME/src/go/bin
+add_bin_path pre "$HOME/src/go/bin"
 
 # The next line updates PATH for the Google Cloud SDK.
 add_bin_path pre /home/danielq/tmp/google-cloud-sdk/bin
@@ -124,3 +117,6 @@ export WORKON=~/.virtualenvs
 
 export BC_ENV_ARGS="$HOME/.config/bc"
 
+# strap:straprc:begin
+[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
+# strap:straprc:end

@@ -1,9 +1,21 @@
+[core]
+	autocrlf = input
+[branch]
+	autosetupmerge = always
+[credential]
+	helper = store
+[github]
+	user = deekue
+[user]
+	email = daniel@chaosengine.net
+	name = DQ
+
 [diff]
 	tool = vimdiff
 [difftool]
 	prompt = false
 [pager]
-    diff =
+  diff =
 [push]
 	default = simple
 [merge]
@@ -19,11 +31,6 @@
 [receive] 
 	fsckObjects = true 
 
-# go/gob/users/user-repository
-[url "sso://user/danielq/"]
-	insteadof = gob:
-
-# https://paste.googleplex.com/5892655485550592?raw
 [color]
 	ui = auto
 [alias]
@@ -33,6 +40,3 @@
 	df = diff
 	gr = log --graph --full-history --color --pretty=format:'%C(red)%h%x09%x1b%x1b %Creset%x20%<(80,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%C(black)%d%Creset' --date=relative -n 10
 	ll = log --color --pretty=oneline -n 10
-[user]
-	email = dq@chaosengine.net
-	name = Daniel Quinlan
