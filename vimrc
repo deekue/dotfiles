@@ -1,6 +1,6 @@
 " load pathogen first
-runtime bundle/vim-pathogen.git/autoload/pathogen.vim
-execute pathogen#infect()
+"runtime bundle/vim-pathogen.git/autoload/pathogen.vim
+"execute pathogen#infect()
 
 set   nocompatible
 syntax on
