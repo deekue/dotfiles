@@ -32,7 +32,10 @@ if type dircolors > /dev/null 2>&1 \
    && echo "$TERM" | grep -qf <(dircolors --print-database | sed -ne '/^TERM/ s///p'); then
   eval "$(dircolors -b)"
   alias ls='ls --color=auto'
+elif uname -a | grep -q Darwin ; then
+  export CLICOLOR=yknot
 fi
+
 # }}}
 
 # ENV {{{
@@ -160,16 +163,20 @@ elif [ -n "$TMUX" ] ; then
 fi
 # }}}
 
-# Tmux/Screen auto start {{{
-# TODO detect screen vs tmux
-#if [ "${TERM:0:6}" != "screen" ]; then
-if [ -z "$TMUX" ] ; then
-  # set window title
-  echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
+# Tmux/Screen auto start for SSH sessions {{{
+if [[ -n "$SSH_TTY" ]] ; then
+  # TODO detect screen vs tmux
+  #if [ "${TERM:0:6}" != "screen" ]; then
+  if ! type tmux 2>/dev/null ; then
+    echo tmux not found, sadness ensues
+  elif [[ -z "$TMUX" ]] ; then
+    # set window title
+    echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
 
-  # connect to session "main" or create a new one if not found
-  tmux new -A -s main
-  exit # exit on detach or exit
+    # connect to session "main" or create a new one if not found
+    tmux new -A -s main
+    exit # exit on detach or exit
+  fi
 fi
 # }}}
 # }}}
