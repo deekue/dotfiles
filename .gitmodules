@@ -32,3 +32,18 @@
 [submodule "vim/bundle/vim-colors-solarized"]
 	path = vim/bundle/vim-colors-solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "vim/bundle/vim-ps1.git"]
+	path = vim/bundle/vim-ps1.git
+	url = https://github.com/PProvost/vim-ps1.git
+[submodule "vim/bundle/vikube"]
+	path = vim/bundle/vikube
+	url = https://github.com/c9s/vikube.vim
+[submodule "vim/bundle/scratch"]
+	path = vim/bundle/scratch
+	url = https://github.com/mtth/scratch.vim
+[submodule "vim/bundle/vim-tmux-navigator"]
+	path = vim/bundle/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator
+[submodule "vim/bundle/vim-fugitive"]
+	path = vim/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive

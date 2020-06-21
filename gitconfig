@@ -1,9 +1,34 @@
-#[diff]
-#    external = git_diff_wrapper
+[diff]
+    external = git_diff_wrapper
+[difftool]
+	prompt = false
 [pager]
-    diff =
+  diff =
 [push]
 	default = simple
+[merge]
+	conflictStyle = diff3
+	tool = vimdiff
+
+# per https://groups.google.com/forum/m/#!topic/binary-transparency/f-BI4o8HZW0
+# for $deity's sake, check that anything we're getting is complete and sane on a regular basis 
+[transfer] 
+	fsckobjects = true 
+[fetch] 
+	fsckobjects = true 
+[receive] 
+	fsckObjects = true 
+
+[color]
+	ui = auto
+[alias]
+	st = status
+	br = branch
+	co = checkout
+	df = diff
+	gr = log --graph --full-history --color --pretty=format:'%C(red)%h%x09%x1b%x1b %Creset%x20%<(80,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%C(black)%d%Creset' --date=relative -n 10
+	ll = log --color --pretty=oneline -n 10
+
 [core]
 	autocrlf = input
 	excludesfile = /Users/danielquinlan/.gitignore_global

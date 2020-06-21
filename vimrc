@@ -1,6 +1,6 @@
 " load pathogen first
-runtime bundle/vim-pathogen.git/autoload/pathogen.vim
-execute pathogen#infect()
+"runtime bundle/vim-pathogen.git/autoload/pathogen.vim
+"execute pathogen#infect()
 
 set   nocompatible
 syntax on
@@ -33,14 +33,13 @@ else
   set bg=dark
 endif
 
-" More coding sytle colors
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd Syntax * syn match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-
-autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
-autocmd Syntax * syn match Tabs "\t"
-autocmd BufWinEnter * match Tabs "\t"
+" More coding sytle colors - where was ExtraWhitespace defined?
+"autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+"autocmd Syntax * syn match ExtraWhitespace /\s\+$/
+"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
+"autocmd Syntax * syn match Tabs "\t"
+"autocmd BufWinEnter * match Tabs "\t"
 
 " Bright red background for text matches
 autocmd ColorScheme * highlight Search ctermbg=red ctermfg=white guifg=#FFFFFF guibg=#FF0000
@@ -54,6 +53,10 @@ autocmd ColorScheme * highlight Normal guibg=black
 "==== Key maps ====
 set pastetoggle=<F2>
 map <F3> mzgg=G'z<CR>
+
+" spaces to tabs from:
+" https://stackoverflow.com/questions/9104706/how-can-i-convert-spaces-to-tabs-in-vim-or-linux
+nnoremap    <F4> :<C-U>setlocal lcs=tab:>-,trail:-,eol:$ list! list? <CR>
 
 " don't show help when F1 is pressed -- I press it too much by accident
 map <F1> <ESC>
@@ -130,6 +133,11 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" Fugitive Conflict Resolution
+nnoremap <leader>gd :Gvdiffsplit!<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
 
 " load local overrides
 source ~/.vim/user.vim
