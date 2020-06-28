@@ -465,6 +465,15 @@ defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
 defaults write com.google.Chrome DisablePrintPreview -bool true
 
 ###############################################################################
+# Hostname                                                                    #
+###############################################################################
+
+# pull hostname from System Prefs > Sharing, propagate elsewhere
+chosenName="$(scutil --get ComputerName)"
+sudo scutil --set HostName "$chosenName"
+sudo scutil --set LocalHostName "$chosenName"
+
+###############################################################################
 # Kill/restart affected applications                                          #
 ###############################################################################
 
