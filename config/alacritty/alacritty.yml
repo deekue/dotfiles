@@ -359,7 +359,7 @@ shell: # {{{
    program: /usr/bin/login
    args:
      - -pf
-     - danielquinlan
+     - daniel.quinlan
      - /usr/local/bin/bash
      - --login
 # }}}
@@ -567,19 +567,22 @@ key_bindings: # {{{
   #- { key: Return,   mods: Alt,           action: ToggleFullscreen }
   # }}}
   # (macOS only) {{{
-  #- { key: Key0,   mods: Command,         action: ResetFontSize    }
-  #- { key: Equals, mods: Command,         action: IncreaseFontSize }
-  #- { key: Add,    mods: Command,         action: IncreaseFontSize }
-  #- { key: Minus,  mods: Command,         action: DecreaseFontSize }
-  #- { key: K,      mods: Command,         action: ClearHistory     }
-  #- { key: K,      mods: Command,         chars: "\x0c"            }
-  #- { key: V,      mods: Command,         action: Paste            }
-  #- { key: C,      mods: Command,         action: Copy             }
-  #- { key: H,      mods: Command,         action: Hide             }
-  #- { key: M,      mods: Command,         action: Minimize         }
-  #- { key: Q,      mods: Command,         action: Quit             }
-  #- { key: W,      mods: Command,         action: Quit             }
-  #- { key: F,      mods: Command|Control, action: ToggleFullscreen }
+  - { key: Key0,   mods: Command,         action: ResetFontSize    }
+  - { key: Equals, mods: Command,         action: IncreaseFontSize }
+  - { key: Add,    mods: Command,         action: IncreaseFontSize }
+  - { key: Minus,  mods: Command,         action: DecreaseFontSize }
+  - { key: K,      mods: Command,         action: ClearHistory     }
+  - { key: K,      mods: Command,         chars: "\x0c"            }
+  - { key: V,      mods: Command,         action: Paste            }
+  - { key: C,      mods: Command,         action: Copy             }
+    #  - { key: H,      mods: Command,         action: Hide             }
+  - { key: M,      mods: Command,         action: Minimize         }
+  - { key: N,      mods: Command,         action: SpawnNewInstance }
+  - { key: T,      mods: Command,         action: SpawnNewInstance }
+  - { key: Q,      mods: Command,         action: Quit             }
+  - { key: W,      mods: Command,         action: Quit             }
+  - { key: F,      mods: Command|Control, action: ToggleFullscreen }
+  - { key: Comma,  mods: Command,         command: { program: "sh", args: ["-c", "open -t ~/.config/alacritty/alacritty.yml"] } }
   # }}}
   # (Defaults) {{{
   #- { key: Paste,                    action: Paste                            }
@@ -591,8 +594,6 @@ key_bindings: # {{{
   #- { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
   #- { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }
   # }}}
-  # Personal
-  - { key: N,        mods: Control|Shift, action: SpawnNewInstance           }
 # }}}
 
 #debug: # {{{
@@ -617,4 +618,4 @@ key_bindings: # {{{
   #print_events: false
 # }}}
 
-# vim:set foldmethod=marker
+# vim:set foldmethod=marker:
