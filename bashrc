@@ -17,8 +17,8 @@ if ! shopt -oq posix; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
-  elif [ -f /usr/local/etc/bash_completion ]; then
-    . /usr/local/etc/bash_completion
+  elif [ -f /usr/local/etc/profile.d/bash_completion.sh ]; then
+    . /usr/local/etc/profile.d/bash_completion.sh
   fi
 fi
 
@@ -27,15 +27,24 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# enable colour, if available
-if type dircolors > /dev/null 2>&1 \
-   && echo "$TERM" | grep -qf <(dircolors --print-database | sed -ne '/^TERM/ s///p'); then
+# }}}
+
+# Security stuff (eg. ssh etc) {{{
+if uname -a | grep -q Darwin ; then
+  ssh-add -K
+fi
+# }}}
+# enable colour, if available {{{
+if inpath dircolors && term_in_dircolors ; then
   eval "$(dircolors -b)"
-  alias ls='ls --color=auto'
-elif uname -a | grep -q Darwin ; then
+  if ls --version 2>&1 > /dev/null ; then  
+    # GNU ls
+    alias ls='ls --color=auto'
+  fi
+fi
+if uname -a | grep -q Darwin ; then
   export CLICOLOR=yknot
 fi
-
 # }}}
 
 # ENV {{{
@@ -45,12 +54,6 @@ export EDITOR=vim
 #export PRINTER=something
 #export LPDEST=$PRINTER
 export GREP_COLOR=auto
-
-# git - move to ~/.gitconfig ?
-export GIT_AUTHOR_NAME="Daniel Quinlan"
-export GIT_COMMITTER_NAME="Daniel Quinlan"
-export GIT_COMMITTER_EMAIL=daniel@chaosengine.net
-export GIT_AUTHOR_EMAIL=daniel@chaosengine.net
 
 # python virtualenv
 export WORKON=~/.virtualenvs

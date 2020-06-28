@@ -1,4 +1,10 @@
 
+alias xclip=pbcopy
+
+function get_bundle {
+  /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
+}
+
 function add_bin_path {
   local where="$1"
   local new_bin_path="$2"
@@ -18,6 +24,14 @@ function add_bin_path {
         ;;
     esac
   fi
+}
+
+function inpath {
+  type "$@" > /dev/null 2>&1
+}
+
+function term_in_dircolors {
+  echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne '/^TERM/ s///p')
 }
 
 function check_zerotier() {
