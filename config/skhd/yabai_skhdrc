@@ -35,8 +35,6 @@
 # ## Modify // Move Space to Display 1..n // <fn>?? - 1..n ##
 # ## Navigate // Window by Name // <fn><Ctrl> Space ##
 #   TODO use yabai -m query 
-# ## Launch // This Dialog // <fn><Shift> ? ##
-#   TODO port remontoire to read this file?
 
 # Handled by native macos stuff, can't be remapped(?)
 ## Launch // Application // <⌘> Space ##
@@ -65,7 +63,6 @@ fn - c : osascript -e 'tell application "System Preferences" to activate'
 fn + shift - e : osascript -e 'tell application "System Events" to log out'
 
 ## Session // Reload Yabai Config // <fn><Shift> c ##
-# TODO generalise this
 fn + shift - c : command "$HOME/.yabairc"
 
 ## Session // Reload Key Bindings // <fn><Shift> r ##
@@ -250,7 +247,7 @@ resize < 0x1B         : yabai -m space --gap rel:-1
 resize < 0 : yabai -m space --balance ; skhd --key "hyper - escape"
 
 ## Launch // Browser // <fn><Shift> Enter ##
-fn + shift - 0x4C : command open -n -a "Google Chrome" --args --new-window http://
+fn + shift - 0x4C : command open -n -a "Google Chrome" --args --new-window
 
 ## Launch // File Browser // <fn><Shift> n ##
 fn + shift - n : open -R ~
@@ -258,8 +255,7 @@ fn + shift - n : open -R ~
 ## Launch // Terminal // <fn> Enter ##
 # 'fn - return' is kVK_ANSI_KeypadEnter = 0x4C
 # TODO set alacritty to handle term:,ssh: URL schemes then use open -na term://
-#fn - 0x4C : /usr/local/bin/alacritty # doesn't play nice with Docker's window listing
-fn - 0x4C : /Applications/Alacritty.app/Contents/MacOS/alacritty
+fn - 0x4C : open -n -a "/Applications/Alacritty.app"
 
 ## Modify // Window Floating Toggle // <fn><Shift> f ##
 fn + shift - space : yabai -m window --toggle float
@@ -279,3 +275,5 @@ fn + shift - 0x2A : yabai -m window --insert east   # fn + shift - \
 ## Modify // Insert Next Window Horizontally // <fn> Minus ##
 fn - 0x1B : yabai -m window --insert south  # fn - -
 
+# ## Launch // This Dialog // <fn><Shift> ? ##
+fn + shift - 0x2C : command "${HOME}/bin/remontoire_html.sh"
