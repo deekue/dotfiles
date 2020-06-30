@@ -257,7 +257,7 @@ fn + shift - n : open -R ~
 # TODO set alacritty to handle term:,ssh: URL schemes then use open -na term://
 fn - 0x4C : open -n -a "/Applications/Alacritty.app"
 
-## Modify // Window Floating Toggle // <fn><Shift> f ##
+## Modify // Window Floating Toggle // <fn><Shift> space ##
 fn + shift - space : yabai -m window --toggle float
 
 ## Modify // Window Fullscreen Toggle // <fn> f ##
