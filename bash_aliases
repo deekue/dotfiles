@@ -31,7 +31,7 @@ function inpath {
 }
 
 function term_in_dircolors {
-  echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne '/^TERM/ s///p')
+  echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne '/^TERM / s///p')
 }
 
 function check_zerotier() {
