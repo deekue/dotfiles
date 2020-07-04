@@ -335,15 +335,18 @@ defaults write com.apple.universalaccess reduceMotion -bool true
 # 10: Put display to sleep
 # 11: Launchpad
 # 12: Notification Center
-# Bottom right screen corner → Mission Control
-defaults write com.apple.dock wvous-br-corner -int 2
+# Bottom right screen corner → off
+defaults write com.apple.dock wvous-br-corner -int 0
 defaults write com.apple.dock wvous-br-modifier -int 0
-# Top right screen corner → Put display to sleep
-defaults write com.apple.dock wvous-tr-corner -int 10
+# Top right screen corner → off
+defaults write com.apple.dock wvous-tr-corner -int 0
 defaults write com.apple.dock wvous-tr-modifier -int 0
-# Bottom left screen corner → Desktop
-defaults write com.apple.dock wvous-bl-corner -int 4
+# Bottom left screen corner → off
+defaults write com.apple.dock wvous-bl-corner -int 0
 defaults write com.apple.dock wvous-bl-modifier -int 0
+# Bottom right screen corner → off
+defaults write com.apple.dock wvous-br-corner -int 0
+defaults write com.apple.dock wvous-br-modifier -int 0
 
 ###############################################################################
 # Safari & WebKit                                                             #
@@ -472,6 +475,14 @@ defaults write com.google.Chrome DisablePrintPreview -bool true
 chosenName="$(scutil --get ComputerName)"
 sudo scutil --set HostName "$chosenName"
 sudo scutil --set LocalHostName "$chosenName"
+
+###############################################################################
+# TODO                                                                        #
+###############################################################################
+
+# Dock: assign 'System Preferences' to all Desktops
+# 
+
 
 ###############################################################################
 # Kill/restart affected applications                                          #
