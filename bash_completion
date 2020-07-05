@@ -1,6 +1,0 @@
-
-if [[ -d ~/.bash_completion.d ]] ; then
-  for f in ~/.bash_completion.d/* ; do
-    . "$f"
-  done
-fi

@@ -1,3 +1,0 @@
-hardstatus on
-hardstatus alwayslastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%< "
-

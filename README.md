@@ -1,4 +1,3 @@
-dotfiles
-========
+# Keyboard focused Tiling Desktop Environment for MacOS
 
-these are my dotfiles.  there are many like them, but these are mine.
+An attempt at recreating the i3/Regolith experience on MacOS
