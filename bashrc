@@ -137,6 +137,7 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
 add_bin_path pre "$HOME/bin"
+add_bin_path post "$HOME/Library/Python/3.7/bin"
 
 # go-lang
 [ -d $HOME/src/go ] && export GOPATH="$HOME/src/go"
