@@ -39,7 +39,7 @@
 # Handled by native macos stuff, can't be remapped(?)
 ## Launch // Application // <⌘> Space ##
 ## Launch // File Search // <⌘><Alt> Space ##
-## Launch // Notification Viewer // <Ctrl><⌥><⌘><Shift> n ##
+## Launch // Notification Viewer // <Ctrl><⌥><⌘> n ##
 
 ## Modify // Window Layout Mode // <fn> t ##
 fn - t : yabai -m space --layout "$([ "$(yabai -m query --spaces --space | jq '.type')" = '"bsp"' ] && echo float || echo bsp)"
@@ -63,18 +63,21 @@ fn - c : osascript -e 'tell application "System Preferences" to activate'
 fn + shift - e : osascript -e 'tell application "System Events" to log out'
 
 ## Session // Reload Yabai Config // <fn><Shift> c ##
-fn + shift - c : command "$HOME/.yabairc"
+fn + shift - c : command "$HOME/.config/yabai/yabairc"
 
 ## Session // Reload Key Bindings // <fn><Shift> r ##
 fn + shift - r : skhd -r
 
-## Session // Restart Yabai // <fn><Ctrl> r ##
-fn + ctrl - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+## Session // Restart Yabai // <fn><Ctrl> c ##
+fn + ctrl - c : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+
+## Session // Restart skhd // <fn><Ctrl> r ##
+fn + ctrl - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.skhd"
 
 ## Session // Reboot // <fn><Shift> b ##
 fn + shift - b : osascript -e 'tell app "loginwindow" to «event aevtrrst»'
 
-## Session // Force Reboot // <fn><Shift><Control> b ##
+## Session // Force Reboot // <fn><Shift><Ctrl> b ##
 fn + shift + ctrl - b : osascript -e 'tell app "System Events" to restart'
 
 ## Session // Sleep // <fn><Shift> s ##
@@ -255,13 +258,16 @@ fn + shift - n : open -R ~
 ## Launch // Terminal // <fn> Enter ##
 # 'fn - return' is kVK_ANSI_KeypadEnter = 0x4C
 # TODO set alacritty to handle term:,ssh: URL schemes then use open -na term://
-fn - 0x4C : open -n -a "/Applications/Alacritty.app"
+fn - 0x4C : open -n -a "Alacritty"
 
 ## Modify // Window Floating Toggle // <fn><Shift> space ##
 fn + shift - space : yabai -m window --toggle float
 
 ## Modify // Window Fullscreen Toggle // <fn> f ##
 fn - f : yabai -m window --toggle zoom-fullscreen
+
+## Modify // Window Native Fullscreen Toggle // <fn><Shift> f ##
+fn + shift - f : yabai -m window --toggle native-fullscreen
 
 ## Session // Exit App // <fn><Shift> q ##
 # !!Currently does not close windows that are missing title bar(more so the WM buttons)
@@ -276,4 +282,4 @@ fn + shift - 0x2A : yabai -m window --insert east   # fn + shift - \
 fn - 0x1B : yabai -m window --insert south  # fn - -
 
 # ## Launch // This Dialog // <fn><Shift> ? ##
-fn + shift - 0x2C : command "${HOME}/bin/remontoire_html.sh"
+fn + shift - 0x2C : open -na "Google Chrome" --args --new-window --app="$(skhd_parse.py -f data)"
