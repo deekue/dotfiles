@@ -37,6 +37,9 @@ default_position = 'top'
 default_height = 30
 
 [[layers]]
+name = 'lang#python'
+
+[[layers]]
 name = 'VersionControl'
 
 [[layers]]
