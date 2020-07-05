@@ -15,3 +15,14 @@ Based on [skhd](https://github.com/koekeishiya/skhd) and [yabai](https://github.
 * The `fn` key is the base modifier.  Only tested on a MacBook, YMMV.  More bindings in progress...
 * `fn + shift + ?` opens the Key Bindings window
 * `fn + return` - opens the [Alacritty](https://github.com/alacritty/alacritty) terminal emulator
+
+### Caveats / ToDos
+* MacOS SIP needs to be disabled for all Yabai features to work
+  * add link to Yabai doc here
+  * mark affected key binds in skhdrc
+  * configure Mission Control hotkeys as alternative
+    * MacOS doesn't add a hotkey when a new Space is created?!
+    * the plist for these hotkeys is opaque and undocumented
+  * use Karabiner-Elements as alternative?
+* current `fn` mapping doesn't work with external PC keyboards :(
+    
