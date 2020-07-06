@@ -27,7 +27,8 @@ VERBOSE = False
 HTML_HEADER = """
 <html>
 <head>
-  <title>Key Bindings</title>
+ <title>Key Bindings</title>
+ <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
 </head>
 <body>
 <ul>
@@ -55,6 +56,33 @@ def readFromIPC(socket):
     pass
 
 
+def parseKeys(line):
+    tokens = []
+    str_builder = []
+
+    for c in line:
+        if c == '<':
+            if len(str_builder) > 0:
+                tokens.append(''.join(str_builder))
+                str_builder.clear()
+            str_builder.append(c)
+        elif c == '>':
+            str_builder.append(c)
+            tokens.append(''.join(str_builder))
+            str_builder.clear()
+        elif c == ' ':
+            if len(str_builder) > 0:
+                tokens.append(''.join(str_builder))
+                str_builder.clear()
+        else:
+            str_builder.append(c)
+
+    if len(str_builder) > 0:
+        tokens.append(''.join(str_builder))
+
+    return tokens
+
+
 def parseLine(line):
     m = LINE_RE.match(line)
     if m is None:
@@ -64,8 +92,7 @@ def parseLine(line):
         return None
     category = groups['category'].strip()
     action = groups['action'].strip()
-    keys = groups['keys'].strip()
-    # TODO parse keys str
+    keys = parseKeys(groups['keys'].strip())
     return (category, action, keys)
 
 
@@ -99,6 +126,24 @@ def outputJSON(tree, pretty=False, file=sys.stdout):
         print(json.dumps(tree), file=file)
 
 
+def formatKeys(keys):
+    formattedKeys = []
+    keys.reverse()
+
+    for key in keys:
+        if key.startswith('<') and key.endswith('>'):
+            css_class = 'metakey'
+            key = key[1:-1]
+        elif '..' in key:
+            css_class = 'rangekey'
+        else:
+            css_class = 'key'
+        escapedKey = html.escape(key).encode(
+            'ascii', 'xmlcharrefreplace').decode()
+        formattedKeys.insert(0, f'<kbd class="{css_class}">{escapedKey}</kbd>')
+    return ''.join(formattedKeys)
+
+
 def outputHTML(tree, file=sys.stdout):
     log('outputHTML')
     print(HTML_HEADER, file=file, end='')
@@ -108,9 +153,7 @@ def outputHTML(tree, file=sys.stdout):
         print(f'<li><h1>{html.escape(category)}</h1><ul>', file=file, end='')
         for action in actions:
             (label, keys) = action.values()
-            escapedKeys = html.escape(keys).encode(
-                'ascii', 'xmlcharrefreplace').decode()
-            print(f'<li>{html.escape(label)} | {escapedKeys}</li>',
+            print(f'<li>{html.escape(label)} | {formatKeys(keys)}</li>',
                   file=file,
                   end='')
         print('</ul></li>', file=file, end='')
@@ -123,8 +166,8 @@ def outputData(tree, file=sys.stdout):
 
     output = StringIO()
     outputHTML(tree, file=output)
-    encodedHTML = base64.encodebytes(output.getvalue().encode())
-    print(f'data:text/html;base64,{encodedHTML.decode()}', file=file)
+    encodedHTML = base64.b64encode(output.getvalue().encode()).decode()
+    print(f'data:text/html;base64,{encodedHTML}', file=file)
 
 
 if __name__ == "__main__":
