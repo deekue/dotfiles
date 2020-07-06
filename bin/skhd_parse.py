@@ -9,9 +9,7 @@
 # https://github.com/regolith-linux/remontoire/blob/master/src/config_parser.vala
 #
 # TODO
-# - handle args, show usage
 # - add heuristic to find common configs?
-# - parse keys string
 
 import argparse
 import html
@@ -40,6 +38,10 @@ HTML_FOOTER = """
 </html>
 """
 
+HTML_CATEGORY_START = '<li><h1>{category}</h1><ul>'
+HTML_CATEGORY_END = '</ul></li>'
+HTML_KEYSPEC = '<li>{label} | {keys}</li>'
+
 
 def log(*args):
     if VERBOSE:
@@ -47,7 +49,7 @@ def log(*args):
 
 
 def readFromFile(filename):
-    """Read config from file, return lines."""
+    """Read config from file, return lines iterator."""
     return open(filename, 'r').readlines
 
 
@@ -138,8 +140,8 @@ def formatKeys(keys):
             css_class = 'rangekey'
         else:
             css_class = 'key'
-        escapedKey = html.escape(key).encode(
-            'ascii', 'xmlcharrefreplace').decode()
+        escapedKey = html.escape(key).encode('ascii',
+                                             'xmlcharrefreplace').decode()
         formattedKeys.insert(0, f'<kbd class="{css_class}">{escapedKey}</kbd>')
     return ''.join(formattedKeys)
 
@@ -150,13 +152,16 @@ def outputHTML(tree, file=sys.stdout):
     # walk tree, convert to HTML UL
     for item in tree:
         (category, actions) = item.values()
-        print(f'<li><h1>{html.escape(category)}</h1><ul>', file=file, end='')
+        print(HTML_CATEGORY_START.format(category=html.escape(category)),
+              file=file,
+              end='')
         for action in actions:
             (label, keys) = action.values()
-            print(f'<li>{html.escape(label)} | {formatKeys(keys)}</li>',
+            print(HTML_KEYSPEC.format(label=html.escape(label),
+                                      keys=formatKeys(keys)),
                   file=file,
                   end='')
-        print('</ul></li>', file=file, end='')
+        print(HTML_CATEGORY_END, file=file, end='')
     print(HTML_FOOTER, file=file, end='')
 
 
