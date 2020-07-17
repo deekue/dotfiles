@@ -65,11 +65,11 @@ fn + shift - e : osascript -e 'tell application "System Events" to log out'
 ## Session // Reload Yabai Config // <fn><shift> c ##
 fn + shift - c : command "$HOME/.config/yabai/yabairc"
 
-## Session // Reload Key Bindings // <fn><shift> r ##
-fn + shift - r : skhd -r
-
 ## Session // Restart Yabai // <fn><control> c ##
 fn + ctrl - c : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+
+## Session // Reload Key Bindings // <fn><shift> r ##
+fn + shift - r : skhd -r
 
 ## Session // Restart skhd // <fn><control> r ##
 fn + ctrl - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.skhd"
@@ -202,7 +202,7 @@ fn + ctrl + shift - 9 : yabai -m window --space 19
 ## Move // Enter Move Mode // <fn> m ##
 fn - m ; move
 
-## Move // Exit Move Mode // esc return ##
+## Move // Exit Move Mode // esc or return ##
 move < hyper - escape ; default
 move < return : echo "Exiting move mode"; skhd --key "hyper - escape"
 move < escape : echo "Exiting move mode"; skhd --key "hyper - escape"
@@ -225,7 +225,7 @@ move < right : yabai -m window --move rel:20:0
 ## Resize // Enter Resize Mode // <fn> r ##
 fn - r ; resize
 
-## Resize // Exit Resize Mode // esc return ##
+## Resize // Exit Resize Mode // esc or return ##
 resize < hyper - escape ; default
 resize < return : echo "Exiting resize mode"; skhd --key "hyper - escape"
 resize < escape : echo "Exiting resize mode"; skhd --key "hyper - escape"
@@ -278,7 +278,7 @@ fn + alt - q : command kill -KILL $(yabai -m query --windows --window | jq '.pid
 
 ## Modify // Insert Next Window Vertically // <fn><shift> | ##
 fn + shift - 0x2A : yabai -m window --insert east   # fn + shift - \ 
-## Modify // Insert Next Window Horizontally // <fn> Minus ##
+## Modify // Insert Next Window Horizontally // <fn> - ##
 fn - 0x1B : yabai -m window --insert south  # fn - -
 
 # ## Launch // This Dialog // <fn><shift> ? ##

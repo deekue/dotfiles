@@ -29,18 +29,23 @@ HTML_HEADER = """
  <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
 </head>
 <body>
-<ul>
+ <table>
+  <thead>
+   <tr><th>Action</th><th>Keybinding</th></tr>
+  </thead>
+  <tbody>
 """
 
 HTML_FOOTER = """
-</ul>
+  </tbody>
+ </table>
 </body>
 </html>
 """
 
-HTML_CATEGORY_START = '<li><h1>{category}</h1><ul>'
-HTML_CATEGORY_END = '</ul></li>'
-HTML_KEYSPEC = '<li>{label} | {keys}</li>'
+HTML_CATEGORY_START = '<tbody id="{category}"><tr><th>{category}</th><th>&nbsp;</th></tr>'
+HTML_CATEGORY_END = '</tbody>'
+HTML_KEYSPEC = '<tr><td>{label}</td><td>{keys}</td></tr>'
 
 
 def log(*args):
@@ -128,6 +133,9 @@ def outputJSON(tree, pretty=False, file=sys.stdout):
         print(json.dumps(tree), file=file)
 
 
+def escapeKey(key):
+    return html.escape(key).encode('ascii', 'xmlcharrefreplace').decode()
+
 def formatKeys(keys):
     formattedKeys = []
     keys.reverse()
@@ -135,14 +143,18 @@ def formatKeys(keys):
     for key in keys:
         if key.startswith('<') and key.endswith('>'):
             css_class = 'metakey'
-            key = key[1:-1]
+            key = key[1:-1] # strip <>
+            key = f'<kbd class="{css_class}">{escapeKey(key)}</kbd>'
         elif '..' in key:
             css_class = 'rangekey'
+            (range_start, range_end) = key.split('..')
+            key = f'<span class="{css_class}"> <kbd>{escapeKey(range_start)}</kbd>..<kbd>{escapeKey(range_end)}</kbd></span>'
+        elif key == "or":
+            key = f' or '
         else:
-            css_class = 'key'
-        escapedKey = html.escape(key).encode('ascii',
-                                             'xmlcharrefreplace').decode()
-        formattedKeys.insert(0, f'<kbd class="{css_class}">{escapedKey}</kbd>')
+            key = f' <kbd>{escapeKey(key)}</kbd>'
+
+        formattedKeys.insert(0, key)
     return ''.join(formattedKeys)
 
 
