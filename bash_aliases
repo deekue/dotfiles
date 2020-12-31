@@ -1,12 +1,13 @@
 
 # MacOS {{{
-alias tf=terraform
-alias xclip=pbcopy
+if [[ "$(uname -a)" == "Darwin" ]]; then
+  alias xclip=pbcopy
+  alias tf=terraform
 
-function get_bundle {
-  /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
-}
-
+  function get_bundle {
+    /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
+  }
+fi
 # }}}
 
 function pussh_term {
@@ -41,6 +42,11 @@ function inpath {
 
 function term_in_dircolors {
   echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne '/^TERM / s///p')
+}
+
+function pussh_term {
+  : "${1:?Usage: pussh_term host}"
+  infocmp | ssh "$@" 'tic -x /dev/stdin'
 }
 
 function check_zerotier() {
