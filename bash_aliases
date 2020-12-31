@@ -1,8 +1,17 @@
 
+# MacOS {{{
+alias tf=terraform
 alias xclip=pbcopy
 
 function get_bundle {
   /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
+}
+
+# }}}
+
+function pussh_term {
+  : "${1:?Usage: pussh_term host}"
+  infocmp | ssh "$@" 'tic -x /dev/stdin'
 }
 
 function add_bin_path {
@@ -40,11 +49,6 @@ function check_zerotier() {
     sudo service zerotier-one start
   fi
 }
-
-function seedbox_tunnel() {
-  sudo openvpn --config ~/.config/rapidseedbox/full-tunnel.ovpn
-}
-
 
 function chiron() {
   gcloud compute --project "perfect-trilogy-461" ssh --zone "us-central1-a" "chiron"
@@ -113,6 +117,10 @@ function tmux_init() {
   esac
 }
 # }}}
+
+if [[ -r "$HOME/.bash_aliases.$HOSTNAME" ]] ; then
+  source "$HOME/.bash_aliases.$HOSTNAME"
+fi
 
 # vim:set foldmethod=marker:
 
