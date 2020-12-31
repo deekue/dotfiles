@@ -84,6 +84,9 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 # Set background to dark-grey color
 #sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '/Library/Desktop Pictures/Solid Colors/Solid Gray Dark.png'"
 
+# disable Window tabbing # yabai
+defaults write NSGlobalDomain NSWindowTabbingEnabled -bool false
+
 ###############################################################################
 # SSD-specific tweaks                                                         #
 ###############################################################################
@@ -286,7 +289,7 @@ defaults write com.apple.finder DisableAllAnimations -bool true
 ###############################################################################
 
 # Set the icon size of Dock items
-defaults write com.apple.dock tilesize -int 30
+defaults write com.apple.dock tilesize -int 20
 
 # Enable spring loading for all Dock items
 # defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
@@ -301,13 +304,13 @@ defaults write com.apple.dock expose-animation-duration -float 0.15
 # (i.e. switch to old Exposé behavior)
 # defaults write com.apple.dock expose-group-by-app -bool false
 
-# Remove the auto-hiding Dock delay
-# defaults write com.apple.dock autohide-delay -float 0
+# Extend the auto-hiding Dock delay
+defaults write com.apple.dock autohide-delay -float 3
 # Remove the animation when hiding/showing the Dock
-# defaults write com.apple.dock autohide-time-modifier -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0
 
 # Automatically hide and show the Dock
-# defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide -bool true
 
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
