@@ -1,0 +1,17 @@
+#
+# shortcuts for services 
+#   ~/Library/Preferences/pbs.plist
+#
+# System Preferences > Keyboard > Shortcuts > App Shortcuts
+#   ~/Library/Preferences/.GlobalPreferences.plist
+# 
+# the property lists of applications (like ~/Library/Preferences/com.apple.iTunes.plist or ~/Library/Containers/com.apple.chess/Data/Library/Preferences/com.apple.chess.plist
+
+# defaults read NSGlobalDomain NSUserKeyEquivalents
+# Key mappings I have discovered in this string syntax:
+#  command = $
+#  control = ^
+#  option = ~
+#  shift = @
+
+# ~/Library/Preferences/com.apple.symbolichotkeys.plist
