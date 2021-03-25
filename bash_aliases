@@ -1,4 +1,20 @@
 
+# MacOS {{{
+if [[ "$(uname -a)" == "Darwin" ]]; then
+  alias xclip=pbcopy
+  alias tf=terraform
+
+  function get_bundle {
+    /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
+  }
+fi
+# }}}
+
+function pussh_term {
+  : "${1:?Usage: pussh_term host}"
+  infocmp | ssh "$@" 'tic -x /dev/stdin'
+}
+
 function add_bin_path {
   local where="$1"
   local new_bin_path="$2"
@@ -20,17 +36,25 @@ function add_bin_path {
   fi
 }
 
+function inpath {
+  type "$@" > /dev/null 2>&1
+}
+
+function term_in_dircolors {
+  echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne '/^TERM / s///p')
+}
+
+function pussh_term {
+  : "${1:?Usage: pussh_term host}"
+  infocmp | ssh "$@" 'tic -x /dev/stdin'
+}
+
 function check_zerotier() {
   if ! zerotier-cli info | grep -q ONLINE ; then
     echo "starting ZeroTier"
     sudo service zerotier-one start
   fi
 }
-
-function seedbox_tunnel() {
-  sudo openvpn --config ~/.config/rapidseedbox/full-tunnel.ovpn
-}
-
 
 function chiron() {
   gcloud compute --project "perfect-trilogy-461" ssh --zone "us-central1-a" "chiron"
@@ -99,6 +123,10 @@ function tmux_init() {
   esac
 }
 # }}}
+
+if [[ -r "$HOME/.bash_aliases.$HOSTNAME" ]] ; then
+  source "$HOME/.bash_aliases.$HOSTNAME"
+fi
 
 # vim:set foldmethod=marker:
 

@@ -1,0 +1,73 @@
+#=============================================================================
+# dark_powered.toml --- dark powered configuration example for SpaceVim
+# Copyright (c) 2016-2017 Wang Shidong & Contributors
+# Author: Wang Shidong < wsdjeg at 163.com >
+# URL: https://spacevim.org
+# License: GPLv3
+#=============================================================================
+
+# All SpaceVim option below [option] section
+[options]
+    # set spacevim theme. by default colorscheme layer is not loaded,
+    # if you want to use more colorscheme, please load the colorscheme
+    # layer
+    colorscheme = "NeoSolarized"
+    colorscheme_bg = "dark"
+    # Disable guicolors in basic mode, many terminal do not support 24bit
+    # true colors
+    enable_guicolors = true
+    # Disable statusline separator, if you want to use other value, please
+    # install nerd fonts
+    statusline_separator = "arrow"
+    statusline_inactive_separator = "arrow"
+    buffer_index_type = 4
+    enable_tabline_filetype_icon = true
+    enable_statusline_mode = false
+# vimcompatible = true 
+
+# Enable autocomplete layer
+[[layers]]
+name = 'autocomplete'
+auto_completion_return_key_behavior = "complete"
+auto_completion_tab_key_behavior = "smart"
+
+[[layers]]
+name = 'shell'
+default_position = 'top'
+default_height = 30
+
+[[layers]]
+name = 'lang#python'
+
+[[layers]]
+name = 'lang#dockerfile'
+
+[[layers]]
+name = 'lsp'
+[layers.override_cmd]
+  dockerfile = ["docker", "run", "rcjsuen/docker-langserver", "--", "--stdio"]
+
+[[layers]]
+name = 'VersionControl'
+
+[[layers]]
+name = 'colorscheme'
+
+[[layers]]
+name = 'git'
+git-plugin = 'fugitive'
+
+[[layers]]
+name = 'github'
+
+[[layers]]
+name = "ui"
+enable_sidebar = true
+
+[[layers]]
+name = "tmux"
+tmux_navigator_modifier = "alt"
+
+[[custom_plugins]]
+name = "aliou/bats.vim"
+merged = false
