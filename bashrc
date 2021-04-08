@@ -36,7 +36,12 @@ fi
 # }}}
 # enable colour, if available {{{
 if inpath dircolors && term_in_dircolors ; then
-  eval "$(dircolors -b)"
+  if [[ "$TERM" == "alacritty" ]] ; then
+    # alacritty isn't in ncurses lib yet
+    eval "$(TERM=xterm-256color dircolors -b)"
+  else
+    eval "$(dircolors -b)"
+  fi
   if ls --version 2>&1 > /dev/null ; then  
     # GNU ls
     alias ls='ls --color=auto'
@@ -79,35 +84,8 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ] ; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# dynamic titles for screen
-# \033k<title>\033\\ is an escape sequence that screen uses to set window titles
-# \001 and \002 delimit a sequence of non-printing characters to bash so this
-# doesn't screw things up (equivalent to \[ and \] but will work even when
-# substituted into PS1)
-title_escape() {
-  case "$TERM" in
-    screen*) printf '\001\033k%s\033\\\002' "$1";;
-    *) echo ""
-  esac
-}
-
-# stuff for abbreviating PS1 for some paths
-# with title_escape calls
-abbrev_pwd() {
-  case "$PWD" in
-    $HOME|$HOME/*)
-      printf "~%s%s" "$(title_escape \~)" "${PWD#$HOME}"
-      ;;
-    *)
-      printf "%s%s" "$PWD" "$(title_escape -)"
-      ;;
-  esac
-}
-
 if [[ -n "$PS1" ]]; then
-  if type dircolors > /dev/null 2>&1 \
-    && echo "$TERM" | grep -qf <(dircolors --print-database | sed -ne '/^TERM/ s///p'); then
-    # TODO detect color on MacOS?
+  if inpath dircolors && term_in_dircolors ; then
     PS1='\[\e[01;32m\]\t \u@\h\[\e[00m\]:\[\e[01;34m\]$(abbrev_pwd)\[\e[00m\]$(__git_ps1)\$ '
   else
     PS1='\t \u@\h:$(abbrev_pwd)$(__git_ps1)\$ '
@@ -154,7 +132,7 @@ add_bin_path pre /home/apathy/tmp/google-cloud-sdk/bin
 
 
 # strap:straprc:begin
-[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
+#[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
 # strap:straprc:end
 
 # screen/tmux init {{{
@@ -166,6 +144,10 @@ elif [ -n "$TMUX" ] ; then
   tmux_init
 fi
 # }}}
+
+if [[ -r "$HOME/.bashrc.$HOSTNAME" ]] ; then
+  . "$HOME/.bashrc.$HOSTNAME"
+fi
 
 # Tmux/Screen auto start for SSH sessions {{{
 if [[ -n "$SSH_TTY" ]] ; then

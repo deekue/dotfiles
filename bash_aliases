@@ -41,7 +41,37 @@ function inpath {
 }
 
 function term_in_dircolors {
-  echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne '/^TERM / s///p')
+  if [[ "$TERM" == "alacritty" ]] ; then
+    true
+  else
+    # TODO fix this, works poorly.  dircolors db uses globbing not regex
+    echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne '/^TERM / s///p')
+  fi
+}
+
+# dynamic titles for screen
+# \033k<title>\033\\ is an escape sequence that screen uses to set window titles
+# \001 and \002 delimit a sequence of non-printing characters to bash so this
+# doesn't screw things up (equivalent to \[ and \] but will work even when
+# substituted into PS1)
+title_escape() {
+  case "$TERM" in
+    screen*) printf '\001\033k%s\033\\\002' "$1";;
+    *) echo ""
+  esac
+}
+
+# stuff for abbreviating PS1 for some paths
+# with title_escape calls
+abbrev_pwd() {
+  case "$PWD" in
+    $HOME|$HOME/*)
+      printf "~%s%s" "$(title_escape \~)" "${PWD#$HOME}"
+      ;;
+    *)
+      printf "%s%s" "$PWD" "$(title_escape -)"
+      ;;
+  esac
 }
 
 function pussh_term {
