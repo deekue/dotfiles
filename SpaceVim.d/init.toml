@@ -23,7 +23,8 @@
     buffer_index_type = 4
     enable_tabline_filetype_icon = true
     enable_statusline_mode = false
-# vimcompatible = true 
+    # vimcompatible = true 
+    filemanager = "nerdtree"
 
 # Enable autocomplete layer
 [[layers]]
@@ -37,15 +38,29 @@ default_position = 'top'
 default_height = 30
 
 [[layers]]
-name = 'lang#python'
-
-[[layers]]
 name = 'lang#dockerfile'
 
 [[layers]]
+name = 'lang#go'
+
+[[layers]]
+name = 'lang#groovy'
+
+[[layers]]
+name = 'lang#kotlin'
+
+[[layers]]
+name = 'lang#python'
+
+[[layers]]
 name = 'lsp'
+filetypes = [
+    'kotlin',
+    'dockerfile',
+  ]
 [layers.override_cmd]
-  dockerfile = ["docker", "run", "rcjsuen/docker-langserver", "--", "--stdio"]
+  dockerfile = ["lsp-dockerfile.sh"]
+  kotlin = ["lsp-kotlin.sh"]
 
 [[layers]]
 name = 'VersionControl'
@@ -63,6 +78,9 @@ name = 'github'
 [[layers]]
 name = "ui"
 enable_sidebar = true
+
+[[layers]]
+name = "unite"
 
 [[layers]]
 name = "tmux"

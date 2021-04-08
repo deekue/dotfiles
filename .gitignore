@@ -1,5 +1,6 @@
 *.swp
 *.un~
+SpaceVim.d/.netrwhist
 vim/.netrwhist
 vim/user.vim
 vim/undodir/*
