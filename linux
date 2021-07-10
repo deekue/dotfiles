@@ -1,0 +1,7 @@
+#!usr/bin/env bash
+
+# Gnome: use CapsLock as Escape
+#dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+# caps:escape_shifted_capslock Make unmodified Caps Lock an additional Esc, but Shift + Caps Lock behaves like regular Caps Lock
+# compose:ralt Make right Alt key the Compose key (for accents etc)
+dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape_shifted_capslock', 'compose:ralt']"
