@@ -1,14 +1,40 @@
+[core]
+	autocrlf = input
+
 [diff]
-    external = git_diff_wrapper
+  tool = vimdiff
+	prompt = false
+  # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
+  # instead of a/b/c/d as prefixes for patches
+  # https://github.com/nikhgupta/dotfiles/blob/7a78258eeec49f17fdb959dd6a331e24c8c1c5a7/user/.gitconfig#L185
+  mnemonicprefix = true
+
 [difftool]
 	prompt = false
-[pager]
-  diff =
-[push]
-	default = simple
+
 [merge]
 	conflictStyle = diff3
-	tool = vimdiff
+	tool = fugitive
+
+[mergetool "fugitive"]
+  cmd = vim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+
+# SourceTree
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[pager]
+  diff =
+
+[push]
+	default = simple
+
+[commit]
+	template = /Users/daniel.quinlan/.stCommitMsg
 
 # per https://groups.google.com/forum/m/#!topic/binary-transparency/f-BI4o8HZW0
 # for $deity's sake, check that anything we're getting is complete and sane on a regular basis 
@@ -26,18 +52,22 @@
 	br = branch
 	co = checkout
 	df = diff
-	gr = log --graph --full-history --color --pretty=format:'%C(red)%h%x09%x1b%x1b %Creset%x20%<(80,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%C(black)%d%Creset' --date=relative -n 10
-	ll = log --color --pretty=oneline -n 10
+	grn = log --graph --full-history --color --pretty=format:'%C(red)%h%x09%x1b%x1b %Creset%x20%<(80,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%C(black)%d%Creset' --date=relative -n 
+	gr = grn 20
+	lln = log --color --pretty=oneline -n 
+	ll = lln 20
+  pullorigin = pull --rebase origin
+  po = pull --rebase origin
+  bu = push origin HEAD
+  prod = commit --allow-empty -m'empty commit to prod Jenkins'
+  la = "!git config -l | sed -ne '/^alias./ s///p'"
+  mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
 
-[core]
-	autocrlf = input
-	excludesfile = /Users/danielquinlan/.gitignore_global
 [branch]
 	autosetupmerge = always
-[credential]
-	helper = store
-[github]
-	user = deekue
-[user]
-	email = daniel@chaosengine.net
-	name = DQ
+
+[url "https://github.com/"]
+  insteadOf = "gh:"
+
+[include]
+  path = .gitconfig.user
