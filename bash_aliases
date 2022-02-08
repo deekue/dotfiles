@@ -44,8 +44,7 @@ function term_in_dircolors {
   if [[ "$TERM" == "alacritty" ]] ; then
     true
   else
-    # TODO fix this, works poorly.  dircolors db uses globbing not regex
-    echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne '/^TERM / s///p')
+    echo "${1:-$TERM}" | grep -qf <(dircolors --print-database | sed -ne 's/\*/.*/g; /^TERM / s///p')
   fi
 }
 
@@ -89,6 +88,37 @@ function check_zerotier() {
 function chiron() {
   gcloud compute --project "perfect-trilogy-461" ssh --zone "us-central1-a" "chiron"
 }
+
+# git {{{
+alias cdgr='cd "$(git rev-parse --show-toplevel)"'
+# }}}
+# k8s {{{
+alias k='kubectl ${K8S_NAMESPACE:+--namespace $K8S_NAMESPACE}'
+complete -F __start_kubectl k
+function kpod {
+  #k -n "${1:?Usage: kpod namespace}" get pods -o jsonpath='{.items[0].metadata.name}'
+  k get pods -o jsonpath='{.items[0].metadata.name}'
+}
+
+function kex {
+  #k -n "${1:?Usage: kex namespace}" exec -it "$(kpod $1)" -- bash
+  k exec -it "$(kpod)" -- bash
+}
+
+function kcn {
+  local -r new_namespace="${1:?arg1 is new k8s namespace}"
+
+  export K8S_NAMESPACE="$new_namespace"
+}
+
+function __k8s_ps1 {
+  if [[ -n "${K8S_NAMESPACE}" ]] ; then
+    echo -n "(${K8S_NAMESPACE})"
+  fi
+}
+
+#export PS1='[\u@\h \W]$(__k8s_ps1)\$ '
+# }}}
 
 # Backups {{{
 function backup() {

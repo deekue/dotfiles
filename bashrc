@@ -24,7 +24,7 @@ fi
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+  . ~/.bash_aliases
 fi
 
 # }}}
@@ -46,6 +46,7 @@ if inpath dircolors && term_in_dircolors ; then
     # GNU ls
     alias ls='ls --color=auto'
   fi
+  export LESS="R"
 fi
 if uname -a | grep -q Darwin ; then
   export CLICOLOR=yknot
@@ -112,7 +113,7 @@ set -o vi
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+inpath lesspipe && eval "$(lesspipe)"
 
 add_bin_path pre "$HOME/bin"
 add_bin_path post "$HOME/Library/Python/3.7/bin"
@@ -126,9 +127,9 @@ add_bin_path pre "$HOME/src/go/bin"
 [ -r ~/.aws/bashrc ] && . ~/.aws/bashrc
 
 # Google Cloud SDK.
-add_bin_path pre /home/apathy/tmp/google-cloud-sdk/bin
+add_bin_path pre "$HOME/tmp/google-cloud-sdk/bin"
 # The next line enables bash completion for gcloud.
-#source /home/apathy/tmp/google-cloud-sdk/arg_rc
+[ -r $HOME/tmp/google-cloud-sdk/arg_rc ] && source $HOME/tmp/google-cloud-sdk/arg_rc
 
 
 # strap:straprc:begin
@@ -138,7 +139,7 @@ add_bin_path pre /home/apathy/tmp/google-cloud-sdk/bin
 # screen/tmux init {{{
 
 # screen/pane auto config {{{
-if [ "${TERM:0:6}" == "screen" ]; then
+if [[ "${TERM:0:6}" == "screen" ]]; then
   screen_init
 elif [ -n "$TMUX" ] ; then
   tmux_init
