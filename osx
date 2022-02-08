@@ -145,6 +145,41 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 # Use F1, F2, etc. keys as standard function keys
 defaults write NSGlobalDomain com.apple.keyboard.fnState 1
 
+# Remap Home and End Buttons for External Keyboard on Mac
+# https://www.iexplain.org/remap-home-and-end-buttons-for-external-keyboard-on-mac/
+if [[ ! -d ~/Library/KeyBindings ]] ; then
+  mkdir -p ~/Library/KeyBindings
+cat <<EOF > ~/Library/KeyBindings/DefaultKeyBinding.dict
+{
+    /* Remap Home / End keys */
+
+    /* Home Button*/
+    "\UF729" = "moveToBeginningOfLine:"; 
+
+    /* End Button */
+    "\UF72B" = "moveToEndOfLine:"; 
+
+    /* Shift + Home Button */
+    "$\UF729" = "moveToBeginningOfLineAndModifySelection:"; 
+
+    /* Shift + End Button */
+    "$\UF72B" = "moveToEndOfLineAndModifySelection:"; 
+    
+    /* Ctrl + Home Button */
+    "^\UF729" = "moveToBeginningOfDocument:";
+ 
+    /* Ctrl + End Button */
+    "^\UF72B" = "moveToEndOfDocument:";
+ 
+    /* Shift + Ctrl + Home Button */
+    "$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:";
+
+    /* Shift + Ctrl + End Button*/
+    "$^\UF72B" = "moveToEndOfDocumentAndModifySelection:"; 
+}
+EOF
+fi
+
 # Shortcuts
 #
 # see: https://support.apple.com/en-us/HT201236
