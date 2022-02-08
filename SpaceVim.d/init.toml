@@ -24,7 +24,8 @@
     enable_tabline_filetype_icon = true
     enable_statusline_mode = false
     # vimcompatible = true 
-    filemanager = "nerdtree"
+    #filemanager = "nerdtree"
+    bootstrap_before = 'deekue#before'
 
 # Enable autocomplete layer
 [[layers]]
@@ -43,23 +44,34 @@ name = 'lang#dockerfile'
 [[layers]]
 name = 'lang#go'
 
+#[[layers]]
+#name = 'lang#groovy'
+
 [[layers]]
-name = 'lang#groovy'
+name = 'lang#java'
+# brew install google-java-format
+java_formatter_jar = '/usr/local/var/homebrew/linked/google-java-format/libexec/google-java-format.jar'
 
 [[layers]]
 name = 'lang#kotlin'
 
 [[layers]]
 name = 'lang#python'
+enabled_linters = ['python', 'pylint']
 
 [[layers]]
 name = 'lsp'
 filetypes = [
-    'kotlin',
     'dockerfile',
+    'go',
+    'java',
+    'kotlin',
+    'python',
   ]
 [layers.override_cmd]
   dockerfile = ["lsp-dockerfile.sh"]
+  go = ["gopls"]
+  java = ["lsp-java.sh"]
   kotlin = ["lsp-kotlin.sh"]
 
 [[layers]]
@@ -80,7 +92,8 @@ name = "ui"
 enable_sidebar = true
 
 [[layers]]
-name = "unite"
+#name = "unite"
+name = "denite"
 
 [[layers]]
 name = "tmux"
@@ -89,3 +102,6 @@ tmux_navigator_modifier = "alt"
 [[custom_plugins]]
 name = "aliou/bats.vim"
 merged = false
+
+[[custom_plugins]]
+name = "tpope/vim-projectionist"

@@ -7,7 +7,7 @@ syntax on
 filetype plugin indent on
 
 " keep undo files in one place
-set undodir=~/.vim/undodir
+set undodir=~/.vim_back/undodir
 
 " reasonable defaults for indentation
 set autoindent nocindent nosmartindent
@@ -140,4 +140,4 @@ nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 
 " load local overrides
-source ~/.vim/user.vim
+source ~/.vim_back/user.vim
