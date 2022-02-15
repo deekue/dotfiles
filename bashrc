@@ -31,6 +31,10 @@ fi
 
 # Security stuff (eg. ssh etc) {{{
 if uname -a | grep -q Darwin ; then
+  SecretAgentSock="$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
+  if [[ -S "$SecretAgentSock" ]] ; then
+    export SSH_AUTH_SOCK="$SecretAgentSock"
+  fi
   ssh-add -K
 fi
 # }}}
