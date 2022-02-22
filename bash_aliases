@@ -3,17 +3,13 @@
 if [[ "$(uname -a)" == "Darwin" ]]; then
   alias xclip=pbcopy
   alias tf=terraform
+  alias anpaste='pbpaste | xargs Library/Android/sdk/platform-tools/adb shell input text'
 
   function get_bundle {
     /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
   }
 fi
 # }}}
-
-function pussh_term {
-  : "${1:?Usage: pussh_term host}"
-  infocmp | ssh "$@" 'tic -x /dev/stdin'
-}
 
 function add_bin_path {
   local where="$1"
