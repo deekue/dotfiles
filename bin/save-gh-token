@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+#
+
+username="${1:?username required}"
+credential="${2:?credential required}"
+
+helper="$(git config --global 'credential.helper')"
+
+printf "protocol=https\nhost=github.com\nusername=%s\npassword=%s\n" "$username" "$credential" \
+  | git "credential-${helper}" store
