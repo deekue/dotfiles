@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# wrapper to provide Linux style args
+# inspired by https://apple.stackexchange.com/questions/157893/what-is-the-equivalent-of-netstat-tln-on-os-x/158029
+# TODO parse args and translate
+# TODO print translated cmd (as an option?)
+
+# -n  -n
+# -t  -p tcp
+# -u  -p udp
+# -p  -v      # pid only, not process name
+# -l  -a | sed -ne '1,2p; /LISTEN/p'
+
+# https://stackoverflow.com/questions/4421633/who-is-listening-on-a-given-tcp-port-on-mac-os-x
+# lsof -nP -iTCP | grep LISTEN
+
+# https://stackoverflow.com/questions/52610532/equivalent-of-netstat-pant-with-the-mac
+# netstat -vanp tcp |
+#  awk 'BEGIN { l=0 }
+#       { if (l == 0) { print $0 }
+#         else if (l == 1) { print $0, "process" }
+#         else { "ps -o comm " $9 "| tail -1" | getline line;
+#                print $0, line }
+#         l++; }'
+
+set -eEuo pipefail
+
+case "$1" in
+  -tnlp)
+    /usr/sbin/netstat -p tcp -van | sed -ne '1,2p; /LISTEN/p'
+    ;;
+  -unlp)
+    /usr/sbin/netstat -p udp -van | sed -ne '1,2p; /LISTEN/p'
+    ;;
+  -tlp)
+    /usr/sbin/netstat -p tcp -va | sed -ne '1,2p; /LISTEN/p'
+    ;;
+  -ulp)
+    /usr/sbin/netstat -p udp -va | sed -ne '1,2p; /LISTEN/p'
+    ;;
+  -i)
+    /usr/sbin/netstat -iWl
+    ;;
+  -in)
+    /usr/sbin/netstat -inWl
+    ;;
+  "-6")
+    shift
+    /usr/sbin/netstat -f inet6 "$@"
+    ;;
+  *)
+    echo "add '$@' to $0" >&2
+    echo "trying native netstat" >&2
+    /usr/sbin/netstat "$@"
+    ;;
+esac
+

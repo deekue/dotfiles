@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eEuo pipefail
+
+markdown "$@" <&0 | open -n -a "Google Chrome" --args --new-window "data:text/html;base64,$(base64 -w 0 <&0)"

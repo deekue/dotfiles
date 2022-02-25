@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -eEuo pipefail
+
+bash_comp="$(brew --prefix)/etc/bash_completion.d"
+[[ -d "${bash_comp}" ]] || exit 1
+docker_etc="/Applications/Docker.app/Contents/Resources/etc"
+[[ -d "${docker_etc}" ]] || exit 2
+
+for file in ${docker_etc}/docker{,-compose}.bash-completion ; do
+  ln -svi "${file}" "${bash_comp}/$(basename -s .bash-completion ${file})"
+done

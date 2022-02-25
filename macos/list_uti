@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# list all configured UTIs
+
+lsregister="$(command -v lsregister)"
+[[ -z "$lsregister" ]] && lsregister=/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister
+
+"$lsregister" -dump | sed -ne '/^uti:[[:space:]]*/ s///p' | sort -u

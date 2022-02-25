@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#
+# find the process that's enabled Secure Keyboard Input
+set -eEuo pipefail
+
+ioreg -l -w 0 \
+    | perl -nle 'print $1 if /"kCGSSessionSecureInputPID"=(\d+)/' \
+    | uniq \
+    | xargs -I{} ps -p {} -o comm=
