@@ -60,7 +60,7 @@ fi
 # ENV {{{
 
 export TZ="America/Los_Angeles"
-export EDITOR=vim
+export EDITOR=nvim
 #export PRINTER=something
 #export LPDEST=$PRINTER
 export GREP_COLOR=auto
@@ -69,6 +69,8 @@ export GREP_COLOR=auto
 export WORKON=~/.virtualenvs
 
 export BC_ENV_ARGS="$HOME/.config/bc"
+
+export ZK_NOTEBOOK_DIR="$HOME/src/zk"
 
 # }}}
 
@@ -173,3 +175,5 @@ fi
 # }}}
 
 # vim:set foldmethod=marker:
+
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash

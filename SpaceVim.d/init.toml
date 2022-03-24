@@ -60,6 +60,18 @@ name = 'lang#python'
 enabled_linters = ['python', 'pylint']
 
 [[layers]]
+name = 'lang#typescript'
+#typescript_server_path = ''
+# yarn add -D lehre
+#lehre_path = ''
+
+[[layers]]
+name = 'lang#javascript'
+#auto_fix = true
+#enable_flow_syntax = true
+#format_on_save = true
+
+[[layers]]
 name = 'lsp'
 filetypes = [
     'dockerfile',
@@ -105,3 +117,7 @@ merged = false
 
 [[custom_plugins]]
 name = "tpope/vim-projectionist"
+
+[[custom_plugins]]
+name = "mickael-menu/zk-nvim"
+
