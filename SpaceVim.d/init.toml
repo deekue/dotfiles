@@ -26,6 +26,7 @@
     # vimcompatible = true 
     #filemanager = "nerdtree"
     bootstrap_before = 'deekue#before'
+    bootstrap_after = 'deekue#after'
 
 # Enable autocomplete layer
 [[layers]]
@@ -105,7 +106,8 @@ enable_sidebar = true
 
 [[layers]]
 #name = "unite"
-name = "denite"
+#name = "denite"
+name = "fzf"
 
 [[layers]]
 name = "tmux"
@@ -120,4 +122,5 @@ name = "tpope/vim-projectionist"
 
 [[custom_plugins]]
 name = "mickael-menu/zk-nvim"
+merged = false
 
