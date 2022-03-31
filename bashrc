@@ -93,7 +93,7 @@ fi
 
 if [[ -n "$PS1" ]]; then
   if inpath dircolors && term_in_dircolors ; then
-    PS1='\[\e[01;32m\]\t \u@\h\[\e[00m\]:\[\e[01;34m\]$(abbrev_pwd)\[\e[00m\]$(__git_ps1)\$ '
+    PS1='\[\e[01;32m\]\t\[\e[00m\] \[\e[01;36m\]\u@\h\[\e[00m\]:\[\e[01;34m\]$(abbrev_pwd)\[\e[00m\]\[\e[01;37m\]$(__git_ps1)\[\e[00m\]\$ '
   else
     PS1='\t \u@\h:$(abbrev_pwd)$(__git_ps1)\$ '
   fi
