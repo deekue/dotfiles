@@ -93,9 +93,15 @@ fi
 
 if [[ -n "$PS1" ]]; then
   if inpath dircolors && term_in_dircolors ; then
-    PS1='\[\e[01;32m\]\t\[\e[00m\] \[\e[01;36m\]\u@\h\[\e[00m\]:\[\e[01;34m\]$(abbrev_pwd)\[\e[00m\]\[\e[01;37m\]$(__git_ps1)\[\e[00m\]\$ '
+    PS1='\[\e[01;32m\]\t\[\e[00m\] \[\e[01;36m\]\u@\h\[\e[00m\]:\[\e[01;34m\]$(abbrev_pwd)\[\e[00m\]\$ '
+    if [[ "$(type -t __git_ps1)" == "function" ]]; then
+       PS1='\[\e[01;32m\]\t\[\e[00m\] \[\e[01;36m\]\u@\h\[\e[00m\]:\[\e[01;34m\]$(abbrev_pwd)\[\e[00m\]\[\e[01;37m\]$(__git_ps1)\[\e[00m\]\$ '
+    fi
   else
-    PS1='\t \u@\h:$(abbrev_pwd)$(__git_ps1)\$ '
+    PS1='\t \u@\h:$(abbrev_pwd)\$ '
+    if [[ "$(type -t __git_ps1)" == "function" ]]; then
+      PS1='\t \u@\h:$(abbrev_pwd)$(__git_ps1)\$ '
+    fi
   fi
   PS1="${debian_chroot:+($debian_chroot)}$PS1"
 fi
