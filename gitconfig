@@ -51,6 +51,9 @@
   la = "!git config -l | sed -ne '/^alias./ s///p'"
   mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
 
+[core]
+	autocrlf = input
+	excludesfile = ~/.gitignore_global
 [branch]
 	autosetupmerge = always
 
