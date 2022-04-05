@@ -143,6 +143,8 @@ add_bin_path pre "$HOME/tmp/google-cloud-sdk/bin"
 # The next line enables bash completion for gcloud.
 [ -r $HOME/tmp/google-cloud-sdk/arg_rc ] && source $HOME/tmp/google-cloud-sdk/arg_rc
 
+# locally installed pip binaries
+add_bin_path pre "$HOME/.local/bin"
 
 # strap:straprc:begin
 #[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
@@ -162,12 +164,40 @@ if [[ -r "$HOME/.bashrc.$HOSTNAME" ]] ; then
   . "$HOME/.bashrc.$HOSTNAME"
 fi
 
-# Tmux/Screen auto start for SSH sessions {{{
+# SSH sessions {{{
 if [[ -n "$SSH_TTY" ]] ; then
-  # TODO detect screen vs tmux
-  #if [ "${TERM:0:6}" != "screen" ]; then
+  # use ssh-agent from outside the screen session {{{
+  SCREEN_SSH_AUTH_SOCK="$HOME/.ssh/screen.auth.sock"
+  case "$TERM" in
+    screen*)
+      if [ -L "$SCREEN_SSH_AUTH_SOCK" ] ; then
+        export SSH_AUTH_SOCK="$SCREEN_SSH_AUTH_SOCK"
+      fi
+      ;;
+    *)
+      if [[ -n "$TMUX" ]] ; then
+        if [ -L "$SCREEN_SSH_AUTH_SOCK" ] ; then
+          export SSH_AUTH_SOCK="$SCREEN_SSH_AUTH_SOCK"
+        fi
+      else
+        # not in a screen/tmux session, if the socket exists symlink it
+        if [ -n "$SSH_AUTH_SOCK" ] ; then
+          ln -sf "$SSH_AUTH_SOCK" "$SCREEN_SSH_AUTH_SOCK"
+        fi
+      fi
+      ;;
+  esac # }}}
+  # Tmux/Screen auto start {{{
   if ! type tmux 2>/dev/null ; then
-    echo tmux not found, sadness ensues
+    # no tmux :(
+    if [ "${TERM:0:6}" != "screen" ]; then
+      # set window title
+      echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
+
+      # connect to session "main" or create a new one if not found
+      screen -x -s main
+      exit
+    fi
   elif [[ -z "$TMUX" ]] ; then
     # set window title
     echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
@@ -175,7 +205,7 @@ if [[ -n "$SSH_TTY" ]] ; then
     # connect to session "main" or create a new one if not found
     tmux new -A -s main
     exit # exit on detach or exit
-  fi
+  fi  # }}}
 fi
 # }}}
 # }}}
