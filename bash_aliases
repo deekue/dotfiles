@@ -1,12 +1,40 @@
 
-# MacOS {{{
-if [[ "$(uname -a)" == "Darwin" ]]; then
+# MacOS specific {{{
+if [[ "$(uname -s)" == "Darwin" ]]; then
   alias xclip=pbcopy
   alias tf=terraform
   alias anpaste='pbpaste | xargs Library/Android/sdk/platform-tools/adb shell input text'
 
   function get_bundle {
     /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
+  }
+fi
+# }}}
+
+# Linux specific {{{
+if [[ "$(uname -s)" == "Linux" ]]; then
+  function iwif {
+    local link="$(ip -brief link show wlp0s20f3)"
+    echo "${link%%[[:space:]]*}"
+  }
+fi
+# }}}
+
+# Chrome shortcuts {{{
+export GOOGLE_CHROME=google-chrome-unstable
+if command -v "${GOOGLE_CHROME}" > /dev/null ; then
+#export GOOGLE_CHROME_PROFILE=
+  function gmail {
+    $GOOGLE_CHROME --app=https://gmail.com --name gMail
+  }
+  function gcal {
+    $GOOGLE_CHROME --app=https://calendar.google.com --name "gCalendar"
+  }
+  function gchat {
+    $GOOGLE_CHROME --app=https://hangouts.google.com --name "gChat"
+  }
+  function gvoice {
+    $GOOGLE_CHROME --app=https://hangouts.google.com --name "gVoice"
   }
 fi
 # }}}
@@ -80,6 +108,16 @@ function check_zerotier() {
     sudo service zerotier-one start
   fi
 }
+
+# Yubikey  {{{
+function yk_otp_toggle {
+  if ykman config usb --list | grep -qi otp ; then
+    ykman config usb --enable otp
+  else
+    ykman config usb --disable otp
+  fi
+}
+# }}}
 
 function chiron() {
   gcloud compute --project "perfect-trilogy-461" ssh --zone "us-central1-a" "chiron"
