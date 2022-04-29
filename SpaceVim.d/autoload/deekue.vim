@@ -4,6 +4,8 @@ function! deekue#before() abort
   let g:github_dashboard = { 'username': 'dq-dd', 'password': $VIM_GITA_GITHUB_TOKEN }
   let g:gista#client#default_username = 'dq-dd'
 
+  let g:neoformat_enabled_javascript = ['npxprettier']
+
   if has('nvim')
     call SpaceVim#custom#SPCGroupName(['z'], '+ZkGroup')
     call SpaceVim#custom#SPC('nore', ['z', 'n'], ":ZkNew { title = vim.fn.input('Title: ') }", 'Create a new note after asking for its title', 1)
