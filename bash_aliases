@@ -1,6 +1,6 @@
 
-# MacOS specific {{{
-if [[ "$(uname -s)" == "Darwin" ]]; then
+# MacOS {{{
+if [[ "$PLATFORM" == "macos" ]] ; then
   alias xclip=pbcopy
   alias tf=terraform
   alias anpaste='pbpaste | xargs Library/Android/sdk/platform-tools/adb shell input text'
@@ -12,7 +12,7 @@ fi
 # }}}
 
 # Linux specific {{{
-if [[ "$(uname -s)" == "Linux" ]]; then
+if [[ "$PLATFORM" == "Linux" ]]; then
   function iwif {
     local link="$(ip -brief link show wlp0s20f3)"
     echo "${link%%[[:space:]]*}"

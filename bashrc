@@ -6,6 +6,18 @@ case $- in
     *) return;;
 esac
 
+case "$(uname -s)" in
+  Darwin)
+    export PLATFORM=macos
+    ;;
+  Linux|linux)
+    export PLATFORM=linux
+    ;;
+  *)
+    unset PLATFORM
+    ;;
+esac
+
 # Source global definitions
 if [ -f /etc/bashrc ] ; then
   . /etc/bashrc
@@ -30,7 +42,7 @@ fi
 # }}}
 
 # Security stuff (eg. ssh etc) {{{
-if uname -a | grep -q Darwin ; then
+if [[ "$PLATFORM" == "macos" ]] ; then
   SecretAgentSock="$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
   if [[ -S "$SecretAgentSock" ]] ; then
     export SSH_AUTH_SOCK="$SecretAgentSock"
@@ -52,7 +64,7 @@ if inpath dircolors && term_in_dircolors ; then
   fi
   export LESS="R"
 fi
-if uname -a | grep -q Darwin ; then
+if [[ "$PLATFORM" == "macos" ]] ; then
   export CLICOLOR=yknot
 fi
 # }}}
@@ -125,7 +137,7 @@ set -o vi
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
-inpath lesspipe && eval "$(lesspipe)"
+inpath lesspipe.sh && eval "$(lesspipe.sh)"
 
 add_bin_path pre "$HOME/bin"
 add_bin_path post "$HOME/Library/Python/3.7/bin"
@@ -210,6 +222,6 @@ fi
 # }}}
 # }}}
 
-# vim:set foldmethod=marker:
-
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+
+# vim:set foldmethod=marker:
