@@ -162,6 +162,10 @@ add_bin_path pre "$HOME/.local/bin"
 #[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
 # strap:straprc:end
 
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+
+inpath gh && eval "$(gh completion -s bash)"
+
 # screen/tmux init {{{
 
 # screen/pane auto config {{{
@@ -221,7 +225,5 @@ if [[ -n "$SSH_TTY" ]] ; then
 fi
 # }}}
 # }}}
-
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
 
 # vim:set foldmethod=marker:
