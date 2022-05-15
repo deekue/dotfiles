@@ -33,6 +33,9 @@ if command -v "${GOOGLE_CHROME}" > /dev/null ; then
   function gchat {
     $GOOGLE_CHROME --app=https://hangouts.google.com --name "gChat"
   }
+  function gmeet {
+    $GOOGLE_CHROME --app=https://meet.google.com --name "gMeet"
+  }
   function gvoice {
     $GOOGLE_CHROME --app=https://hangouts.google.com --name "gVoice"
   }
