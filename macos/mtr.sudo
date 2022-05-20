@@ -1,0 +1,3 @@
+# give all members of group admin access to mtr
+Cmnd_Alias MTR = /usr/local/sbin/mtr, /usr/local/sbin/mtr-packet
+%admin	ALL = NOPASSWD: MTR ALL
