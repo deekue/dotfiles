@@ -1,11 +1,21 @@
-#!/bin/sh
-#
+#!/usr/bin/env bash
 #
 
 username="${1:?username required}"
-credential="${2:?credential required}"
+credential="${2}"
+
+while read -s -p "Credential: " credential ; do
+  if [[ -n "${credential}" ]] ; then
+    break
+  fi
+done
 
 helper="$(git config --global 'credential.helper')"
 
-printf "protocol=https\nhost=github.com\nusername=%s\npassword=%s\n" "$username" "$credential" \
-  | git "credential-${helper}" store
+if [[ -n "${credential}" ]] ; then
+  printf "protocol=https\nhost=github.com\nusername=%s\npassword=%s\n" "$username" "$credential" \
+    | git "credential-${helper}" store
+else
+  echo "credential.helper not set in $HOME/.gitconfig" >&2
+  exit 1
+fi
