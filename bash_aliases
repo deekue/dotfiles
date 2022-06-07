@@ -126,6 +126,12 @@ function chiron() {
   gcloud compute --project "perfect-trilogy-461" ssh --zone "us-central1-a" "chiron"
 }
 
+# dns.toys {{{
+function dy {
+  dig +noall +answer +additional "${1:-help}" @dns.toys
+}
+# }}}
+
 # git {{{
 alias cdgr='cd "$(git rev-parse --show-toplevel)"'
 # }}}
