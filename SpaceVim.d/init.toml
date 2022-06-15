@@ -81,6 +81,7 @@ filetypes = [
     'kotlin',
     'python',
   ]
+enabled_clients = ['pylsp']
 [layers.override_cmd]
   dockerfile = ["lsp-dockerfile.sh"]
   go = ["gopls"]
