@@ -47,7 +47,7 @@ if [[ "$PLATFORM" == "macos" ]] ; then
   if [[ -S "$SecretAgentSock" ]] ; then
     export SSH_AUTH_SOCK="$SecretAgentSock"
   fi
-  ssh-add -K
+  ssh-add --apple-use-keychain
 fi
 # }}}
 # enable colour, if available {{{
