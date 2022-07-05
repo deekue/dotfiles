@@ -13,9 +13,36 @@ location_id_re = '^0x[0-9a-f]{2}(?P<bus_num>[0-9a-f]{2})[0-9a-f]+(?: +/ (?P<devi
 
 
 def formatHostController(device):
-    print('TODO: format host controller')
-    # {usb_bus_number, _name, pci_vendor, pci_device}
-    pass
+    # loosely based on Linux lsusb
+    device_num = 1
+    vendor_id = '1d6b'
+    manufacturer = 'Apple Inc.'  # on linux this is '(Linux Foundation)'
+    bus_num = device.get('usb_bus_number', '0x00').strip()
+    host_controller = device.get('host_controller')
+    if 'OHCI' in host_controller:
+        product_id = '0001'
+        speed = '12M'
+    elif 'EHCI' in host_controller:
+        product_id = '0002'
+        speed = '480M'
+    elif 'XHCI' in host_controller:
+        product_id = '0003'
+        speed = '5000M'
+    elif 'VHCI' in host_controller:
+        # Apple T2Bus
+        product_id = '8000'
+        bus_num = '0x00'
+    else:
+        # Unknown
+        product_id = '0000'
+        bus_num = '0x00'
+    location_ID = f'{bus_num}000000'
+    name = device.get('_name', '')
+
+    try:
+        print(f'Bus {int(bus_num, 16):03} Device {device_num:03}: ID {vendor_id}:{product_id} {manufacturer} {name}')
+    except ValueError as e:
+        print(f'ERROR: failed to parse device: {e}', file=sys.stderr)
 
 def parseVendorID(vendor_id_str):
     vendor_id = '0000'
