@@ -1,4 +1,5 @@
 [core]
+	excludesfile = ~/.gitignore_global
 	autocrlf = input
 
 [diff]
@@ -20,9 +21,6 @@
 
 [push]
 	default = simple
-
-[commit]
-	template = /Users/daniel.quinlan/.stCommitMsg
 
 # per https://groups.google.com/forum/m/#!topic/binary-transparency/f-BI4o8HZW0
 # for $deity's sake, check that anything we're getting is complete and sane on a regular basis 
@@ -51,9 +49,6 @@
   la = "!git config -l | sed -ne '/^alias./ s///p'"
   mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
 
-[core]
-	autocrlf = input
-	excludesfile = ~/.gitignore_global
 [branch]
 	autosetupmerge = always
 
