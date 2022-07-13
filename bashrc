@@ -39,6 +39,8 @@ if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
 
+# brew info coreutils
+add_bin_path pre /usr/local/opt/coreutils/libexec/gnubin
 # }}}
 
 # Security stuff (eg. ssh etc) {{{
