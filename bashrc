@@ -111,7 +111,7 @@ export WORKON=~/.virtualenvs
 
 export BC_ENV_ARGS="$HOME/.config/bc"
 
-export ZK_NOTEBOOK_DIR="$HOME/src/zk"
+export ZK_NOTEBOOK_DIR="$HOME/src/zk-data"
 
 # }}}
 
