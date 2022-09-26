@@ -5,6 +5,7 @@ function! deekue#before() abort
   let g:gista#client#default_username = 'dq-dd'
 
   let g:neoformat_enabled_javascript = ['npxprettier']
+  let g:neomake_sh_enabled_makers    = ['shellcheck']
 
   if has('nvim')
     call SpaceVim#custom#SPCGroupName(['z'], '+ZkGroup')
