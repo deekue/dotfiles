@@ -4,6 +4,7 @@ if [[ "$PLATFORM" == "macos" ]] ; then
   alias xclip=pbcopy
   alias tf=terraform
   alias anpaste='pbpaste | xargs Library/Android/sdk/platform-tools/adb shell input text'
+  alias lsregister='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister'
 
   function get_bundle {
     /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
