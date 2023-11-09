@@ -11,10 +11,10 @@
 
 [merge]
 	conflictStyle = diff3
-	tool = fugitive
+#	tool = fugitive
 
-[mergetool "fugitive"]
-  cmd = vim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+#[mergetool "fugitive"]
+#  cmd = vim -f -c \"Gvdiffsplit!\" \"$MERGED\"
 
 [pager]
   diff =
@@ -55,5 +55,11 @@
 [url "https://github.com/"]
   insteadOf = "gh:"
 
-[include]
+[github]
+	user = deekue
+[user]
+	email = daniel@chaosengine.net
+	name = Daniel Quinlan
+
+[includeif "gitdir:~/co"]
   path = .gitconfig.user

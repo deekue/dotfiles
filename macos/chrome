@@ -22,6 +22,12 @@ case "${cmd}" in
   g*)
     args="--app=https://${cmd#?}.google.com/"
     ;;
+  outlook)
+    args="--app=https://outlook.office365.com/mail/inbox"
+    ;;
+  ocal)
+    args="--app=https://outlook.office365.com/calendar/view/workweek"
+    ;;
   *)
     if [[ -n "$1" ]] ; then
       args="--app=$@"

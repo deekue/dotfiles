@@ -31,6 +31,8 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   elif [ -f /usr/local/etc/profile.d/bash_completion.sh ]; then
     . /usr/local/etc/profile.d/bash_completion.sh
+  elif [ -f /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
+    . /opt/homebrew/etc/profile.d/bash_completion.sh
   fi
 fi
 
@@ -39,8 +41,33 @@ if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
 
-# brew info coreutils
-add_bin_path pre /usr/local/opt/coreutils/libexec/gnubin
+if [[ "$PLATFORM" == "macos" ]]; then
+  # brew info coreutils
+  add_bin_path pre /opt/homebrew/opt/coreutils/libexec/gnubin
+
+  # homebrew on Mac ARM
+  add_bin_path pre /opt/homebrew/sbin
+  add_bin_path pre /opt/homebrew/bin force
+
+  # Homebrew Python
+  if command -v python3 > /dev/null ; then
+    python_major_version="$(python3 --version | sed -ne 's/^Python \(3.[0-9]*\).*$/\1/p')"
+    if [[ -n "$python_major_version" ]]; then
+      add_bin_path post "$HOME/Library/Python/$python_major_version/bin"
+    fi
+  fi
+
+  # Homebrew Ruby
+  add_bin_path pre /opt/homebrew/opt/ruby/bin
+  add_bin_path post "$HOME/.gem/ruby/3.1.0/bin"
+
+  # For compilers to find ruby you may need to set:
+  if [[ -d /opt/homebrew/opt/ruby ]] ; then
+    export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+    export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+  fi
+fi
+
 # }}}
 
 # Security stuff (eg. ssh etc) {{{
@@ -60,7 +87,7 @@ if inpath dircolors && term_in_dircolors ; then
   else
     eval "$(dircolors -b)"
   fi
-  if ls --version 2>&1 > /dev/null ; then  
+  if ls --version > /dev/null 2> /dev/null ; then
     # GNU ls
     alias ls='ls --color=auto'
   fi
@@ -142,7 +169,6 @@ shopt -s checkwinsize
 inpath lesspipe.sh && eval "$(lesspipe.sh)"
 
 add_bin_path pre "$HOME/bin"
-add_bin_path post "$HOME/Library/Python/3.7/bin"
 
 # go-lang
 [ -d $HOME/src/go ] && export GOPATH="$HOME/src/go"

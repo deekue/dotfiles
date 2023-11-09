@@ -7,7 +7,7 @@ syntax on
 filetype plugin indent on
 
 " keep undo files in one place
-set undodir=~/.vim_back/undodir
+set undodir=~/.vim/undodir
 
 " reasonable defaults for indentation
 set autoindent nocindent nosmartindent
@@ -20,18 +20,18 @@ set expandtab
 set textwidth=79
 
 "==== Color schemes ===
-colorscheme solarized
-let g:solarized_termcolors = 256
+"colorscheme solarized
+"let g:solarized_termcolors = 256
 "let g:solarized_termcolors="16"
-if has('gui_running')
-  set guifont=terminus\ 12 linespace=0
-  set guioptions-=T
-  set bg=dark
-  set antialias
-else
-  set t_Co=256
-  set bg=dark
-endif
+""if has('gui_running')
+"  set guifont=terminus\ 12 linespace=0
+"  set guioptions-=T
+"  set bg=dark
+"  set antialias
+"else
+"  set t_Co=256
+"  set bg=dark
+"endif
 
 " More coding sytle colors - where was ExtraWhitespace defined?
 "autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
@@ -140,4 +140,8 @@ nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 
 " load local overrides
-source ~/.vim_back/user.vim
+try
+  source ~/.vim_back/user.vim
+catch
+  " no local overrides
+endtry

@@ -48,45 +48,45 @@ name = 'lang#go'
 #[[layers]]
 #name = 'lang#groovy'
 
-[[layers]]
-name = 'lang#java'
-# brew install google-java-format
-java_formatter_jar = '/usr/local/var/homebrew/linked/google-java-format/libexec/google-java-format.jar'
+# [[layers]]
+# name = 'lang#java'
+# # brew install google-java-format
+# java_formatter_jar = '/usr/local/var/homebrew/linked/google-java-format/libexec/google-java-format.jar'
 
 [[layers]]
-name = 'lang#kotlin'
+name = 'lang#ruby'
+enabled_linters = ['rubylint', 'rubocop']
 
 [[layers]]
 name = 'lang#python'
 enabled_linters = ['python', 'pylint']
 
-[[layers]]
-name = 'lang#typescript'
-#typescript_server_path = ''
-# yarn add -D lehre
-#lehre_path = ''
+# [[layers]]
+# name = 'lang#typescript'
+# #typescript_server_path = ''
+# # yarn add -D lehre
+# #lehre_path = ''
 
-[[layers]]
-name = 'lang#javascript'
-#auto_fix = true
-#enable_flow_syntax = true
-#format_on_save = true
+# [[layers]]
+# name = 'lang#javascript'
+# #auto_fix = true
+# #enable_flow_syntax = true
+# #format_on_save = true
 
 [[layers]]
 name = 'lsp'
 filetypes = [
     'dockerfile',
     'go',
-    'java',
-    'kotlin',
     'python',
+    'ruby',
   ]
 enabled_clients = ['pylsp']
 [layers.override_cmd]
   dockerfile = ["lsp-dockerfile.sh"]
-  go = ["gopls"]
-  java = ["lsp-java.sh"]
-  kotlin = ["lsp-kotlin.sh"]
+#  go = ["gopls"]
+#  java = ["lsp-java.sh"]
+#  kotlin = ["lsp-kotlin.sh"]
 
 [[layers]]
 name = 'VersionControl'
@@ -114,9 +114,9 @@ name = "fzf"
 name = "tmux"
 tmux_navigator_modifier = "alt"
 
-[[custom_plugins]]
-name = "aliou/bats.vim"
-merged = false
+# [[custom_plugins]]
+# name = "aliou/bats.vim"
+# merged = false
 
 [[custom_plugins]]
 name = "tpope/vim-projectionist"

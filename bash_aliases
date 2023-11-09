@@ -2,12 +2,24 @@
 # MacOS {{{
 if [[ "$PLATFORM" == "macos" ]] ; then
   alias xclip=pbcopy
-  alias tf=terraform
   alias anpaste='pbpaste | xargs Library/Android/sdk/platform-tools/adb shell input text'
   alias lsregister='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister'
 
   function get_bundle {
     /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "/Applications/${1^}.app/Contents/Info.plist"
+  }
+
+  fix_mosh_server() {
+      local fw='/usr/libexec/ApplicationFirewall/socketfilterfw'
+      local mosh_sym="$(which mosh-server)"
+      local mosh_abs="$(greadlink -f $mosh_sym)"
+  
+      sudo "$fw" --setglobalstate off && \
+      sudo "$fw" --add "$mosh_sym" && \
+      sudo "$fw" --unblockapp "$mosh_sym" && \
+      sudo "$fw" --add "$mosh_abs" && \
+      sudo "$fw" --unblockapp "$mosh_abs" && \
+      sudo "$fw" --setglobalstate on
   }
 fi
 # }}}
@@ -46,9 +58,10 @@ fi
 function add_bin_path {
   local where="$1"
   local new_bin_path="$2"
+  local -r force="$3"
 
   [ -d "$new_bin_path" ] || return 1
-  if [ -n "${PATH##*${new_bin_path}}" -a -n "${PATH##*${new_bin_path}:*}" ]; then
+  if [ -n "$force" ] || [ -n "${PATH##*${new_bin_path}}" -a -n "${PATH##*${new_bin_path}:*}" ]; then
     case "$where" in
       pre)
         export PATH=${new_bin_path}:$PATH
@@ -130,6 +143,24 @@ function chiron() {
 # dns.toys {{{
 function dy {
   dig +noall +answer +additional "${1:-help}" @dns.toys
+}
+# }}}
+# weather {{{
+export CITY="San Francisco"
+function weather {
+  local location="$@"
+  location="${location:-$CITY}"
+  curl -fsSL "wttr.in/${location// /%20}?m1nF"
+}
+function forecast {
+  local location="$@"
+  location="${location:-$CITY}"
+  curl -fsSL "wttr.in/${location// /%20}?mnF"
+}
+function moon {
+  local location="$@"
+  location="${location:-$CITY}"
+  curl -GfsSL ${location:+--data-urlencode "+$location"} "wttr.in/Moon"
 }
 # }}}
 

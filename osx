@@ -210,7 +210,7 @@ defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 # Save screenshots to the desktop
-defaults write com.apple.screencapture location -string "${HOME}/Desktop"
+defaults write com.apple.screencapture location -string "${HOME}/Downloads"
 
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
 defaults write com.apple.screencapture type -string "png"
@@ -233,7 +233,7 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
 # Set Desktop as the default location for new Finder windows
 # For other paths, use `PfLo` and `file:///full/path/here/`
 defaults write com.apple.finder NewWindowTarget -string "PfDe"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
 
 # Show icons for hard drives, servers, and removable media on the desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
@@ -510,9 +510,9 @@ defaults write com.google.Chrome DisablePrintPreview -bool true
 ###############################################################################
 
 # pull hostname from System Prefs > Sharing, propagate elsewhere
-chosenName="$(scutil --get ComputerName)"
-sudo scutil --set HostName "$chosenName"
-sudo scutil --set LocalHostName "$chosenName"
+#chosenName="$(scutil --get ComputerName)"
+#sudo scutil --set HostName "$chosenName"
+#sudo scutil --set LocalHostName "$chosenName"
 
 ###############################################################################
 # TODO                                                                        #
