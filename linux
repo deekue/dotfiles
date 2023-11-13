@@ -1,7 +1,11 @@
-#!usr/bin/env bash
+#!/bin/bash
 
 # Gnome: use CapsLock as Escape
 #dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
 # caps:escape_shifted_capslock Make unmodified Caps Lock an additional Esc, but Shift + Caps Lock behaves like regular Caps Lock
 # compose:ralt Make right Alt key the Compose key (for accents etc)
 dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape_shifted_capslock', 'compose:ralt']"
+
+# Don't suspend on lid closed while docked (ak clamshell mode)
+# https://fostips.com/lid-close-action-ubuntu-21-04-laptop/
+sed -i -e 's/^#*HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/systemd/logind.conf
