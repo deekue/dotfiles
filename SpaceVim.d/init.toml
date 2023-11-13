@@ -28,6 +28,10 @@
     bootstrap_before = 'deekue#before'
     bootstrap_after = 'deekue#after'
 
+[[layers]]
+name = 'core'
+enable_netrw = true
+
 # Enable autocomplete layer
 [[layers]]
 name = 'autocomplete'
@@ -57,6 +61,9 @@ name = 'lang#go'
 name = 'lang#ruby'
 enabled_linters = ['rubylint', 'rubocop']
 
+#[[layers]]
+#name = 'lang#kotlin'
+
 [[layers]]
 name = 'lang#python'
 enabled_linters = ['python', 'pylint']
@@ -77,11 +84,11 @@ enabled_linters = ['python', 'pylint']
 name = 'lsp'
 filetypes = [
     'dockerfile',
-    'go',
     'python',
     'ruby',
   ]
 enabled_clients = ['pylsp']
+
 [layers.override_cmd]
   dockerfile = ["lsp-dockerfile.sh"]
 #  go = ["gopls"]
