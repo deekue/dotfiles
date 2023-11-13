@@ -1,0 +1,9 @@
+i3xrocks.date.format2: %Y/%m/%d %H:%M
+i3-wm.bar.position:top
+i3-wm.bar.trayoutput:primary
+i3-wm.program.1: /usr/bin/nm-applet
+
+St.font: Source Code Pro:pixelsize=16:antialias=true:autohint=true
+regolith.look.path: /usr/share/regolith-look/solarized-dark
+regolith.wallpaper.options: zoom
+regolith.wallpaper.file: /usr/share/backgrounds/Optical_Fibers_in_Dark_by_Elena_Stravoravdi.jpg
