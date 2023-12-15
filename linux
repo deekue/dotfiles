@@ -8,4 +8,4 @@ dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape_shifted_
 
 # Don't suspend on lid closed while docked (ak clamshell mode)
 # https://fostips.com/lid-close-action-ubuntu-21-04-laptop/
-sed -i -e 's/^#*HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/systemd/logind.conf
+sudo sed -i -e 's/^#*HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/systemd/logind.conf
