@@ -168,6 +168,7 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 inpath lesspipe.sh && eval "$(lesspipe.sh)"
 
+add_bin_path pre "$HOME/.local/bin"
 add_bin_path pre "$HOME/bin"
 
 # go-lang
@@ -193,6 +194,8 @@ add_bin_path pre "$HOME/.local/bin"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
 
 inpath gh && eval "$(gh completion -s bash)"
+
+inpath op && eval "$(op completion bash)"
 
 # screen/tmux init {{{
 
