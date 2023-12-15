@@ -8,6 +8,7 @@ filetype plugin indent on
 
 " keep undo files in one place
 set undodir=~/.vim/undodir
+set directory=~/.vim/swaps
 
 " reasonable defaults for indentation
 set autoindent nocindent nosmartindent
