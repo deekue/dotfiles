@@ -1,0 +1,22 @@
+[Unit]
+Description=RClone Service
+Wants=network-online.target
+After=network-online.target
+AssertPathIsDirectory=%h/Documents/work
+
+[Service]
+Type=notify
+Environment=GOMAXPROCS=2
+Restart=on-failure
+ExecStart=/usr/bin/rclone mount gDrive: %h/Documents/work \
+   --allow-root \
+   --config %h/.config/rclone/rclone.conf \
+   --syslog \
+   --use-mmap \
+   --vfs-cache-mode full
+
+ExecStop=/bin/fusermount -uz %h/Documents/work
+
+[Install]
+WantedBy=multi-user.target
+
