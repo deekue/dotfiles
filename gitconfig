@@ -4,10 +4,8 @@
 
 [diff]
 #    external = git_diff_wrapper
-
-[difftool]
 	prompt = false
-  tool = vimdiff
+	tool = vimdiff
 
 [merge]
 	conflictStyle = diff3
@@ -17,7 +15,7 @@
 #  cmd = vim -f -c \"Gvdiffsplit!\" \"$MERGED\"
 
 [pager]
-  diff =
+	diff =
 
 [push]
 	default = simple
@@ -42,18 +40,18 @@
 	gr = grn 20
 	lln = log --color --pretty=oneline -n 
 	ll = lln 20
-  pullorigin = pull --rebase origin
-  po = pull --rebase origin
-  bu = push origin HEAD
-  prod = commit --allow-empty -m'empty commit to prod Jenkins'
-  la = "!git config -l | sed -ne '/^alias./ s///p'"
-  mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
+	pullorigin = pull --rebase origin
+	po = pull --rebase origin
+	bu = push origin HEAD
+	prod = commit --allow-empty -m'empty commit to prod Jenkins'
+	la = "!git config -l | sed -ne '/^alias./ s///p'"
+	mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
 
 [branch]
 	autosetupmerge = always
 
 [url "https://github.com/"]
-  insteadOf = "gh:"
+	insteadOf = "gh:"
 
 [github]
 	user = deekue
@@ -62,4 +60,4 @@
 	name = Daniel Quinlan
 
 [includeif "gitdir:~/co/**"]
-  path = ~/.gitconfig.user
+	path = ~/.gitconfig.user
