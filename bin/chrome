@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+#
+# wrapper for Chrome to support user profiles and "app" windows
+
+base="$(basename -- "$0")"
+profile="${base#*-}"
+cmd="${base%%-*}"
+
+# support "app" mode via symlinks and cmdline args
+case "${cmd}" in
+  chrome)
+    args="$@"
+    ;;
+  g*)
+    args="--app=https://${cmd#?}.google.com/"
+    ;;
+  outlook)
+    args="--app=https://outlook.office365.com/mail/inbox"
+    ;;
+  ocal)
+    args="--app=https://outlook.office365.com/calendar/view/workweek"
+    ;;
+  *)
+    if [[ -n "$1" ]] ; then
+      args="--app=$@"
+    else
+      args="--app=https://${cmd}.com/ --name $cmd"
+    fi
+    ;;
+esac
+
+case "$(uname -s)" in
+  Darwin)
+    # support multiple profiles (eg. work vs personal)
+    if [[ "${cmd}" == "${profile}" ]] ; then
+      profile="Chrome"
+    else
+      profile="Chrome-${profile^}" # camel case
+    fi
+
+    dataDir="$HOME/Library/Application Support/Google/${profile}/"
+    open -n -a "Google Chrome" --args --user-data-dir="${dataDir}" ${args}
+    ;;
+  Linux|linux)
+    chrome="google-chrome"  # or 'google-chrome-unstable'
+    # support multiple profiles (eg. work vs personal)
+    if [[ "${cmd}" == "${profile}" ]] ; then
+      profile="$chrome"
+    else
+      profile="${chrome}-${profile}"
+    fi
+    dataDir="$HOME/.config/${profile}/"
+    google-chrome --user-data-dir="${dataDir}" ${args}
+    ;;
+  *)
+    echo "unknown OS" >&2
+    exit 1
+    ;; 
+esac  
