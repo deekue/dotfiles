@@ -1,0 +1,11 @@
+i3xrocks.date.format2: %Y/%m/%d %H:%M
+wm.bar.position: top
+wm.bar.trayoutput: primary
+wm.gaps.outer.size: 0
+wm.program.1: /usr/bin/nm-applet
+wm.window.border.size:	2
+wm.workspace.02.name: 2: 2 Mail
+wm.workspace.03.name: 3: 3 Chat
+wm.workspace.06.name: 6: 6 VC
+
+St.font: Source Code Pro:pixelsize=16:antialias=true:autohint=true

@@ -5,3 +5,4 @@ vim/.netrwhist
 vim/user.vim
 vim/undodir/*
 !vim/undodir/.gitkeep
+config/regolith*/flags
