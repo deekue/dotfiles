@@ -46,6 +46,7 @@
 	prod = commit --allow-empty -m'empty commit to prod Jenkins'
 	la = "!git config -l | sed -ne '/^alias./ s///p'"
 	mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
+	mr = push -u origin HEAD -o merge_request.create
 
 [branch]
 	autosetupmerge = always
