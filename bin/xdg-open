@@ -1,0 +1,37 @@
+#!/bin/bash
+
+function log {
+  echo "$(date +%Y%m%d%H%M%S) $@" >> $HOME/.cache/xdg-open.log
+}
+
+log "$@"
+
+case "$1" in
+  zoommtg://*)
+    # convert this
+    #zoommtg://zoom.us/join?action=join&confno=95749595787&pwd=dWkxTFp6SVFheTV0dU1tUmpYakszQT09&zc=64&mcv=0.92.11227.0929&confid=dXNzPXBTRlc4QkF6a1RvR190bHRKMFBPM0xySkV6NEhLU1JfVmpSMC1udHpXbnJQTWdhV1JpcnhYQ0p4UGI1LUNvSk5CSG1VUXdoS2pJU080Z2JqVENrLmhWdnFwNTdZUldpVEE0Nk8mdGlkPTcwODliYjQ5N2VmZTQ2MDhiODNmMjc4MWM3OWZjY2U4&browser=chrome&t=1606236866463
+    # to this
+    #https://zoom.us/wc/join/92224464031?pwd=YzViUU1CeWlmUDRxbzhFbnBoekx1UT09
+    confno="$(echo "$1" | sed -En 's/.*confno=([0-9]*).*/\1/p')"
+    pwd="$(echo "$1" | sed -En 's/.*pwd=([^&]*).*/\1/p')"
+    url="https://zoom.us/wc/join/${confno}?pwd=${pwd}"
+    ;;
+  slack://*)
+    # slack://channel?team=T09NY5SBT&id=C0181L6JYQ2&host=slack.com&desktop_deeplink_signal_request=f7eeb453-e363-43d2-992d-f5975d5d3752
+    team="$(echo "$1" | sed -En 's/.*team=([^&]*).*/\1/p')"
+    channel="$(echo "$1" | sed -En 's/.*id=([^&]*).*/\1/p')"
+    url="https://app.slack.com/client/$team/$channel"
+    ;;
+  msteams:/*)
+    # msteams:/l/meetup-join/19:meeting_MWIwMzUyOTItN2U1NC00YmFkLTk2NWMtZmU5ZTc1NjMxMGZm@thread.v2/0?context=%7b%22Tid%22%3a%22b622d6de-49c8-44e4-8bd9-d8c72ce46372%22%2c%22Oid%22%3a%22e0f8562c-bfa5-457b-b6c1-c4e8b8722511%22%7d&anon=true&deeplinkId=23238cfe-f60a-430c-a9b2-a69e2926c694&launchAgent=join_launcher&type=meetup-join&directDl=true&msLaunch=true&enableMobilePage=true&fqdn=teams.microsoft.com
+    # https://teams.microsoft.com/_#/pre-join-calling/19:meeting_MWIwMzUyOTItN2U1NC00YmFkLTk2NWMtZmU5ZTc1NjMxMGZm@thread.v2
+    meeting="$(echo "$1" | sed -En 's#msteams:/l/meetup-join/([^/]*)/.*$#\1#p')"
+    url="https://teams.microsoft.com/_#/pre-join-calling/$meeting"
+    ;;
+  *)
+    exec /usr/bin/xdg-open "$@"
+    ;;
+esac
+
+log "  -> $url"
+/usr/bin/xdg-open "${url}"
