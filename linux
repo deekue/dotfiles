@@ -9,3 +9,9 @@ dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape_shifted_
 # Don't suspend on lid closed while docked (ak clamshell mode)
 # https://fostips.com/lid-close-action-ubuntu-21-04-laptop/
 sudo sed -i -e 's/^#*HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /etc/systemd/logind.conf
+
+# change these hotkeys as they conflict with Slack
+dconf write /desktop/ibus/panel/emoji/hotkey "['<Control><Alt>semicolon', '<Control><Alt>period']"
+# doesn't work on Wayland - https://gitlab.gnome.org/GNOME/gtk/-/issues/5865
+dconf write /desktop/ibus/panel/emoji/unicode-hotkey "['<Control><Alt><Shift>u']"
+
