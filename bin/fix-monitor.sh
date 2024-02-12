@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# sometimes the right quarter of the screen is black after docking
+# sometimes the right quarter of the screen is black after docking.
 # changing refresh rate clears it
 
-output="$( xrandr -q | sed -nE '/^(.*) connected primary .*$/ s//\1/p')"
+output="$(xrandr -q | sed -nE '/^(.*) connected primary .*$/ s//\1/p')"
 
 # assumes highest res is active, could search for active instead
 mapfile -t modeline \
@@ -27,7 +27,7 @@ if [[ -n "$active_rate" ]] && [[ -n "$alt_rate" ]] ; then
   sleep 2
   xrandr --output "$output" --mode "$mode" --rate "$active_rate"
 else
-  echo -e "two refresh rates not found for mode $mode\n${modeline[@]}" >&2
+  echo -e "two refresh rates not found for mode $mode\n${modeline[*]}" >&2
   exit 1
 fi
 
