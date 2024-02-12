@@ -60,5 +60,5 @@
 	email = daniel@chaosengine.net
 	name = Daniel Quinlan
 
-[includeif "gitdir:~/co/**"]
-	path = ~/.gitconfig.user
+[include]
+	path = ~/.gitconfig.work
