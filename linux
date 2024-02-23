@@ -12,6 +12,6 @@ sudo sed -i -e 's/^#*HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/' /et
 
 # change these hotkeys as they conflict with Slack
 dconf write /desktop/ibus/panel/emoji/hotkey "['<Control><Alt>semicolon', '<Control><Alt>period']"
-# doesn't work on Wayland - https://gitlab.gnome.org/GNOME/gtk/-/issues/5865
+# this doesn't work on Wayland - https://gitlab.gnome.org/GNOME/gtk/-/issues/5865
 dconf write /desktop/ibus/panel/emoji/unicode-hotkey "['<Control><Alt><Shift>u']"
 
