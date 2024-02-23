@@ -1,14 +1,25 @@
+# h/t: https://jvns.ca/blog/2024/02/16/popular-git-config-options/
+
 [core]
 	excludesfile = ~/.gitignore_global
 	autocrlf = input
 
+[commit]
+  verbose = true
+
+[rerere]
+  enabled = true
+
 [diff]
 #    external = git_diff_wrapper
+  algorithm = histogram
 	prompt = false
 	tool = vimdiff
+  colorMoved = default
 
 [merge]
-	conflictStyle = diff3
+	conflictStyle = zdiff3
+  keepbackup = false
 #	tool = fugitive
 
 #[mergetool "fugitive"]
@@ -20,12 +31,16 @@
 [push]
 	default = simple
 
+[log]
+  date = iso
+
 # per https://groups.google.com/forum/m/#!topic/binary-transparency/f-BI4o8HZW0
 # for $deity's sake, check that anything we're getting is complete and sane on a regular basis 
 [transfer] 
 	fsckobjects = true 
 [fetch] 
 	fsckobjects = true 
+  prune = true
 [receive] 
 	fsckObjects = true 
 
@@ -48,8 +63,12 @@
 	mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
 	mr = push -u origin HEAD -o merge_request.create
 
+[init]
+	defaultBranch = main
+
 [branch]
 	autosetupmerge = always
+  sort = -committerdate
 
 [url "https://github.com/"]
 	insteadOf = "gh:"
@@ -57,8 +76,10 @@
 [github]
 	user = deekue
 [user]
-	email = daniel@chaosengine.net
 	name = Daniel Quinlan
 
 [include]
 	path = ~/.gitconfig.work
+
+[includeif "gitdir:~/src/"]
+	email = daniel@chaosengine.net
