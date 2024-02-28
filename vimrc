@@ -21,9 +21,11 @@ set expandtab
 set textwidth=79
 
 "==== Color schemes ===
-"colorscheme solarized
-"let g:solarized_termcolors = 256
-"let g:solarized_termcolors="16"
+set background=dark
+set bg=dark
+let g:solarized_termcolors=256
+"let g:solarized_termcolors=16
+colorscheme solarized
 ""if has('gui_running')
 "  set guifont=terminus\ 12 linespace=0
 "  set guioptions-=T
@@ -41,6 +43,9 @@ set textwidth=79
 "autocmd ColorScheme * highlight Tabs ctermbg=red guibg=red
 "autocmd Syntax * syn match Tabs "\t"
 "autocmd BufWinEnter * match Tabs "\t"
+
+" improve readability of delimiters in Solarized - https://stackoverflow.com/a/69529920
+highlight Delimiter cterm=bold ctermbg=none ctermfg=grey
 
 " Bright red background for text matches
 autocmd ColorScheme * highlight Search ctermbg=red ctermfg=white guifg=#FFFFFF guibg=#FF0000
@@ -83,58 +88,58 @@ autocmd BufWinEnter *.go set textwidth=0
 autocmd BufWinEnter *.go set wrapmargin=0
 
 " UltiSnips integration
-set omnifunc=syntaxcomplete#Complete
-let g:UltiSnipsSnippetDirectories=["UltiSnips","vim-snippets/UltiSnips"]
+"set omnifunc=syntaxcomplete#Complete
+"let g:UltiSnipsSnippetDirectories=["UltiSnips","vim-snippets/UltiSnips"]
 " Needed for YCM compat
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+"let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsJumpForwardTrigger="<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " Force YCM to call out to the gocode omnifunc for everything.
-let g:ycm_semantic_triggers = {
-\  'go'  : [' '],
-\ }
+"let g:ycm_semantic_triggers = {
+"\  'go'  : [' '],
+"\ }
+"
+"let g:go_fmt_command = "goimports"
+"
+"let g:syntastic_aggregate_errors = 1
+"let g:syntastic_go_checkers = ['go', 'gotype', 'golint', 'govet']
 
-let g:go_fmt_command = "goimports"
-
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_go_checkers = ['go', 'gotype', 'golint', 'govet']
-
-au Filetype go nnoremap <leader>v :sp <CR>:exe "GoDef" <CR>
+"au Filetype go nnoremap <leader>v :sp <CR>:exe "GoDef" <CR>
 
 " NERDTree key map
-nmap <F7> :NERDTreeToggle<CR>
+"nmap <F7> :NERDTreeToggle<CR>
 
 " Tagbar/Go integration
-nmap <F6> :TagbarToggle<CR>
-let g:tagbar_type_go = {  
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
-
+"nmap <F6> :TagbarToggle<CR>
+"let g:tagbar_type_go = {  
+    "\ 'ctagstype' : 'go',
+    "\ 'kinds'     : [
+        "\ 'p:package',
+        "\ 'i:imports:1',
+        "\ 'c:constants',
+        "\ 'v:variables',
+        "\ 't:types',
+        "\ 'n:interfaces',
+        "\ 'w:fields',
+        "\ 'e:embedded',
+        "\ 'm:methods',
+        "\ 'r:constructor',
+        "\ 'f:functions'
+    "\ ],
+    "\ 'sro' : '.',
+    "\ 'kind2scope' : {
+        "\ 't' : 'ctype',
+        "\ 'n' : 'ntype'
+    "\ },
+    "\ 'scope2kind' : {
+        "\ 'ctype' : 't',
+        "\ 'ntype' : 'n'
+    "\ },
+    "\ 'ctagsbin'  : 'gotags',
+    "\ 'ctagsargs' : '-sort -silent'
+"\ }
+"
 " Fugitive Conflict Resolution
 nnoremap <leader>gd :Gvdiffsplit!<CR>
 nnoremap gdh :diffget //2<CR>
@@ -142,7 +147,7 @@ nnoremap gdl :diffget //3<CR>
 
 " load local overrides
 try
-  source ~/.vim_back/user.vim
+  source ~/.vim/user.vim
 catch
   " no local overrides
 endtry
