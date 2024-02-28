@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
 # set up a triangular workflow for a personal fork of a public GitHub project
+# h/t: https://gist.github.com/anjohnson/8994c95ab2a06f7d2339
 
 set -eEuo pipefail
 
-# h/t: https://gist.github.com/anjohnson/8994c95ab2a06f7d2339
 GH_USER="$(git config github.user)"
 SRC="${1:?arg1 is upstream project. e.g. foobar/baz}"
 PROJECT="${SRC##*/}"
@@ -15,14 +15,18 @@ cd "$BASE"
 
 if type gh > /dev/null 2>&1 ; then
   if ! gh repo view "$DST" > /dev/null 2>&1 ; then
-    gh repo fork "$SRC" -- -o github --clone true --remote true --remote-name upstream
+    gh repo fork "$SRC" -- -o github --clone --remote true --remote-name upstream
   else
-    echo "$DST exists" >&2
-    exit 1
+    echo "https://github.com/$DST exists" >&2
   fi
 else
   echo "Create fork of $SRC via https://github.com/$SRC/fork"
   read -r -p "Press enter to continue "
+fi
+
+if [[ -d "$BASE/$PROJECT/.git" ]] ; then
+  echo "$BASE/$PROJECT exists" >&2
+else
   git clone -o github "git@github.com:$GH_USER/${PROJECT}.git"
   cd "$BASE/$PROJECT"
   git remote add upstream "https://github.com/${SRC}.git"
