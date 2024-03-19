@@ -18,7 +18,7 @@
   colorMoved = default
 
 [merge]
-	conflictStyle = zdiff3
+	conflictStyle = diff3  # zdiff3 not available
   keepbackup = false
 #	tool = fugitive
 
