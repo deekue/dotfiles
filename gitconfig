@@ -17,9 +17,16 @@
 	tool = vimdiff
   colorMoved = default
 
+[difftool]
+	algorithm = histogram
+	prompt = false
+	tool = vimdiff
+	colorMoved = default
+
 [merge]
 	conflictStyle = diff3  # zdiff3 not available
   keepbackup = false
+	tool = vimdiff
 #	tool = fugitive
 
 #[mergetool "fugitive"]
@@ -51,6 +58,7 @@
 	br = branch
 	co = checkout
 	df = diff
+	cdf = diff --color=always
 	grn = log --graph --full-history --color --pretty=format:'%C(red)%h%x09%x1b%x1b %Creset%x20%<(80,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%C(black)%d%Creset' --date=relative -n 
 	gr = grn 20
 	lln = log --color --pretty=oneline -n 
@@ -58,7 +66,7 @@
 	pullorigin = pull --rebase origin
 	po = pull --rebase origin
 	bu = push origin HEAD
-	prod = commit --allow-empty -m'empty commit to prod Jenkins'
+	prod = commit --allow-empty -m'empty commit to prod CI'
 	la = "!git config -l | sed -ne '/^alias./ s///p'"
 	mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
 	mr = push -u origin HEAD -o merge_request.create
