@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+#
+
+docker run \
+  -u "$(id -u):$(id -g)" \
+  --network=host \
+  --rm \
+  -w / \
+  -ti \
+  -v ~/.aws:/.aws \
+  -v "$(pwd):/aws" \
+  amazon/aws-cli "$@"
