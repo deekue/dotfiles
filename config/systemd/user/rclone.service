@@ -17,5 +17,5 @@ ExecStart=/usr/bin/rclone mount gDrive: %h/Documents/work \
 ExecStop=/bin/fusermount -uz %h/Documents/work
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 
