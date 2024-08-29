@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# https://fx.wtf/install
+
+# TODO handle passing flags
+if [[ -r "${1:-}" ]] ; then
+  docker run \
+    -u "$(id -u):$(id -g)" \
+    -it \
+    --rm \
+    -v "$1:/file.json:ro" \
+    -e FX_THEME=3 \
+    antonmedv/fx "/file.json"
+else
+  echo "Usage: fx <file>" >&2
+  exit 1
+fi

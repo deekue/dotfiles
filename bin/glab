@@ -1,0 +1,16 @@
+#!/bin/bash
+
+GLAB_CONF="$HOME/.config/glab"
+
+docker run \
+  -u "$(id -u):$(id -g)" \
+  --network=host \
+  -i \
+  --rm \
+  -w "/src" \
+  -v "$(pwd):/src" \
+  -v "$GLAB_CONF:/.glab" \
+  -e GLAB_CONFIG_DIR="/.glab" \
+  -e GITLAB_HOST \
+  -e GITLAB_TOKEN \
+  gitlab/glab "$@"

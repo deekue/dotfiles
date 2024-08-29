@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+#
+
+DEFAULT_IMAGE="golang:1.22.5-bookworm"
+DOCKER_IMAGE="${DOCKER_IMAGE:-$DEFAULT_IMAGE}"
+
+docker run \
+  -u "$(id -u):$(id -g)" \
+  --network=host \
+  --rm \
+  -w /go \
+  -i \
+  -v "$(pwd):/go/src" \
+  -e LANG=en_US.UTF-8 \
+  --entrypoint "/usr/local/go/bin/go" \
+  "$DOCKER_IMAGE" "$@"
