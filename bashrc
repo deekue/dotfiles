@@ -197,64 +197,43 @@ inpath gh && eval "$(gh completion -s bash)"
 
 inpath op && eval "$(op completion bash)"
 
-# screen/tmux init {{{
-
-# screen/pane auto config {{{
-if [[ "${TERM:0:6}" == "screen" ]]; then
-  screen_init
-elif [ -n "$TMUX" ] ; then
-  tmux_init
-fi
-# }}}
-
 if [[ -r "$HOME/.bashrc.$HOSTNAME" ]] ; then
   . "$HOME/.bashrc.$HOSTNAME"
 fi
 
 # SSH sessions {{{
+# use ssh-agent from outside the screen session
+SCREEN_SSH_AUTH_SOCK="$HOME/.ssh/screen.auth.sock"
 if [[ -n "$SSH_TTY" ]] ; then
-  # use ssh-agent from outside the screen session {{{
-  SCREEN_SSH_AUTH_SOCK="$HOME/.ssh/screen.auth.sock"
-  case "$TERM" in
-    screen*)
-      if [ -L "$SCREEN_SSH_AUTH_SOCK" ] ; then
-        export SSH_AUTH_SOCK="$SCREEN_SSH_AUTH_SOCK"
-      fi
-      ;;
-    *)
-      if [[ -n "$TMUX" ]] ; then
-        if [ -L "$SCREEN_SSH_AUTH_SOCK" ] ; then
-          export SSH_AUTH_SOCK="$SCREEN_SSH_AUTH_SOCK"
-        fi
-      else
-        # not in a screen/tmux session, if the socket exists symlink it
-        if [ -n "$SSH_AUTH_SOCK" ] ; then
-          ln -sf "$SSH_AUTH_SOCK" "$SCREEN_SSH_AUTH_SOCK"
-        fi
-      fi
-      ;;
-  esac # }}}
+  # not in a screen/tmux session, if the socket exists symlink it
+  if [ -n "$SSH_AUTH_SOCK" ] ; then
+    ln -sf "$SSH_AUTH_SOCK" "$SCREEN_SSH_AUTH_SOCK"
+  fi
+  # set window title
+  echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
   # Tmux/Screen auto start {{{
-  if ! type tmux 2>/dev/null ; then
-    # no tmux :(
-    if [ "${TERM:0:6}" != "screen" ]; then
-      # set window title
-      echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
-
-      # connect to session "main" or create a new one if not found
-      screen -x -s main
-      exit
-    fi
-  elif [[ -z "$TMUX" ]] ; then
-    # set window title
-    echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
-
+  if type tmux 2>/dev/null && [[ -z "$TMUX" ]] ; then
     # connect to session "main" or create a new one if not found
     tmux new -A -s main
-    exit # exit on detach or exit
+  elif type screen 2>/dev/null && [ "${TERM:0:6}" != "screen" ]; then
+    # connect to session "main" or create a new one if not found
+    screen -x -s main
   fi  # }}}
-fi
-# }}}
-# }}}
+  exit # exit on detach or exit
+else
+  # in a screen/tmux session? use symlinked ssh agent
+  if [[ -n "$TMUX" ]] || [[ "${TERM:0:6}" == "screen" ]]; then
+    if [ -L "$SCREEN_SSH_AUTH_SOCK" ] ; then
+      export SSH_AUTH_SOCK="$SCREEN_SSH_AUTH_SOCK"
+    fi
+  fi
+  # screen/pane auto config {{{
+  if [[ "${TERM:0:6}" == "screen" ]]; then
+    screen_init
+  elif [ -n "$TMUX" ] ; then
+    tmux_init
+  fi
+  # }}}
+fi # }}}
 
 # vim:set foldmethod=marker:
