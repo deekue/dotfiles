@@ -3,19 +3,20 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	autocrlf = input
+	pager = cat
 
 [commit]
-  verbose = true
+	 verbose = true
 
 [rerere]
-  enabled = true
+	 enabled = true
 
 [diff]
 #    external = git_diff_wrapper
-  algorithm = histogram
+	 algorithm = histogram
 	prompt = false
 	tool = vimdiff
-  colorMoved = default
+	 colorMoved = default
 
 [difftool]
 	algorithm = histogram
@@ -25,7 +26,7 @@
 
 [merge]
 	conflictStyle = diff3  # zdiff3 not available
-  keepbackup = false
+	 keepbackup = false
 	tool = vimdiff
 #	tool = fugitive
 
@@ -39,7 +40,7 @@
 	default = simple
 
 [log]
-  date = iso
+	 date = iso
 
 # per https://groups.google.com/forum/m/#!topic/binary-transparency/f-BI4o8HZW0
 # for $deity's sake, check that anything we're getting is complete and sane on a regular basis 
@@ -47,7 +48,7 @@
 	fsckobjects = true 
 [fetch] 
 	fsckobjects = true 
-  prune = true
+	 prune = true
 [receive] 
 	fsckObjects = true 
 
@@ -66,17 +67,29 @@
 	pullorigin = pull --rebase origin
 	po = pull --rebase origin
 	bu = push origin HEAD
-	prod = commit --allow-empty -m'empty commit to prod CI'
+	prod = "!git commit --allow-empty -m'empty commit to prod CI' && git push"
 	la = "!git config -l | sed -ne '/^alias./ s///p'"
-	mod = "!git status -s | sed -nE '/^ M (.*)/ s//\\1/p'"
+	mod = "!git status -s | sed -nE '/^.M (.*)/ s//\\1/p'"
 	mr = push -u origin HEAD -o merge_request.create
+	filelog = log --
+
+	 # https://www.eficode.com/blog/10-levels-of-git-aliases-advanced-and-beyond#why_do_i_need_to_know_how_to_continue%3F
+	 continue = "!f() { \
+	       repo_path=$(git rev-parse --git-dir) && \
+	       [ -d \"${repo_path}/rebase-merge\" ] && git rebase --continue && return; \
+	       [ -d \"${repo_path}/rebase-apply\" ] && git rebase --continue && return; \
+	       [ -f \"${repo_path}/MERGE_HEAD\" ] && git merge --continue && return; \
+	       [ -f \"${repo_path}/CHERRY_PICK_HEAD\" ] && git cherry-pick --continue && return; \
+	       [ -f \"${repo_path}/REVERT_HEAD\" ] && git revert --continue && return; \
+	       echo \"Nothing to continue?\" && return 1; \
+	   }; f"
 
 [init]
 	defaultBranch = main
 
 [branch]
 	autosetupmerge = always
-  sort = -committerdate
+	sort = -committerdate
 
 [url "https://github.com/"]
 	insteadOf = "gh:"
@@ -85,6 +98,7 @@
 	user = deekue
 [user]
 	name = Daniel Quinlan
+	email = daniel@chaosengine.net
 
 [include]
 	path = ~/.gitconfig.work
