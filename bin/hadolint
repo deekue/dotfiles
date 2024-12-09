@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+#
+
+DOCKER_IMAGE="${HADOLINT_IMG:-hadolint/hadolint:latest-alpine}"
+
+docker run \
+  --rm \
+  -it \
+  -u "$(id -u):$(id -g)" \
+  -w /src \
+  -v .:/src \
+  "$DOCKER_IMAGE" \
+  hadolint "${1:?arg1 is Dockerfile}"
