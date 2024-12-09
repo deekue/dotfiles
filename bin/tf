@@ -1,0 +1,30 @@
+#!/bin/bash
+
+TERRAFORM_IMG="${TERRAFORM_IMG:-hashicorp/terraform}"
+TERRAFORM_IMG_VER="${TERRAFORM_IMG_VER:-light}"
+
+containerAgentPath="/ssh-agent"
+case "$PLATFORM" in
+  macos)
+    sshAgent="/run/host-services/ssh-auth.sock:$containerAgentPath"
+    ;;
+  linux)
+    sshAgent="$SSH_AUTH_SOCK:$containerAgentPath"
+    ;;
+esac
+
+docker run -i --rm \
+  --name tf \
+  -u "$(id -u):$(id -g)" \
+  -v "$(pwd):/src" \
+  -v "$HOME/.aws:/root/.aws:ro" \
+  -e "SSH_AUTH_SOCK=$containerAgentPath" \
+  -v "$sshAgent" \
+  --network=host \
+  -w /src \
+  ${AWS_PROFILE:+-e AWS_PROFILE="$AWS_PROFILE"} \
+  ${TF_LOG:+-e TF_LOG="$TF_LOG"} \
+  ${TF_LOG_PATH:+-e TF_LOG_PATH="$TF_LOG_PATH"} \
+  "$TERRAFORM_IMG":"$TERRAFORM_IMG_VER" \
+  "$@"
+
