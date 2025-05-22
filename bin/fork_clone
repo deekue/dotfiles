@@ -15,7 +15,7 @@ cd "$BASE"
 
 if type gh > /dev/null 2>&1 ; then
   if ! gh repo view "$DST" > /dev/null 2>&1 ; then
-    gh repo fork "$SRC" -- -o github --clone --remote true --remote-name upstream
+    gh repo fork "$SRC" --clone --remote true --remote-name upstream -- -o github
   else
     echo "https://github.com/$DST exists" >&2
   fi

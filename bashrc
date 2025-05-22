@@ -100,7 +100,7 @@ fi
 
 # ENV {{{
 
-export TZ="America/Los_Angeles"
+export TZ="Australia/Melbourne"
 export EDITOR=nvim
 #export PRINTER=something
 #export LPDEST=$PRINTER
@@ -197,6 +197,10 @@ inpath gh && eval "$(gh completion -s bash)"
 
 inpath op && eval "$(op completion bash)"
 
+[[ -d "$HOME/.nvm" ]] && export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
+[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 if [[ -r "$HOME/.bashrc.$HOSTNAME" ]] ; then
   . "$HOME/.bashrc.$HOSTNAME"
 fi
@@ -237,3 +241,4 @@ else
 fi # }}}
 
 # vim:set foldmethod=marker:
+

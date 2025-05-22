@@ -2,16 +2,29 @@
 #
 #
 
-DEFAULT_IMAGE="golang:1.22.5-bookworm"
+DEFAULT_IMAGE="${DOCKER_PROXY:+$DOCKER_PROXY/}golang:1.22.5-bookworm"
 DOCKER_IMAGE="${DOCKER_IMAGE:-$DEFAULT_IMAGE}"
+
+if [[ -n "$1" ]] ; then
+  entrypoint="/usr/local/go/bin/go"
+  terminal=
+else
+  entrypoint="/bin/bash"
+  terminal="-t"
+fi
 
 docker run \
   -u "$(id -u):$(id -g)" \
   --network=host \
   --rm \
-  -w /go \
+  -w /go/src \
   -i \
   -v "$(pwd):/go/src" \
+  -v "$(pwd)/bin:/go/bin" \
+  -v "$(pwd)/pkg:/go/pkg" \
+  -v "$HOME/.cache/go:/go/.cache" \
   -e LANG=en_US.UTF-8 \
-  --entrypoint "/usr/local/go/bin/go" \
+  -e HOME=/go \
+  $terminal \
+  --entrypoint "$entrypoint" \
   "$DOCKER_IMAGE" "$@"
