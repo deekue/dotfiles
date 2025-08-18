@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+#
+
+docker run --rm  \
+  -v "$(pwd):/work:ro" -w /work \
+  ${DOCKER_REGISTRY_PROXY:+$DOCKER_REGISTRY_PROXY}nvuillam/npm-groovy-lint:v14.5.0 \
+  --loglevel error \
+  --failon error \
+  "$@"
