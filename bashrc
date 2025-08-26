@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # Init {{{
 # If not running interactively, don't do anything
@@ -20,24 +21,30 @@ esac
 
 # Source global definitions
 if [ -f /etc/bashrc ] ; then
+  # shellcheck disable=SC1091
   . /etc/bashrc
 fi
 
 # enable programmable completion features
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
+    # shellcheck disable=SC1091
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
+    # shellcheck disable=SC1091
     . /etc/bash_completion
   elif [ -f /usr/local/etc/profile.d/bash_completion.sh ]; then
+    # shellcheck disable=SC1091
     . /usr/local/etc/profile.d/bash_completion.sh
   elif [ -f /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
+    # shellcheck disable=SC1091
     . /opt/homebrew/etc/profile.d/bash_completion.sh
   fi
 fi
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
+  # shellcheck disable=SC1090
   . ~/.bash_aliases
 fi
 
@@ -172,29 +179,34 @@ add_bin_path pre "$HOME/.local/bin"
 add_bin_path pre "$HOME/bin"
 
 # go-lang
-[ -d $HOME/src/go ] && export GOPATH="$HOME/src/go"
+[ -d "$HOME/src/go" ] && export GOPATH="$HOME/src/go"
 add_bin_path pre /usr/local/go/bin
 add_bin_path pre "$HOME/src/go/bin"
 
 # setup AWS
+# shellcheck disable=SC1090
 [ -r ~/.aws/bashrc ] && . ~/.aws/bashrc
 
 # Google Cloud SDK.
 add_bin_path pre "$HOME/tmp/google-cloud-sdk/bin"
 # The next line enables bash completion for gcloud.
-[ -r $HOME/tmp/google-cloud-sdk/arg_rc ] && source $HOME/tmp/google-cloud-sdk/arg_rc
+# shellcheck disable=SC1090
+[ -r "$HOME/tmp/google-cloud-sdk/arg_rc" ] && source "$HOME/tmp/google-cloud-sdk/arg_rc"
 
 # locally installed pip binaries
 add_bin_path pre "$HOME/.local/bin"
 
 export NVM_DIR="$HOME/.nvm"
+# shellcheck disable=SC1090
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
+# shellcheck disable=SC1090
 [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # strap:straprc:begin
 #[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
 # strap:straprc:end
 
+# shellcheck disable=SC1090
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
 
 inpath gh && eval "$(gh completion -s bash)"
@@ -202,46 +214,52 @@ inpath gh && eval "$(gh completion -s bash)"
 inpath op && eval "$(op completion bash)"
 
 [[ -d "$HOME/.nvm" ]] && export NVM_DIR="$HOME/.nvm"
+# shellcheck disable=SC1090
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
+# shellcheck disable=SC1090
 [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 if [[ -r "$HOME/.bashrc.$HOSTNAME" ]] ; then
+  # shellcheck disable=SC1090
   . "$HOME/.bashrc.$HOSTNAME"
 fi
 
 # SSH sessions {{{
-# use ssh-agent from outside the screen session
-SCREEN_SSH_AUTH_SOCK="$HOME/.ssh/screen.auth.sock"
 if [[ -n "$SSH_TTY" ]] ; then
-  # not in a screen/tmux session, if the socket exists symlink it
-  if [ -n "$SSH_AUTH_SOCK" ] ; then
-    ln -sf "$SSH_AUTH_SOCK" "$SCREEN_SSH_AUTH_SOCK"
-  fi
-  # set window title
-  echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
-  # Tmux/Screen auto start {{{
-  if type tmux 2>/dev/null && [[ -z "$TMUX" ]] ; then
-    # connect to session "main" or create a new one if not found
-    tmux new -A -s main
-  elif type screen 2>/dev/null && [ "${TERM:0:6}" != "screen" ]; then
-    # connect to session "main" or create a new one if not found
-    screen -x -s main
-  fi  # }}}
-  exit # exit on detach or exit
-else
-  # in a screen/tmux session? use symlinked ssh agent
+  # use ssh-agent from outside the screen session
+  SCREEN_SSH_AUTH_SOCK="$HOME/.ssh/screen.auth.sock"
+  # shellcheck disable=SC2174
+  mkdir -p -m 0700 "$(dirname "$SCREEN_SSH_AUTH_SOCK")"
+
   if [[ -n "$TMUX" ]] || [[ "${TERM:0:6}" == "screen" ]]; then
-    if [ -L "$SCREEN_SSH_AUTH_SOCK" ] ; then
+    # in a screen/tmux session, use symlinked ssh agent
+    if [[ -L "$SCREEN_SSH_AUTH_SOCK" ]] ; then
       export SSH_AUTH_SOCK="$SCREEN_SSH_AUTH_SOCK"
     fi
+    # screen/pane auto config {{{
+    if [[ "${TERM:0:6}" == "screen" ]]; then
+      screen_init
+    elif [[ -n "$TMUX" ]] ; then
+      tmux_init
+    fi
+    # }}}
+  else
+    # not in a screen/tmux session, if the socket exists symlink it
+    if [[ -n "$SSH_AUTH_SOCK" ]] ; then
+      ln -sf "$SSH_AUTH_SOCK" "$SCREEN_SSH_AUTH_SOCK"
+    fi
+    # set window title
+    echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
+    # Tmux/Screen auto start {{{
+    if type tmux 2>/dev/null ; then
+      # connect to session "main" or create a new one if not found
+      tmux new -A -s main
+    elif type screen 2>/dev/null ; then
+      # connect to session "main" or create a new one if not found
+      screen -x -s main
+    fi  # }}}
+    exit # exit on detach or exit
   fi
-  # screen/pane auto config {{{
-  if [[ "${TERM:0:6}" == "screen" ]]; then
-    screen_init
-  elif [ -n "$TMUX" ] ; then
-    tmux_init
-  fi
-  # }}}
 fi # }}}
 
 # vim:set foldmethod=marker:

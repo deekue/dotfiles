@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 # MacOS {{{
 if [[ "$PLATFORM" == "macos" ]] ; then
@@ -11,8 +12,9 @@ if [[ "$PLATFORM" == "macos" ]] ; then
 
   fix_mosh_server() {
       local fw='/usr/libexec/ApplicationFirewall/socketfilterfw'
-      local mosh_sym="$(which mosh-server)"
-      local mosh_abs="$(greadlink -f $mosh_sym)"
+      local mosh_sym mosh_abs
+      mosh_sym="$(command -v mosh-server)"
+      mosh_abs="$(greadlink -f "$mosh_sym")"
   
       sudo "$fw" --setglobalstate off && \
       sudo "$fw" --add "$mosh_sym" && \
@@ -27,8 +29,8 @@ fi
 # Linux specific {{{
 if [[ "$PLATFORM" == "Linux" ]]; then
   function iwif {
-    local link="$(ip -brief link show wlp0s20f3)"
-    echo "${link%%[[:space:]]*}"
+    ip -brief link \
+      | sed -En '/^(wl[^[:space:]]+)[[:space:]]+.*$/ s//\1/p'
   }
 fi
 # }}}
@@ -56,18 +58,18 @@ fi
 # }}}
 
 function add_bin_path {
-  local where="$1"
-  local new_bin_path="$2"
+  local -r where="$1"
+  local -r new_bin_path="$2"
   local -r force="$3"
 
   [ -d "$new_bin_path" ] || return 1
-  if [ -n "$force" ] || [ -n "${PATH##*${new_bin_path}}" -a -n "${PATH##*${new_bin_path}:*}" ]; then
+  if [ -n "$force" ] || [[ "$PATH" =~ (^${new_bin_path}:|:${new_bin_path}:|:${new_bin_path}$) ]]; then
     case "$where" in
       pre)
-        export PATH=${new_bin_path}:$PATH
+        export PATH="${new_bin_path}:$PATH"
         ;;
       post)
-        export PATH=$PATH:${new_bin_path}
+        export PATH="$PATH:${new_bin_path}"
         ;;
       *)
         echo "Usage: add_bin_path <pre|post> <path>" >&2
@@ -148,24 +150,27 @@ function dy {
 # weather {{{
 export CITY="San Francisco"
 function weather {
-  local location="$@"
+  local location="$*"
   location="${location:-$CITY}"
   curl -fsSL "wttr.in/${location// /%20}?m1nF"
 }
 function forecast {
-  local location="$@"
+  local location="$*"
   location="${location:-$CITY}"
   curl -fsSL "wttr.in/${location// /%20}?mnF"
 }
 function moon {
-  local location="$@"
+  local location="$*"
   location="${location:-$CITY}"
   curl -GfsSL ${location:+--data-urlencode "+$location"} "wttr.in/Moon"
 }
 # }}}
 
 # git {{{
-alias cdgr='cd "$(git rev-parse --show-toplevel)"'
+function cdgr {
+  cd "$(git rev-parse --show-toplevel)/$*" || return 1
+}
+
 # }}}
 # k8s {{{
 alias k='kubectl ${K8S_NAMESPACE:+--namespace $K8S_NAMESPACE}'
@@ -197,41 +202,41 @@ function __k8s_ps1 {
 
 # Backups {{{
 function backup() {
-  $HOME/bin/duplicacy -log backup -stats
+  "$HOME/bin/duplicacy" -log backup -stats
 }
 function backup-offsite() {
+  local -r threads="${1:-5}"
   check_zerotier
-  $HOME/bin/duplicacy -log copy -id chelone-home -to metis -threads ${1:-5}
+  "$HOME/bin/duplicacy" -log copy -id chelone-home -to metis -threads "$threads"
 }
 # }}}
 
 # Screen setup {{{
 function screen_init() {
-
-  local SCREEN=$1
+  local -r SCREEN=$1
+  loca TTY
 
   if [ -z "$SCREEN" ] ; then
-    TTY=`/usr/bin/tty | cut -f3- -d/`
-    SCREEN=$(who | grep "$TTY" | sed -n 's/^.*:S\.\([0-9]*\))$/\1/p')
+    TTY="$(/usr/bin/tty | cut -f3- -d/)"
+    SCREEN="$(who | grep "$TTY" | sed -En 's/^.*:S\.([0-9]*))$/\1/p')"
   fi
 
-  case $SCREEN in
+  case "$SCREEN" in
     0)
-      irssi
+      #irssi
       ;;
     1)
-      cd /some/where
+      #cd /some/where
       ;;
     2)
-      cd ~/doc/
+      #cd ~/doc/
       ;;
     3)
-      cd /some/where/else
+      #cd /some/where/else
       ;;
     4)
-      cd /some/where
-      export PATH=$PATH:/home/build/
-      export PATH=/foo
+      #cd /some/where
+      #export PATH=$PATH:/home/build/
   esac
 }
 # }}}
@@ -242,7 +247,7 @@ function tmux_init() {
 
   case $PANE in
     %0)
-      irssi
+      #irssi
       ;;
     %1)
       #cd /some/where
@@ -251,15 +256,16 @@ function tmux_init() {
       #cd /some/where/else
       ;;
     %3)
-      cd /some/where
-      export PATH=$PATH:/home/build/
-      export P4DIFF='/usr/bin/diff -u'
+      #cd /some/where
+      #export PATH=$PATH:/home/build/
+      #export P4DIFF='/usr/bin/diff -u'
       ;;
   esac
 }
 # }}}
 
 if [[ -r "$HOME/.bash_aliases.$HOSTNAME" ]] ; then
+  # shellcheck disable=SC1090
   source "$HOME/.bash_aliases.$HOSTNAME"
 fi
 
