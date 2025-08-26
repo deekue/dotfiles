@@ -2,13 +2,14 @@
 #
 #
 
-DOCKER_IMAGE="${HADOLINT_IMG:-hadolint/hadolint:latest-alpine}"
+DEFAULT_IMAGE="${DOCKER_REGISTRY_PROXY:+$DOCKER_REGISTRY_PROXY/}hadolint/hadolint:latest-alpine"
+DOCKER_IMAGE="${DOCKER_IMAGE:-$DEFAULT_IMAGE}"
 
 docker run \
   --rm \
   -it \
   -u "$(id -u):$(id -g)" \
   -w /src \
-  -v .:/src \
+  -v .:/src:ro \
   "$DOCKER_IMAGE" \
   hadolint "${1:?arg1 is Dockerfile}"
