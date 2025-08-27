@@ -168,7 +168,7 @@ function moon {
 
 # git {{{
 function cdgr {
-  cd "$(git rev-parse --show-toplevel)/$*" || return 1
+  cd "$(git rev-parse --show-toplevel)/${1:-}" || return 1
 }
 
 # }}}
