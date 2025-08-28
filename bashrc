@@ -225,7 +225,7 @@ if [[ -r "$HOME/.bashrc.$HOSTNAME" ]] ; then
 fi
 
 # SSH sessions {{{
-if [[ -n "$SSH_TTY" ]] ; then
+if [[ -n "$SSH_CONNECTION" ]] ; then
   # use ssh-agent from outside the screen session
   SCREEN_SSH_AUTH_SOCK="$HOME/.ssh/screen.auth.sock"
   # shellcheck disable=SC2174
@@ -237,10 +237,10 @@ if [[ -n "$SSH_TTY" ]] ; then
       export SSH_AUTH_SOCK="$SCREEN_SSH_AUTH_SOCK"
     fi
     # screen/pane auto config {{{
-    if [[ "${TERM:0:6}" == "screen" ]]; then
-      screen_init
-    elif [[ -n "$TMUX" ]] ; then
+    if [[ -n "$TMUX" ]] ; then
       tmux_init
+    elif [[ "${TERM:0:6}" == "screen" ]]; then
+      screen_init
     fi
     # }}}
   else

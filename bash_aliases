@@ -213,15 +213,15 @@ function backup-offsite() {
 
 # Screen setup {{{
 function screen_init() {
-  local -r SCREEN=$1
-  loca TTY
+  local window="${1:-}"
+  local this_tty
 
-  if [ -z "$SCREEN" ] ; then
-    TTY="$(/usr/bin/tty | cut -f3- -d/)"
-    SCREEN="$(who | grep "$TTY" | sed -En 's/^.*:S\.([0-9]*))$/\1/p')"
+  if [[ -z "$window" ]] ; then
+    this_tty="$(/usr/bin/tty | cut -f3- -d/)"
+    window="$(who | grep "$this_tty" | sed -En 's/^.*:S\.([0-9]*)\)$/\1/p')"
   fi
 
-  case "$SCREEN" in
+  case "$window" in
     0)
       #irssi
       ;;
