@@ -63,7 +63,7 @@ function add_bin_path {
   local -r force="$3"
 
   [ -d "$new_bin_path" ] || return 1
-  if [ -n "$force" ] || [[ "$PATH" =~ (^${new_bin_path}:|:${new_bin_path}:|:${new_bin_path}$) ]]; then
+  if [ -n "$force" ] || [[ ! "$PATH" =~ (^${new_bin_path}:|:${new_bin_path}:|:${new_bin_path}$) ]]; then
     case "$where" in
       pre)
         export PATH="${new_bin_path}:$PATH"
