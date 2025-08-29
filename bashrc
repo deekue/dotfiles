@@ -124,6 +124,21 @@ export ZK_NOTEBOOK_DIR="$HOME/src/zk-data"
 
 # History {{{
 shopt -s histappend histreedit histverify
+TTY="$(tty|cut -d/ -f3-)"
+if [[ -n "$TMUX" ]] ; then
+  # in tmux, use per-window history files
+  # TMUX_PANE is something like %1, %2 etc
+  PER_WINDOW_HISTORY_SUFFIX="tmux-${TMUX_PANE}"
+elif [[ "${TERM:0:6}" == "screen" ]] ; then
+  # in screen, use per-window history files
+  # extract the screen window number from who output
+  PER_WINDOW_HISTORY_SUFFIX="screen-$(who | grep "$TTY" | sed -En 's/^.*:S\.([0-9]*)\)$/\1/p')"
+else
+  # not in tmux/screen, use per-tty history files
+  # tty is something like /dev/pts/0 etc
+  PER_WINDOW_HISTORY_SUFFIX="tty-${TTY//\//_}"
+fi
+export HISTFILE="$HOME/.bash_history${PER_WINDOW_HISTORY_SUFFIX:+.$PER_WINDOW_HISTORY_SUFFIX}"
 export HISTCONTROL='ignoredups:ignorespace:ignoreboth'
 export HISTFILESIZE=10000
 export HISTIGNORE='&:ls:[bf]g:exit'

@@ -142,6 +142,25 @@ function chiron() {
   gcloud compute --project "perfect-trilogy-461" ssh --zone "us-central1-a" "chiron"
 }
 
+# History {{{
+# simple search across all per-window history files
+function ahistory {
+  # TODO find a parser for the date lines
+  grep -hv "^#" "$HOME/.bash_history"*
+}
+function ahgrep {
+  if inpath fzf ; then
+    ahistory \
+      | fzf \
+          --height=40% \
+          --layout=reverse \
+          ${1:+--query="$*"} \
+          --border
+  else
+    ahistory | grep "$*"
+  fi
+}
+# }}}
 # dns.toys {{{
 function dy {
   dig +noall +answer +additional "${1:-help}" @dns.toys
