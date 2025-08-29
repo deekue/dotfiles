@@ -44,7 +44,7 @@ fi
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
-  # shellcheck disable=SC1090
+  # shellcheck disable=SC1090,SC1091
   . ~/.bash_aliases
 fi
 
@@ -199,29 +199,29 @@ add_bin_path pre /usr/local/go/bin
 add_bin_path pre "$HOME/src/go/bin"
 
 # setup AWS
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 [ -r ~/.aws/bashrc ] && . ~/.aws/bashrc
 
 # Google Cloud SDK.
 add_bin_path pre "$HOME/tmp/google-cloud-sdk/bin"
 # The next line enables bash completion for gcloud.
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 [ -r "$HOME/tmp/google-cloud-sdk/arg_rc" ] && source "$HOME/tmp/google-cloud-sdk/arg_rc"
 
 # locally installed pip binaries
 add_bin_path pre "$HOME/.local/bin"
 
 export NVM_DIR="$HOME/.nvm"
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # strap:straprc:begin
 #[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
 # strap:straprc:end
 
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
 
 inpath gh && eval "$(gh completion -s bash)"
@@ -229,13 +229,13 @@ inpath gh && eval "$(gh completion -s bash)"
 inpath op && eval "$(op completion bash)"
 
 [[ -d "$HOME/.nvm" ]] && export NVM_DIR="$HOME/.nvm"
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 if [[ -r "$HOME/.bashrc.$HOSTNAME" ]] ; then
-  # shellcheck disable=SC1090
+  # shellcheck disable=SC1090,SC1091
   . "$HOME/.bashrc.$HOSTNAME"
 fi
 

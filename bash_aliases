@@ -107,8 +107,8 @@ title_escape() {
 # with title_escape calls
 abbrev_pwd() {
   case "$PWD" in
-    $HOME|$HOME/*)
-      printf "~%s%s" "$(title_escape \~)" "${PWD#$HOME}"
+    "$HOME"|$HOME/*)
+      printf "~%s%s" "$(title_escape \~)" "${PWD#"$HOME"}"
       ;;
     *)
       printf "%s%s" "$PWD" "$(title_escape -)"
