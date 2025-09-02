@@ -99,10 +99,7 @@
 	user = deekue
 [user]
 	name = Daniel Quinlan
-	email = dquinlan@meraki.com
+	email = daniel@chaosengine.net
 
 [include]
 	path = ~/.gitconfig.work
-
-[includeif "gitdir:~/src/"]
-	email = daniel@chaosengine.net
