@@ -108,7 +108,11 @@ fi
 # ENV {{{
 
 export TZ="Australia/Melbourne"
-export EDITOR=nvim
+if command -v nvim > /dev/null 2>&1 ; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
 #export PRINTER=something
 #export LPDEST=$PRINTER
 export GREP_COLOR=auto
