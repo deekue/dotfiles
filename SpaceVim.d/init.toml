@@ -57,9 +57,9 @@ name = 'lang#go'
 # # brew install google-java-format
 # java_formatter_jar = '/usr/local/var/homebrew/linked/google-java-format/libexec/google-java-format.jar'
 
-[[layers]]
-name = 'lang#ruby'
-enabled_linters = ['rubylint', 'rubocop']
+#[[layers]]
+#name = 'lang#ruby'
+#enabled_linters = ['rubylint', 'rubocop']
 
 #[[layers]]
 #name = 'lang#kotlin'
@@ -85,7 +85,6 @@ name = 'lsp'
 filetypes = [
     'dockerfile',
     'python',
-    'ruby',
   ]
 enabled_clients = ['pylsp']
 
