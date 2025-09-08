@@ -10,3 +10,4 @@ wm.workspace.03.name: 3: 3 Chat
 wm.workspace.06.name: 6: 6 VC
 
 St.font: Source Code Pro:pixelsize=16:antialias=true:autohint=true
+regolith.look.path: /usr/share/regolith-look/solarized-dark
