@@ -226,7 +226,7 @@ function backup() {
 function backup-offsite() {
   local -r threads="${1:-5}"
   check_zerotier
-  "$HOME/bin/duplicacy" -log copy -id chelone-home -to metis -threads "$threads"
+  "$HOME/bin/duplicacy" -log copy -id chelone-home -to wasabi -threads "$threads"
 }
 # }}}
 
