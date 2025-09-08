@@ -272,7 +272,7 @@ if [[ -n "$SSH_CONNECTION" ]] ; then
     # Tmux/Screen auto start {{{
     if type tmux 2>/dev/null ; then
       # connect to session "main" or create a new one if not found
-      tmux new -A -s main
+      tmux new -t main -s "main$RANDOM"
     elif type screen 2>/dev/null ; then
       # connect to session "main" or create a new one if not found
       screen -x -s main
