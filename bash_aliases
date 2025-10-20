@@ -142,6 +142,36 @@ function chiron() {
   gcloud compute --project "perfect-trilogy-461" ssh --zone "us-central1-a" "chiron"
 }
 
+# fzf {{{
+if inpath fzf && inpath rg && inpath bat ; then
+  # ripgrep->fzf->vim [QUERY]
+  function rfv {
+    local RELOAD OPENER
+
+    RELOAD='reload:rg --column --color=always --smart-case {q} || :'
+    # shellcheck disable=SC2016
+    OPENER='if [[ $FZF_SELECT_COUNT -eq 0 ]]; then
+              vim {1} +{2}     # No selection. Open the current line in Vim.
+            else
+              vim +cw -q {+f}  # Build quickfix list for the selected items.
+            fi'
+    fzf --phony --ansi --multi \
+        --bind "start:$RELOAD" --bind "change:$RELOAD" \
+        --bind "enter:become:$OPENER" \
+        --bind "ctrl-o:execute:$OPENER" \
+        --bind 'alt-a:select-all,alt-d:deselect-all,ctrl-/:toggle-preview' \
+        --delimiter : \
+        --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+        --preview-window '~4,+{2}+4/3,<80(up)' \
+        --query "$*"
+  }
+else
+  function rfv {
+    echo "rfv requires fzf, rg, and bat to be installed"
+    return 1
+  }
+fi
+# }}}
 # History {{{
 # simple search across all per-window history files
 function ahistory {
