@@ -6,9 +6,13 @@ docker run \
   -u "$(id -u):$(id -g)" \
   --network=host \
   --rm \
-  -w / \
+  -w "$(pwd)" \
   -i \
+  -e AWS_ACCESS_KEY_ID \
+  -e AWS_SECRET_ACCESS_KEY \
+  -e AWS_SESSION_TOKEN \
   -v ~/.aws:/.aws \
-  -v "$(pwd):/aws" \
+  -v "$(pwd):$(pwd)" \
   -e LANG=en_US.UTF-8 \
-  amazon/aws-cli "$@"
+  ${DOCKER_REGISTRY_PROXY:+$DOCKER_REGISTRY_PROXY/}amazon/aws-cli \
+  "$@"
