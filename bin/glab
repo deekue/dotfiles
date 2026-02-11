@@ -7,10 +7,10 @@ docker run \
   --network=host \
   -i \
   --rm \
-  -w "/src" \
-  -v "$(pwd):/src" \
+  -w "$(pwd)" \
+  -v "$(pwd):$(pwd)" \
   -v "$GLAB_CONF:/.glab" \
   -e GLAB_CONFIG_DIR="/.glab" \
   -e GITLAB_HOST \
   -e GITLAB_TOKEN \
-  gitlab/glab "$@"
+  gitlab/glab glab "$@"
