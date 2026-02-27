@@ -265,7 +265,12 @@ if [[ -n "$SSH_CONNECTION" ]] ; then
   else
     # not in a screen/tmux session, if the socket exists symlink it
     if [[ -n "$SSH_AUTH_SOCK" ]] ; then
-      ln -sf "$SSH_AUTH_SOCK" "$SCREEN_SSH_AUTH_SOCK"
+      if [[ -L "$SCREEN_SSH_AUTH_SOCK" ]] && [[ -S "$(readlink -e "$SCREEN_SSH_AUTH_SOCK")" ]] ; then
+        # don't overwrite symlink if it points to a valid socket
+        echo "Using existing ssh agent socket at $SCREEN_SSH_AUTH_SOCK"
+      else
+        ln -sf "$SSH_AUTH_SOCK" "$SCREEN_SSH_AUTH_SOCK"
+      fi
     fi
     # set window title
     echo -ne "\033]0;${USER}@${HOSTNAME%%.*}\007"
