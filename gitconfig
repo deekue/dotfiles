@@ -74,17 +74,18 @@
 	mod = "!git status -s | sed -nE '/^.M (.*)/ s//\\1/p'"
 	mr = push -u origin HEAD -o merge_request.create
 	filelog = log --
+	addmod = "!git mod | xargs -r git -C \"$(git rev-parse --show-toplevel)\" add"
 
-	 # https://www.eficode.com/blog/10-levels-of-git-aliases-advanced-and-beyond#why_do_i_need_to_know_how_to_continue%3F
-	 continue = "!f() { \
-	       repo_path=$(git rev-parse --git-dir) && \
-	       [ -d \"${repo_path}/rebase-merge\" ] && git rebase --continue && return; \
-	       [ -d \"${repo_path}/rebase-apply\" ] && git rebase --continue && return; \
-	       [ -f \"${repo_path}/MERGE_HEAD\" ] && git merge --continue && return; \
-	       [ -f \"${repo_path}/CHERRY_PICK_HEAD\" ] && git cherry-pick --continue && return; \
-	       [ -f \"${repo_path}/REVERT_HEAD\" ] && git revert --continue && return; \
-	       echo \"Nothing to continue?\" && return 1; \
-	   }; f"
+	# https://www.eficode.com/blog/10-levels-of-git-aliases-advanced-and-beyond#why_do_i_need_to_know_how_to_continue%3F
+	continue = "!f() { \
+	    repo_path=$(git rev-parse --git-dir) && \
+	    [ -d \"${repo_path}/rebase-merge\" ] && git rebase --continue && return; \
+	    [ -d \"${repo_path}/rebase-apply\" ] && git rebase --continue && return; \
+	    [ -f \"${repo_path}/MERGE_HEAD\" ] && git merge --continue && return; \
+	    [ -f \"${repo_path}/CHERRY_PICK_HEAD\" ] && git cherry-pick --continue && return; \
+	    [ -f \"${repo_path}/REVERT_HEAD\" ] && git revert --continue && return; \
+	    echo \"Nothing to continue?\" && return 1; \
+	  }; f"
 
 [init]
 	defaultBranch = main
