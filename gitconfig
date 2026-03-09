@@ -70,7 +70,7 @@
 	po = pull --rebase origin
 	bu = push origin HEAD
 	prod = "!git commit --allow-empty -m'empty commit to prod CI' && git push"
-	la = "!git config -l | sed -ne '/^alias./ s///p'"
+	la = "!git config -l | sed -ne '/^alias./ s///p' | sort -t= -k1"
 	mod = "!git status -s | sed -nE '/^.M (.*)/ s//\\1/p'"
 	mr = push -u origin HEAD -o merge_request.create
 	filelog = log --
