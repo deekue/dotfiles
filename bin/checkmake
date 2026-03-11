@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+#
+
+DOCKER_IMAGE="${DOCKER_IMAGE:-quay.io/checkmake/checkmake}"
+DOCKER_TAG="${DOCKER_TAG:-latest}"
+
+docker run \
+  -u "$(id -u):$(id -g)" \
+  --rm \
+  -w "$(pwd)" \
+  -i \
+  -v "$(pwd):$(pwd)" \
+  -e LANG=en_US.UTF-8 \
+  --entrypoint /checkmake \
+  "${DOCKER_REGISTRY_PROXY:+$DOCKER_REGISTRY_PROXY/}$DOCKER_IMAGE:$DOCKER_TAG" \
+  "$@"
