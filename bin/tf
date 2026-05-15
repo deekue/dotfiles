@@ -14,17 +14,17 @@ case "$PLATFORM" in
 esac
 
 docker run -i --rm \
-  --name tf \
+  --name terraform \
   -u "$(id -u):$(id -g)" \
-  -v "$(pwd):/src" \
+  -v "$(pwd):$(pwd)" \
   -v "$HOME/.aws:/root/.aws:ro" \
   -e "SSH_AUTH_SOCK=$containerAgentPath" \
   -v "$sshAgent" \
   --network=host \
-  -w /src \
+  -w "$(pwd)" \
   ${AWS_PROFILE:+-e AWS_PROFILE="$AWS_PROFILE"} \
   ${TF_LOG:+-e TF_LOG="$TF_LOG"} \
   ${TF_LOG_PATH:+-e TF_LOG_PATH="$TF_LOG_PATH"} \
-  "$TERRAFORM_IMG":"$TERRAFORM_IMG_VER" \
+  "${DOCKER_REGISTRY_PROXY:+$DOCKER_REGISTRY_PROXY/}$TERRAFORM_IMG":"$TERRAFORM_IMG_VER" \
   "$@"
 
