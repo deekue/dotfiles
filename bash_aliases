@@ -316,6 +316,8 @@ function tmux_init() {
 }
 # }}}
 
+alias mcp-inspector='npx @modelcontextprotocol/inspector'
+
 if [[ -r "$HOME/.bash_aliases.$HOSTNAME" ]] ; then
   # shellcheck disable=SC1090
   source "$HOME/.bash_aliases.$HOSTNAME"
