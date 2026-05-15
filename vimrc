@@ -1,4 +1,30 @@
 
+" Install vim-plug if not found
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+let $vim_plug_path = data_dir . '/autoload/plug.vim'
+if empty(glob($vim_plug_path))
+  silent execute '!curl -fsLo '.$vim_plug_path.' --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  if !has('autoload')
+    source $vim_plug_path
+  endif
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+  Plug 'altercation/vim-colors-solarized'
+  Plug 'dense-analysis/ale'
+  Plug 'fatih/vim-go'
+  Plug 'github/copilot.vim'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-git'
+  Plug 'tpope/vim-jdaddy'
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-rhubarb'
+  Plug 'tpope/vim-sensible'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-tbone'
+call plug#end()
+
 set   nocompatible
 syntax on
 filetype plugin indent on
@@ -141,37 +167,41 @@ autocmd BufWinEnter *.go set wrapmargin=0
 "\ }
 "
 " Fugitive Conflict Resolution
-nnoremap <leader>gd :Gvdiffsplit!<CR>
-nnoremap gdh :diffget //2<CR>
-nnoremap gdl :diffget //3<CR>
+if exists('g:plugs["vim-fugitive"]')
+  nnoremap <leader>gd :Gvdiffsplit!<CR>
+  nnoremap gdh :diffget //2<CR>
+  nnoremap gdl :diffget //3<CR>
+endif
 
 " vim-which-key
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
-nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
-let g:which_key_map = {}
-let g:which_key_map['w'] = {
-      \ 'name' : '+windows' ,
-      \ 'w' : ['<C-W>w'     , 'other-window']          ,
-      \ 'd' : ['<C-W>c'     , 'delete-window']         ,
-      \ '-' : ['<C-W>s'     , 'split-window-below']    ,
-      \ '|' : ['<C-W>v'     , 'split-window-right']    ,
-      \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
-      \ 'h' : ['<C-W>h'     , 'window-left']           ,
-      \ 'j' : ['<C-W>j'     , 'window-below']          ,
-      \ 'l' : ['<C-W>l'     , 'window-right']          ,
-      \ 'k' : ['<C-W>k'     , 'window-up']             ,
-      \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
-      \ 'J' : [':resize +5'  , 'expand-window-below']   ,
-      \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
-      \ 'K' : [':resize -5'  , 'expand-window-up']      ,
-      \ '=' : ['<C-W>='     , 'balance-window']        ,
-      \ 's' : ['<C-W>s'     , 'split-window-below']    ,
-      \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
-      \ '?' : ['Windows'    , 'fzf-window']            ,
-      \ }
-"call which_key#register('<Space>', "g:which_key_map")
+if exists('g:plugs["vim-whichkey"]')
+  nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+  vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
+  nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+  vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
+  let g:which_key_map = {}
+  let g:which_key_map['w'] = {
+        \ 'name' : '+windows' ,
+        \ 'w' : ['<C-W>w'     , 'other-window']          ,
+        \ 'd' : ['<C-W>c'     , 'delete-window']         ,
+        \ '-' : ['<C-W>s'     , 'split-window-below']    ,
+        \ '|' : ['<C-W>v'     , 'split-window-right']    ,
+        \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
+        \ 'h' : ['<C-W>h'     , 'window-left']           ,
+        \ 'j' : ['<C-W>j'     , 'window-below']          ,
+        \ 'l' : ['<C-W>l'     , 'window-right']          ,
+        \ 'k' : ['<C-W>k'     , 'window-up']             ,
+        \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
+        \ 'J' : [':resize +5'  , 'expand-window-below']   ,
+        \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
+        \ 'K' : [':resize -5'  , 'expand-window-up']      ,
+        \ '=' : ['<C-W>='     , 'balance-window']        ,
+        \ 's' : ['<C-W>s'     , 'split-window-below']    ,
+        \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
+        \ '?' : ['Windows'    , 'fzf-window']            ,
+        \ }
+  "call which_key#register('<Space>', "g:which_key_map")
+endif
 
 " load local overrides
 try
