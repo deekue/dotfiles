@@ -1,0 +1,23 @@
+{
+  "sites": {
+    "github": "https://api.github.com/repos/%s/releases/latest",
+    "codeberg": "https://codeberg.org/api/v1/repos/%s/releases/latest"
+  },
+  "binaries" : [
+    {
+      "name": "difft",
+      "repo": "Wilfred/difftastic",
+      "site": "github"
+    },
+    {
+      "name": "mergiraf",
+      "repo": "mergiraf/mergiraf",
+      "site": "codeberg"
+    },
+    {
+      "name": "jqp",
+      "repo": "noahgorstein/jqp",
+      "site": "github"
+    }
+  ]
+}
