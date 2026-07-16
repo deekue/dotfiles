@@ -13,10 +13,9 @@ dockerfile="$(mktemp)"
 
 cat <<EOF > "$dockerfile"
 FROM busybox
-COPY . /build-context
-WORKDIR /build-context
-CMD ["find", "."]
+RUN --mount=type=bind,target=/context \
+    cd /context && find .
 EOF
 
-docker build -f "$dockerfile" -t build-context .
-docker run --rm -it build-context
+docker build -f "$dockerfile" --progress=plain --no-cache -t build-context . \
+  2>&1 | sed -nE '/^#6 [0-9.]* (.*)$/ s//\1/p'
