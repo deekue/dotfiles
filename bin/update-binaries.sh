@@ -55,7 +55,8 @@ function update {
     echo "ERROR: failed to extract version from $releaseUrl"
     return 1
   fi
-  downloadUrl="$(jq -r --arg ARCH "$(uname -m)" --arg platform "$(uname -s)" '.assets[] | select( .browser_download_url | contains($ARCH) ) | select(.browser_download_url | ascii_downcase | contains($platform|ascii_downcase)) | .browser_download_url' <<< "$releaseJson")"
+  # TODO handle selecting gnu when present, instead of !musl
+  downloadUrl="$(jq -r --arg ARCH "$(uname -m)" --arg platform "$(uname -s)" '.assets[] | select( .browser_download_url | contains($ARCH) ) | select(.browser_download_url | ascii_downcase | contains($platform|ascii_downcase)) | select(.browser_download_url|ascii_downcase | contains("musl")|not) | .browser_download_url' <<< "$releaseJson")"
 
   if [[ ! -f "$newVersionFile" ]] ; then
     tempFile="$(mktemp)"
