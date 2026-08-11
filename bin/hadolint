@@ -12,4 +12,4 @@ docker run \
   -w /src \
   -v .:/src:ro \
   "$DOCKER_IMAGE" \
-  hadolint "${1:?arg1 is Dockerfile}"
+  hadolint "$@"
