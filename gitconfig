@@ -66,6 +66,7 @@
 	df = diff
 	cdiff = diff --color=always
 	ccdiff = diff --color=always --cached
+	ediff = diff --no-ext-diff
 	grn = log --graph --full-history --color --pretty=format:'%C(red)%h%x09%x1b%x1b %Creset%x20%<(80,trunc)%s %Cgreen(%cr) %C(bold blue)<%an>%C(black)%d%Creset' --date=relative -n 
 	gr = grn 20
 	lln = log --color --pretty=oneline -n 
