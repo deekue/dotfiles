@@ -1,0 +1,305 @@
+#!/bin/bash
+#
+# sync accounts/profiles from AWS access portal to local awscliV2 config
+
+set -euo pipefail
+
+readonly BEGIN_MARKER="# BEGIN aws-sso-sync"
+readonly END_MARKER="# END aws-sso-sync"
+readonly DEFAULT_AWS_CONFIG_DIR="$HOME/.aws"
+
+function error {
+  echo "ERROR: $*" >&2
+  return 1
+}
+
+function read_sso_sessions {
+  local -r awsConfigFile="${1:?arg1 is AWS config file}"
+
+  sed -En '/^\[sso-session ([^]]+)\] *$/ s//\1/p' "$awsConfigFile"
+}
+
+function read_sso_session_value {
+  local -r ssoSession="${1:?arg1 is sso-session to read value from}"
+  local -r key="${2:?arg2 is key to read value for}"
+  local -r awsConfigFile="${3:?arg3 is AWS config file}"
+
+  awk \
+    -v section="[sso-session $ssoSession]" \
+    -v key="$key" '
+      # Strip leading/trailing whitespace.
+      function trim(s) {
+        sub(/^[[:space:]]+/, "", s)
+        sub(/[[:space:]]+$/, "", s)
+        return s
+      }
+
+      {
+        line = trim($0)
+      }
+
+      # Ignore blank lines and full-line comments.
+      line == "" || line ~ /^[#;]/ {
+        next
+      }
+
+      line == section {
+        found = 1
+        next
+      }
+
+      # Reached the next config section.
+      found && line ~ /^\[/ {
+        exit
+      }
+
+      found {
+        # Match:
+        #
+        #   key = value
+        #   key=value
+        #   key = value # comment
+        #   key = value ; comment
+        #
+        if (line ~ "^" key "[[:space:]]*=") {
+          sub("^[^=]*=[[:space:]]*", "", line)
+
+          # Strip inline comments. Require whitespace before the
+          # comment character so that # or ; can occur in values.
+          sub(/[[:space:]]+[#;].*$/, "", line)
+
+          print trim(line)
+          exit
+        }
+      }
+    ' "$awsConfigFile"
+}
+
+function read_cached_access_token {
+  local -r ssoCacheDir="${1:?arg1 is SSO cache dir}"
+  local -r ssoStartUrl="${2:?arg2 is SSO start url to search for}"
+
+  for file in "$ssoCacheDir"/*.json ; do
+    if [[ -r "$file" ]] ; then
+      break
+    else
+      return 0
+    fi
+  done
+
+  jq -r \
+    --arg start_url "$ssoStartUrl" '
+      select(
+        .startUrl == $start_url
+        and .accessToken != null
+        and .expiresAt != null
+      )
+      | select(
+          (
+            .expiresAt
+            | sub("\\.[0-9]+Z$"; "Z")
+            | fromdateiso8601
+          ) > now
+        )
+      | .accessToken
+      // empty
+    ' "$ssoCacheDir"/*.json 2>/dev/null \
+    | head -n1
+}
+
+function aws_sso_login {
+  local -r accessTokenRef="${1:?arg1 is nameref for access token var}"
+  local -n localAccessToken="$accessTokenRef"
+  local -r ssoSession="${2:?arg2 is AWS SSO session to use}"
+  local -r ssoStartUrl="${3:?arg3 is AWS SSO start URL}"
+  local -r ssoCacheDir="${4:?arg4 is AWS SSO cache dir}"
+
+  localAccessToken="$(read_cached_access_token "$ssoCacheDir" "$ssoStartUrl")"
+
+  if [[ -z "$localAccessToken" ]] ; then
+    echo "no valid cached SSO token found, logging in..." >&2
+    aws sso login --sso-session "$ssoSession"
+
+    localAccessToken="$(read_cached_access_token "$ssoCacheDir" "$ssoStartUrl")"
+
+    if [[ -z "$localAccessToken" ]] ; then
+      echo "no valid SSO token found after login" >&2
+      return 1
+    fi
+  fi
+}
+
+function aws_sync_accounts {
+  local -r accessToken="${1:?arg1 is AWS SSO access token}"
+  local -r ssoRegion="${2:?arg2 is AWS SSO region}"
+  local -r awsConfigFile="${3:?arg3 is AWS config file to update}"
+
+  local accountId accountName profileName safeAccountName roleName
+  local tmpProfiles tmpConfig
+  local accountsJson rolesJson
+  local -a accounts roles
+
+  echo "Discovering AWS accounts..."
+
+  accountsJson="$(
+    aws sso list-accounts \
+      --access-token "$accessToken" \
+      --region "$ssoRegion" \
+      --no-cli-pager \
+      --output json \
+    < /dev/null
+  )"
+  readarray -t accounts < <(jq -c '.accountList[]' <<<"$accountsJson")
+
+  tmpProfiles="$(mktemp)"
+  tmpConfig="$(mktemp)"
+  # shellcheck disable=SC2064
+  trap "rm -f '$tmpProfiles' '$tmpConfig'" EXIT
+
+  {
+    echo "$BEGIN_MARKER"
+    echo
+
+    for account in "${accounts[@]}" ; do
+      accountId="$(jq -r '.accountId' <<<"$account")"
+      accountName="$(jq -r '.accountName // .accountId' <<<"$account")"
+
+      safeAccountName="$(
+        printf '%s' "$accountName" |
+          sed 's/[^A-Za-z0-9_.-]/-/g'
+      )"
+
+      echo "  $accountName ($accountId)" >&2
+
+      rolesJson="$(
+        aws sso list-account-roles \
+          --access-token "$accessToken" \
+          --account-id "$accountId" \
+          --region "$ssoRegion" \
+          --no-cli-pager \
+          --output json \
+          < /dev/null
+      )"
+      readarray -t roles < <(
+        jq -r '.roleList[].roleName' <<<"$rolesJson" \
+        | sort
+      )
+
+      for roleName in "${roles[@]}" ; do
+        profileName="${safeAccountName}.${roleName}"
+        echo "    $profileName" >&2
+
+        cat <<EOF
+[profile ${profileName}]
+sso_session = ${ssoSession}
+sso_accountId = ${accountId}
+sso_roleName = ${roleName}
+
+EOF
+      done < <(jq -r '.roleList[].roleName' <<<"$rolesJson" \
+               | sort)
+    done
+
+    echo "$END_MARKER"
+  } > "$tmpProfiles"
+
+  # keep any existing config
+  awk \
+    -v begin="$BEGIN_MARKER" \
+    -v end="$END_MARKER" '
+      $0 == begin { skipping=1; next }
+      $0 == end   { skipping=0; next }
+      !skipping
+    ' "$awsConfigFile" \
+  > "$tmpConfig"
+
+  {
+    cat "$tmpConfig"
+
+    if [[ -s "$tmpConfig" ]]; then
+      echo
+    fi
+
+    cat "$tmpProfiles"
+  } > "${awsConfigFile}.new"
+
+  mv "${awsConfigFile}.new" "$awsConfigFile"
+
+  echo
+  echo "Updated: $awsConfigFile"
+}
+
+function usage {
+  cat <<EOF >&2
+Usage: $(basename -- "$0") [options]
+
+ -c dir     - AWS config dir (default: $DEFAULT_AWS_CONFIG_DIR)
+ -s session - AWS SSO session to use (default: first in AWS config)
+EOF
+
+ exit "${1:-1}"
+}
+
+function handle_options {
+  while getopts "c:hs:" flag; do
+    case "$flag" in
+      c) awsConfigDir="$OPTARG";;
+      h) usage 0 ;;
+      s) ssoSession="$OPTARG";;
+      *) usage ;;
+    esac
+  done
+}
+
+function main {
+  local accessToken ssoStartUrl ssoRegion ssoSession
+  local -a ssoSessions
+  local awsConfigDir="$DEFAULT_AWS_CONFIG_DIR"
+  handle_options "$@"
+  local -r awsConfigFile="$awsConfigDir/config"
+  local -r ssoCacheDir="$awsConfigDir/sso/cache"
+
+  mkdir -p "$(dirname -- "$awsConfigFile")"
+  if [[ ! -s "$awsConfigFile" ]] ; then
+    echo "$awsConfigFile not found, running 'aws configure sso-session'" >&2
+    aws configure sso-session
+  fi
+  if ! grep -q '^\[sso-session' "$awsConfigFile" ; then
+    echo "No sso-session found in $awsConfigFile, running configure" >&2
+    aws configure sso-session
+  fi
+
+  if [[ -z "${ssoSession:-}" ]] ; then
+    # no SSO session selected, try to use first one as default
+    readarray -t ssoSessions < <(read_sso_sessions "$awsConfigFile")
+    if [[ "${#ssoSessions[@]}" -eq 0 ]] ; then
+      error "no SSO sessions found in $awsConfigFile"
+    elif [[ "${#ssoSessions[@]}" -gt 0 ]] ; then
+      ssoSession="${ssoSessions[0]}"
+    fi
+  fi
+  
+  ssoStartUrl="$(read_sso_session_value "$ssoSession" "sso_start_url" "$awsConfigFile")"
+  ssoRegion="$(read_sso_session_value "$ssoSession" "sso_region" "$awsConfigFile")"
+
+	if [[ -z "$ssoStartUrl" ]] ; then
+		error "missing sso_start_url in [sso-session ${ssoSession}]"
+  fi
+
+	if [[ -z "$ssoRegion" ]] ; then
+		error "missing sso_region in [sso-session ${ssoSession}]"
+  fi
+
+	echo "SSO session: $ssoSession"
+	echo "SSO start URL: $ssoStartUrl"
+	echo "SSO region: $ssoRegion"
+	echo
+
+  aws_sso_login "accessToken" "$ssoSession" "$ssoStartUrl" "$ssoCacheDir"
+  aws_sync_accounts "$accessToken" "$ssoRegion" "$awsConfigFile"
+}
+
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
+fi
