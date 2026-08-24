@@ -200,7 +200,7 @@ function dy {
 }
 # }}}
 # weather {{{
-export CITY="San Francisco"
+export CITY="Melbourne"
 function weather {
   local location="$*"
   location="${location:-$CITY}"
@@ -215,6 +215,33 @@ function moon {
   local location="$*"
   location="${location:-$CITY}"
   curl -GfsSL ${location:+--data-urlencode "+$location"} "wttr.in/Moon"
+}
+# }}}
+# url (en|de)code {{{
+# h/t: https://gist.github.com/cdown/1163649
+function urlencode {
+    local -r string="${1:?'urlencode <string>'}"
+
+    old_lc_collate="$LC_COLLATE"
+    LC_COLLATE="C"
+
+    local length="${#string}"
+    for (( i = 0; i < length; i++ )); do
+        local c="${string:$i:1}"
+        case "$c" in
+            [a-zA-Z0-9.~_-]) printf '%s' "$c" ;;
+            *) printf '%%%02X' "'$c" ;;
+        esac
+    done
+
+    LC_COLLATE="$old_lc_collate"
+}
+
+function urldecode {
+    local -r string="${1:?'urldecode <string>'}"
+
+    local url_encoded="${string//+/ }"
+    printf '%b' "${url_encoded//%/\\x}"
 }
 # }}}
 
