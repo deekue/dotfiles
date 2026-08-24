@@ -14,7 +14,7 @@ case "$PLATFORM" in
 esac
 
 docker run -i --rm \
-  --name terraform \
+  --name "terraform-$$" \
   -u "$(id -u):$(id -g)" \
   -v "$(pwd):$(pwd)" \
   -v "$HOME/.aws:/root/.aws:ro" \
