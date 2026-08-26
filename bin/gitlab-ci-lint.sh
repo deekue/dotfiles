@@ -7,11 +7,11 @@ GITLAB_HOST="${GITLAB_HOST:?not defined}"
 function get_project_id_from_repo {
   local projectID
 
-  projectID="$(git config remote.origin.url \
-    | sed -En '/^([[:alpha:]]*:\/\/[[:alnum:]@.:]*\/|[[:alnum:]-]*:)([^\/]*)\/(.*)$/ s//\2%2F\3/;s#/#%2F#g;p')"
+  projectID="$(git remote get-url origin \
+    | sed -En '/^[[:alpha:]]*:\/\/[[:alnum:]@.:]*\/([^\/]*)\/(.*)$/ s//\1%2F\2/;s#/#%2F#g;p')"
   projectID="${projectID%.git}"
   if [[ -z "$projectID" ]] ; then
-    echo "Failed to extract project ID from 'git config remote.origin.url'" >&2
+    echo "Failed to extract project ID from 'git remote get-url origin'" >&2
     exit 1
   fi
   echo "$projectID"
@@ -50,7 +50,7 @@ function usage {
   cat <<EOF >&2
 Usage: $(basename -- "$0") [options] <file>
 
- -p project   - Gitlab project to lint file for (default is read from 'git config remote.origin.url')
+ -p project   - Gitlab project to lint file for (default is read from 'git remote get-url origin')
  -b branch    - branch (default is current branch)
  -m           - output merged yaml instead of linting
 
