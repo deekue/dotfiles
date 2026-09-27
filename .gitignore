@@ -1,8 +1,13 @@
 *.swp
 *.un~
+config/regolith*/flags
 SpaceVim.d/.netrwhist
 vim/.netrwhist
+vim/autoload/*
+vim/plugged/*
+vim/swaps/*
 vim/user.vim
 vim/undodir/*
-!vim/undodir/.gitkeep
-config/regolith*/flags
+
+# keep .gitkeep everywhere
+!**/.gitkeep
