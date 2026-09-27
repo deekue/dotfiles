@@ -243,6 +243,8 @@ if [[ -r "$HOME/.bashrc.$HOSTNAME" ]] ; then
   . "$HOME/.bashrc.$HOSTNAME"
 fi
 
+inpath podman-compose && export PODMAN_COMPOSE_WARNING_LOGS=false
+
 # SSH sessions {{{
 if [[ -n "$SSH_CONNECTION" ]] ; then
   # use ssh-agent from outside the screen session
