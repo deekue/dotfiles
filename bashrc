@@ -215,12 +215,6 @@ add_bin_path pre "$HOME/tmp/google-cloud-sdk/bin"
 # locally installed pip binaries
 add_bin_path pre "$HOME/.local/bin"
 
-export NVM_DIR="$HOME/.nvm"
-# shellcheck disable=SC1090,SC1091
-[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # This loads nvm
-# shellcheck disable=SC1090,SC1091
-[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # strap:straprc:begin
 #[ -r "$HOME/.strap/etc/straprc" ] && . "$HOME/.strap/etc/straprc"
 # strap:straprc:end
