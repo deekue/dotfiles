@@ -175,10 +175,10 @@ fi
 
 # If this is an xterm set the title
 case "$TERM" in
-xterm*|rxvt*|alacritty)
+  xterm*|rxvt*|alacritty)
     PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND};}"'echo -ne "\033]0;${USER}@${HOSTNAME%%.*}: $(abbrev_pwd)\007"'
     ;;
-*)
+  *)
     ;;
 esac
 

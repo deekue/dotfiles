@@ -98,7 +98,7 @@ function term_in_dircolors {
 # substituted into PS1)
 title_escape() {
   case "$TERM" in
-    screen*) printf '\001\033k%s\033\\\002' "$1";;
+    screen*|tmux*) printf '\001\033k%s\033\\\002' "$1";;
     *) echo ""
   esac
 }
@@ -108,7 +108,8 @@ title_escape() {
 abbrev_pwd() {
   case "$PWD" in
     "$HOME"|$HOME/*)
-      printf "~%s%s" "$(title_escape \~)" "${PWD#"$HOME"}"
+      # set the title to the current directory name and show the path relative to $HOME
+      printf "%s%s" "~${PWD#"$HOME"}" "$(title_escape "${PWD##*/}")"
       ;;
     *)
       printf "%s%s" "$PWD" "$(title_escape -)"
