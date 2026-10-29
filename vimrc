@@ -1,4 +1,7 @@
 
+" needs to be set before ALE loads
+let g:ale_completion_enabled = 1
+
 " Install vim-plug if not found
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 let $vim_plug_path = data_dir . '/autoload/plug.vim'
@@ -14,7 +17,7 @@ call plug#begin()
   Plug 'altercation/vim-colors-solarized'
   Plug 'dense-analysis/ale'
   Plug 'fatih/vim-go'
-  Plug 'github/copilot.vim'
+  Plug 'tmux-plugins/vim-tmux'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-git'
   Plug 'tpope/vim-jdaddy'
@@ -201,6 +204,14 @@ if exists('g:plugs["vim-whichkey"]')
         \ '?' : ['Windows'    , 'fzf-window']            ,
         \ }
   "call which_key#register('<Space>', "g:which_key_map")
+endif
+
+if exists('g:plugs["ale"]')
+  " only show the current line's errors in virtual text
+  let g:ale_virtualtext_cursor = 'current'
+
+  " overload omnifunc with ALE's version
+  set omnifunc=ale#completion#OmniFunc
 endif
 
 " load local overrides
